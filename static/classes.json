@@ -1,0 +1,172 @@
+[
+  {
+    "id": 20,
+    "simulation_id": 1,
+    "name": "Capitalists",
+    "population": 1500,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 1500.0,
+    "assets": 0.0
+  },
+  {
+    "id": 21,
+    "simulation_id": 1,
+    "name": "Workers",
+    "population": 3000,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 22,
+    "simulation_id": 2,
+    "name": "Capitalists",
+    "population": 1500,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 1500.0,
+    "assets": 0.0
+  },
+  {
+    "id": 23,
+    "simulation_id": 2,
+    "name": "Workers",
+    "population": 3000,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 24,
+    "simulation_id": 3,
+    "name": "Capitalists",
+    "population": 1500,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 750.0,
+    "assets": 0.0
+  },
+  {
+    "id": 25,
+    "simulation_id": 3,
+    "name": "Workers",
+    "population": 3000,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 26,
+    "simulation_id": 4,
+    "name": "Capitalists",
+    "population": 1500,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 1500.0,
+    "assets": 0.0
+  },
+  {
+    "id": 27,
+    "simulation_id": 4,
+    "name": "Workers",
+    "population": 3000,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 28,
+    "simulation_id": 5,
+    "name": "Capitalists",
+    "population": 1500,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 1250.0,
+    "assets": 0.0
+  },
+  {
+    "id": 29,
+    "simulation_id": 5,
+    "name": "Workers",
+    "population": 3500,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 30,
+    "simulation_id": 6,
+    "name": "Capitalists",
+    "population": 3000,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 3000.0,
+    "assets": 0.0
+  },
+  {
+    "id": 31,
+    "simulation_id": 6,
+    "name": "Workers",
+    "population": 6000,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 32,
+    "simulation_id": 6,
+    "name": "Bankers",
+    "population": 10,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 2.0,
+    "revenue": 10.0,
+    "assets": 0.0
+  },
+  {
+    "id": 33,
+    "simulation_id": 7,
+    "name": "Capitalists",
+    "population": 10,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 10.0,
+    "assets": 0.0
+  },
+  {
+    "id": 34,
+    "simulation_id": 7,
+    "name": "Workers",
+    "population": 300,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 35,
+    "simulation_id": 8,
+    "name": "Capitalists",
+    "population": 1500,
+    "participation_ratio": 0.0,
+    "consumption_ratio": 1.0,
+    "revenue": 1500.0,
+    "assets": 0.0
+  },
+  {
+    "id": 36,
+    "simulation_id": 8,
+    "name": "Workers",
+    "population": 3000,
+    "participation_ratio": 1.0,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  }
+]
