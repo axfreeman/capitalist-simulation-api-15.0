@@ -25,7 +25,7 @@ def get_api_key(
         Raises HTTPException if the API key is invalid.
     """
     # Uncomment for more detailed diagnostics
-    # logger.info(f"Received request using api key {api_key_header}")
+    logger.info(f"Received request using api key {api_key_header}")
     u:User=session.query(User).where(User.api_key==api_key_header).first()
     if u is not None:
         # logger.info(f"the user associated with this key is {u.username}")
