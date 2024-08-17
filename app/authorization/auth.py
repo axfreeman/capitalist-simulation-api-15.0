@@ -6,10 +6,9 @@ from ..database import get_session
 from ..reporting.caplog import logger
 from fastapi import Security, status
 
-"""In this version, all security is handled via api_keys. 
-These are manually allocated on request.  
-Each user is given a unique key.  
-So the api_key used in the client request uniquely identifies the user.
+"""Login is handled by the client. Authorization is managed by api_keys
+which are allocated when the user registers. The api_key  in the client
+request uniquely identifies the user.
 """
 api_key_header = APIKeyHeader(name="x-api-key", auto_error=False)
 
@@ -25,7 +24,7 @@ def get_api_key(
         Raises HTTPException if the API key is invalid.
     """
     # Uncomment for more detailed diagnostics
-    logger.info(f"Received request using api key {api_key_header}")
+    # logger.info(f"Received request using api key {api_key_header}")
     u:User=session.query(User).where(User.api_key==api_key_header).first()
     if u is not None:
         # logger.info(f"the user associated with this key is {u.username}")
