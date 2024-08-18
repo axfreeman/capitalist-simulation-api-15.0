@@ -52,32 +52,6 @@
     "profit_rate": 0.0
   },
   {
-    "id": 5,
-    "name": "Consumption",
-    "simulation_id": 3,
-    "output": "Consumption",
-    "output_scale": 1500,
-    "output_growth_rate": 0,
-    "initial_capital": 0.0,
-    "work_in_progress": 0.0,
-    "current_capital": 0.0,
-    "profit": 0.0,
-    "profit_rate": 0.0
-  },
-  {
-    "id": 6,
-    "name": "Means of Production",
-    "simulation_id": 3,
-    "output": "Means of Production",
-    "output_scale": 3000,
-    "output_growth_rate": 0,
-    "initial_capital": 0.0,
-    "work_in_progress": 0.0,
-    "current_capital": 0.0,
-    "profit": 0.0,
-    "profit_rate": 0.0
-  },
-  {
     "id": 7,
     "name": "Department I",
     "simulation_id": 4,

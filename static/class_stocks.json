@@ -9,7 +9,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 0,
+    "requirement": 1500,
     "name": "Capitalists.Consumption.Consumption.(id_2)(sim_1)"
   },
   {
@@ -48,7 +48,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 0,
+    "requirement": 1500,
     "name": "Workers.Consumption.Consumption.(id_11)(sim_1)"
   },
   {
@@ -87,7 +87,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 0,
+    "requirement": 1500,
     "name": "Capitalists.Consumption.Consumption.(id_15)(sim_2)"
   },
   {
@@ -126,7 +126,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 0,
+    "requirement": 1500,
     "name": "Workers.Consumption.Consumption.(id_25)(sim_2)"
   },
   {
@@ -156,84 +156,6 @@
     "name": "Workers.Sales.Labour Power.(id_27)(sim_2)"
   },
   {
-    "id": 29,
-    "class_id": 24,
-    "simulation_id": 3,
-    "commodity_id": 9,
-    "usage_type": "Consumption",
-    "size": 0,
-    "value": 0,
-    "price": 0,
-    "demand": 0,
-    "requirement": 0,
-    "name": "Capitalists.Consumption.Consumption.(id_29)(sim_3)"
-  },
-  {
-    "id": 30,
-    "class_id": 24,
-    "simulation_id": 3,
-    "commodity_id": 12,
-    "usage_type": "Money",
-    "size": 750,
-    "value": 750,
-    "price": 750,
-    "demand": 0,
-    "requirement": 0,
-    "name": "Capitalists.Money.Money.(id_30)(sim_3)"
-  },
-  {
-    "id": 42,
-    "class_id": 24,
-    "simulation_id": 3,
-    "commodity_id": 10,
-    "usage_type": "Sales",
-    "size": 0,
-    "value": 0,
-    "price": 0,
-    "demand": 0,
-    "requirement": 0,
-    "name": "Capitalists.Sales.Labour Power.(id_42)(sim_3)"
-  },
-  {
-    "id": 39,
-    "class_id": 25,
-    "simulation_id": 3,
-    "commodity_id": 9,
-    "usage_type": "Consumption",
-    "size": 0,
-    "value": 0,
-    "price": 0,
-    "demand": 0,
-    "requirement": 0,
-    "name": "Workers.Consumption.Consumption.(id_39)(sim_3)"
-  },
-  {
-    "id": 40,
-    "class_id": 25,
-    "simulation_id": 3,
-    "commodity_id": 12,
-    "usage_type": "Money",
-    "size": 750,
-    "value": 750,
-    "price": 750,
-    "demand": 0,
-    "requirement": 0,
-    "name": "Workers.Money.Money.(id_40)(sim_3)"
-  },
-  {
-    "id": 41,
-    "class_id": 25,
-    "simulation_id": 3,
-    "commodity_id": 10,
-    "usage_type": "Sales",
-    "size": 1500,
-    "value": 750,
-    "price": 750,
-    "demand": 0,
-    "requirement": 0,
-    "name": "Workers.Sales.Labour Power.(id_41)(sim_3)"
-  },
-  {
     "id": 43,
     "class_id": 26,
     "simulation_id": 4,
@@ -243,7 +165,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 0,
+    "requirement": 750,
     "name": "Capitalists.Consumption.Luxuries.(id_43)(sim_4)"
   },
   {
@@ -256,7 +178,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 0,
+    "requirement": 750,
     "name": "Capitalists.Consumption.Necessities.(id_45)(sim_4)"
   },
   {
@@ -308,7 +230,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 0,
+    "requirement": 1500,
     "name": "Workers.Consumption.Necessities.(id_61)(sim_4)"
   },
   {
