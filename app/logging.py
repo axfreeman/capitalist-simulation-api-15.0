@@ -8,6 +8,10 @@ import logging
 FORMAT = "%(levelname)s:%(message)s"
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 from sqlalchemy.orm import Session
+logger = logging.getLogger("capsim-logger")
+logger.info("Started Logging")
+
+
 
 # Logs both to the console and
 # As the simulation proceeds, create entries in the 'Trace' file which can be accesed via an endpoint

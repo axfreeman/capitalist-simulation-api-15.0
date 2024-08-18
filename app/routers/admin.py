@@ -9,7 +9,6 @@ from sqlalchemy.orm import Session
 
 from app.logging import report
 from ..schemas import UserCreate, UserRegistrationMessage, ServerMessage
-from ..reporting.caplog import logger
 
 from ..schemas import UserBase
 from ..database import get_session

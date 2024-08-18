@@ -3,7 +3,6 @@ from fastapi.security import APIKeyHeader
 from sqlalchemy.orm import Session
 from app.models import User
 from ..database import get_session
-from ..reporting.caplog import logger
 from fastapi import Security, status
 
 """Login is handled by the client. Authorization is managed by api_keys

@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.logging import report
-from ..reporting.caplog import logger
 from ..database import  get_session
 from ..models import Simulation, User
 from ..schemas import  ServerMessage, SimulationBase
