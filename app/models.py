@@ -382,6 +382,7 @@ class Class_stock(Base):
     size = Column(Float)
     value = Column(Float)
     price = Column(Float)
+    requirement = Column(Float)
     demand = Column(Float)
 
     def social_class(self, db: Session)->SocialClass:

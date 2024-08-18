@@ -9,6 +9,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Consumption.(id_2)(sim_1)"
   },
   {
@@ -21,6 +22,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_3)(sim_1)"
   },
   {
@@ -33,6 +35,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Capital Services.(id_14)(sim_1)"
   },
   {
@@ -45,6 +48,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Consumption.(id_11)(sim_1)"
   },
   {
@@ -57,6 +61,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_12)(sim_1)"
   },
   {
@@ -69,6 +74,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_13)(sim_1)"
   },
   {
@@ -81,6 +87,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Consumption.(id_15)(sim_2)"
   },
   {
@@ -93,6 +100,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_16)(sim_2)"
   },
   {
@@ -105,6 +113,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Labour Power.(id_28)(sim_2)"
   },
   {
@@ -117,6 +126,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Consumption.(id_25)(sim_2)"
   },
   {
@@ -129,6 +139,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_26)(sim_2)"
   },
   {
@@ -141,6 +152,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_27)(sim_2)"
   },
   {
@@ -153,6 +165,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Consumption.(id_29)(sim_3)"
   },
   {
@@ -165,6 +178,7 @@
     "value": 750,
     "price": 750,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_30)(sim_3)"
   },
   {
@@ -177,6 +191,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Labour Power.(id_42)(sim_3)"
   },
   {
@@ -189,6 +204,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Consumption.(id_39)(sim_3)"
   },
   {
@@ -201,6 +217,7 @@
     "value": 750,
     "price": 750,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_40)(sim_3)"
   },
   {
@@ -213,6 +230,7 @@
     "value": 750,
     "price": 750,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_41)(sim_3)"
   },
   {
@@ -225,6 +243,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Luxuries.(id_43)(sim_4)"
   },
   {
@@ -237,6 +256,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Necessities.(id_45)(sim_4)"
   },
   {
@@ -249,6 +269,7 @@
     "value": 3000,
     "price": 3000,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_44)(sim_4)"
   },
   {
@@ -261,6 +282,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Labour Power.(id_62)(sim_4)"
   },
   {
@@ -273,6 +295,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Luxuries.(id_60)(sim_4)"
   },
   {
@@ -285,6 +308,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Necessities.(id_61)(sim_4)"
   },
   {
@@ -297,6 +321,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_58)(sim_4)"
   },
   {
@@ -309,6 +334,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_59)(sim_4)"
   },
   {
@@ -321,6 +347,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Consumption.(id_63)(sim_5)"
   },
   {
@@ -333,6 +360,7 @@
     "value": 1750,
     "price": 1750,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_64)(sim_5)"
   },
   {
@@ -345,6 +373,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Labour Power.(id_76)(sim_5)"
   },
   {
@@ -357,6 +386,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Consumption.(id_73)(sim_5)"
   },
   {
@@ -369,6 +399,7 @@
     "value": 3500,
     "price": 3500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_75)(sim_5)"
   },
   {
@@ -381,6 +412,7 @@
     "value": 1750,
     "price": 1750,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_74)(sim_5)"
   },
   {
@@ -393,6 +425,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Consumption.(id_77)(sim_6)"
   },
   {
@@ -405,6 +438,7 @@
     "value": 3000,
     "price": 3000,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_78)(sim_6)"
   },
   {
@@ -417,6 +451,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Labour Power.(id_90)(sim_6)"
   },
   {
@@ -429,6 +464,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Consumption.(id_87)(sim_6)"
   },
   {
@@ -441,6 +477,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_88)(sim_6)"
   },
   {
@@ -453,6 +490,7 @@
     "value": 3000,
     "price": 3000,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_89)(sim_6)"
   },
   {
@@ -465,6 +503,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Bankers.Consumption.Consumption.(id_93)(sim_7)"
   },
   {
@@ -477,6 +516,7 @@
     "value": 10000,
     "price": 10000,
     "demand": 0,
+    "requirement": 0,
     "name": "Bankers.Money.Money.(id_95)(sim_7)"
   },
   {
@@ -489,6 +529,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Bankers.Sales.Labour Power.(id_99)(sim_7)"
   },
   {
@@ -501,6 +542,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Consumption.(id_91)(sim_7)"
   },
   {
@@ -513,6 +555,7 @@
     "value": 3000,
     "price": 3000,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_92)(sim_7)"
   },
   {
@@ -525,6 +568,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Labour Power.(id_114)(sim_7)"
   },
   {
@@ -537,6 +581,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Consumption.(id_108)(sim_7)"
   },
   {
@@ -549,6 +594,7 @@
     "value": 3000,
     "price": 3000,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_112)(sim_7)"
   },
   {
@@ -561,6 +607,7 @@
     "value": 150,
     "price": 150,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_113)(sim_7)"
   },
   {
@@ -573,6 +620,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Consumption.Consumption.(id_115)(sim_8)"
   },
   {
@@ -585,6 +633,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Money.Money.(id_116)(sim_8)"
   },
   {
@@ -597,6 +646,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Capitalists.Sales.Labour Power.(id_117)(sim_8)"
   },
   {
@@ -609,6 +659,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Consumption.Consumption.(id_133)(sim_8)"
   },
   {
@@ -621,6 +672,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Money.Money.(id_134)(sim_8)"
   },
   {
@@ -633,6 +685,7 @@
     "value": 1500,
     "price": 1500,
     "demand": 0,
+    "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_135)(sim_8)"
   }
 ]

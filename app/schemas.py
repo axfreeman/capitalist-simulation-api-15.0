@@ -121,6 +121,7 @@ class Class_stock_base(BaseModel):
     size: float
     value: float
     price: float
+    requirement: float
     demand: float
 
 class BuyerBase(BaseModel):
