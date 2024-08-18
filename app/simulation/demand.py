@@ -61,7 +61,6 @@ def industry_demand(db:Session,simulation:Simulation):
 
 def class_demand(db:Session,simulation:Simulation):
     """Tell each class to set demand for each of its consumption stocks."""
-
     report(1,simulation.id, "CALCULATING DEMAND FROM SOCIAL CLASSES",db)
     query=db.query(SocialClass).where(SocialClass.simulation_id==simulation.id)
     for socialClass in query:
@@ -71,7 +70,7 @@ def class_demand(db:Session,simulation:Simulation):
         for stock in query:
             db.add(stock)
             commodity=stock.commodity(db)
-            demand=round(stock.flow_per_period(db),4) # TODO consider using fraction types
+            demand=round(stock.flow_per_period(db),4) 
             stock.demand+=demand
             report(3,simulation.id,f'Demand for {stock.name} of {commodity.name} has been increased by {demand} to {stock.demand}',db)
     db.commit()

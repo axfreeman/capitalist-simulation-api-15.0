@@ -403,7 +403,7 @@ class Class_stock(Base):
         """
         if self.usage_type == "Consumption":
             social_class:SocialClass = db.query(SocialClass).where(SocialClass.id == self.class_id).first()
-            return social_class.population * social_class.consumption_ratio
+            return self.requirement
         else:
             return 0.0
 
