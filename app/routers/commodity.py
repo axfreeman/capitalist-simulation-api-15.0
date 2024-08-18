@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from ..authorization.auth import get_api_key
 from ..database import get_session
-from ..models import Commodity, Simulation, User
+from models.models import Commodity, Simulation, User
 from ..schemas import CommodityBase
  
 router = APIRouter(prefix="/commodity", tags=["Commodity"])

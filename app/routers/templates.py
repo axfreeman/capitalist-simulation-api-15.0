@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from app.schemas import SimulationBase
 from ..database import get_session
 from ..authorization.auth import get_api_key
-from ..models import Simulation, User
+from models.models import Simulation, User
 
 router = APIRouter(prefix="/templates", tags=["Templates"])
 

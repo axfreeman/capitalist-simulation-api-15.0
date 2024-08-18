@@ -1,7 +1,7 @@
 """This module contains functions used in handling the trade action."""
 
 from sqlalchemy.orm import Session
-from ..models import Buyer, Class_stock, Industry_stock, Seller, Commodity, Simulation
+from models.models import Buyer, Class_stock, Industry_stock, Seller, Commodity, Simulation
 from app.logging import report
 
 def constrain_demand(session,simulation):

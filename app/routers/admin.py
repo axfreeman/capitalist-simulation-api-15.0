@@ -13,7 +13,7 @@ from ..schemas import UserCreate, UserRegistrationMessage, ServerMessage
 from ..schemas import UserBase
 from ..database import get_session
 from ..authorization.auth import get_api_key
-from ..models import User
+from models.models import User
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 

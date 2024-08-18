@@ -6,7 +6,7 @@ from fastapi import Depends, APIRouter, HTTPException, Security
 from sqlalchemy.orm import Session
 from ..authorization.auth import get_api_key
 from ..database import  get_session
-from ..models import SocialClass,Simulation, User
+from models.models import SocialClass,Simulation, User
 from ..schemas import SocialClassBase
 
 router=APIRouter(

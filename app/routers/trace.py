@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from ..authorization.auth import get_api_key
 from ..database import  get_session
-from ..models import Simulation,Trace,User
+from models.models import Simulation,Trace,User
 from ..schemas import TraceOut
 
 router=APIRouter(

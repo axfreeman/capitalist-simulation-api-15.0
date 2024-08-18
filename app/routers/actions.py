@@ -16,7 +16,7 @@ from ..simulation.supply import initialise_supply, industry_supply, class_supply
 from ..simulation.trade import buy_and_sell, constrain_demand
 from ..simulation.production import produce
 from ..simulation.invest import invest
-from ..models import (
+from models.models import (
     Class_stock,
     Industry_stock,
     Simulation,

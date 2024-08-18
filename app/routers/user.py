@@ -7,7 +7,7 @@ from app.schemas import CloneMessage, ServerMessage
 from app.simulation.reload import initialise_buyers_and_sellers
 from app.simulation.utils import calculate_current_capitals, calculate_initial_capitals, revalue_commodities, revalue_stocks
 from ..authorization.auth import get_api_key
-from ..models import Class_stock, Commodity, Industry, Industry_stock, SocialClass, Simulation, User
+from models.models import Class_stock, Commodity, Industry, Industry_stock, SocialClass, Simulation, User
 
 from sqlalchemy.orm import Session
 

@@ -1,7 +1,7 @@
 from fastapi import Depends
 
 from app.database import get_session
-from .models import Trace
+from models.models import Trace
 from colorama import Fore # type: ignore
 import logging
 

@@ -5,7 +5,7 @@ from typing import List
 
 from app.logging import report
 from ..database import  get_session
-from ..models import Simulation, User
+from models.models import Simulation, User
 from ..schemas import  ServerMessage, SimulationBase
 from ..authorization.auth import get_api_key
 

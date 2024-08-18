@@ -16,8 +16,8 @@ The sequence is:
     Finally, tell every commodity to add up demand from stocks of it.
 """
 
-from .. import models
-from ..models import Class_stock, Commodity,Industry, Industry_stock,SocialClass, Simulation
+from models import models
+from models.models import Class_stock, Commodity,Industry, Industry_stock,SocialClass, Simulation
 from app.logging import report
 from sqlalchemy.orm import Session
 

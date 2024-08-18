@@ -1,4 +1,4 @@
-from ..models import Simulation, Industry, SocialClass
+from models.models import Simulation, Industry, SocialClass
 from .demand import report
 from sqlalchemy.orm import Session
 

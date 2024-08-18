@@ -1,4 +1,4 @@
-from ..models import Class_stock, Commodity,Industry, Industry_stock, Simulation
+from models.models import Class_stock, Commodity,Industry, Industry_stock, Simulation
 from app.logging import report
 from sqlalchemy.orm import Session
 
