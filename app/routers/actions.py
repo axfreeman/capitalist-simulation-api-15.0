@@ -1,6 +1,6 @@
 from fastapi import Depends, APIRouter, Security, status
 from sqlalchemy.orm import Session
-from app.schemas import ServerMessage
+from models.schemas import ServerMessage
 from app.simulation.consumption import consume
 from ..authorization.auth import get_api_key
 from ..logging import report

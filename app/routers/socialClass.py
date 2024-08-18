@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from ..authorization.auth import get_api_key
 from ..database import  get_session
 from models.models import SocialClass,Simulation, User
-from ..schemas import SocialClassBase
+from models.schemas import SocialClassBase
 
 router=APIRouter(
     prefix="/classes",

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.authorization.auth import get_api_key
 from ..database import get_session
 from models.models import Simulation, Industry, User
-from ..schemas import IndustryBase
+from models.schemas import IndustryBase
 
 router = APIRouter(prefix="/industry", tags=["Industry"])
 

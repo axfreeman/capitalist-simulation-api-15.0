@@ -4,7 +4,7 @@ from typing import List
 from ..authorization.auth import get_api_key
 from ..database import get_session
 from models.models import Class_stock, Industry_stock, Simulation, User
-from ..schemas import Class_stock_base, Industry_stock_base
+from models.schemas import Class_stock_base, Industry_stock_base
 
 router = APIRouter(prefix="/stocks", tags=["Stocks"])
 

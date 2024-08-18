@@ -4,7 +4,7 @@ from typing import List
 from fastapi import APIRouter, Depends, Security
 from sqlalchemy.orm import Session
 
-from app.schemas import SimulationBase
+from models.schemas import SimulationBase
 from ..database import get_session
 from ..authorization.auth import get_api_key
 from models.models import Simulation, User

@@ -4,7 +4,7 @@ from typing import List
 from ..authorization.auth import get_api_key
 from ..database import  get_session
 from models.models import Simulation,Trace,User
-from ..schemas import TraceOut
+from models.schemas import TraceOut
 
 router=APIRouter(
     prefix="/trace",

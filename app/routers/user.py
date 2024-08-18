@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, Security, status, Response
 from app.database import get_session
 from app.logging import report
-from app.schemas import CloneMessage, ServerMessage
+from models.schemas import CloneMessage, ServerMessage
 from app.simulation.reload import initialise_buyers_and_sellers
 from app.simulation.utils import calculate_current_capitals, calculate_initial_capitals, revalue_commodities, revalue_stocks
 from ..authorization.auth import get_api_key
