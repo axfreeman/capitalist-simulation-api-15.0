@@ -289,14 +289,14 @@
     "id": 76,
     "class_id": 28,
     "simulation_id": 5,
-    "commodity_id": 19,
+    "commodity_id": 41,
     "usage_type": "Sales",
     "size": 0,
     "value": 0,
     "price": 0,
     "demand": 0,
     "requirement": 0,
-    "name": "Capitalists.Sales.Labour Power.(id_76)(sim_5)"
+    "name": "Capitalists.Sales.Capital Services.(id_76)(sim_5)"
   },
   {
     "id": 73,

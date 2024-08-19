@@ -8,4 +8,4 @@
 * consider using fraction types
 
 ## Errors in json files
-* From simulation 4 on, the Capitalist Class is wrongly supposed to be selling Labour Power
+* From simulation 6 on, the Capitalist Class is wrongly supposed to be selling Labour Power
