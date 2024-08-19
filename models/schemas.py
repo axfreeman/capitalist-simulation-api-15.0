@@ -87,7 +87,6 @@ class SocialClassBase(BaseModel):
     name: str
     username: str
     population: float
-    participation_ratio: float
     consumption_ratio: float
     revenue: float
     assets: float

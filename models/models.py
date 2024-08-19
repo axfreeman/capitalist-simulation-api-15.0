@@ -220,7 +220,6 @@ class SocialClass(Base):
     name = Column(String)
     username = Column(String, nullable=True)
     population = Column(Float)
-    participation_ratio = Column(Float)
     consumption_ratio = Column(Float)
     revenue = Column(Float)
     assets = Column(Float)
