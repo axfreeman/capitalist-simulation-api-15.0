@@ -6,7 +6,7 @@ preparation for Trade.
 Quite simple: supply is simply the size of the Sales Stock.
 """
 from models.models import Class_stock, Commodity,Industry, Industry_stock,SocialClass
-from app.logging import report
+from report.report import report
 
 def initialise_supply(session,simulation):
     """Set supply of every commodity to zero to prepare for the calculation."""

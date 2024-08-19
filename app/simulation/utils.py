@@ -1,5 +1,5 @@
 from models.models import Class_stock, Commodity,Industry, Industry_stock, Simulation
-from app.logging import report
+from report.report import report
 from sqlalchemy.orm import Session
 
 """Helper functions for use in all parts of the simulation."""

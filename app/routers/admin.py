@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Security, status
 from sqlalchemy.orm import Session
 
-from app.logging import report,logger
+from report.report import report,logger
 from models.schemas import UserCreate, UserRegistrationMessage, ServerMessage
 
 from models.schemas import UserBase

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models.models import Commodity, SocialClass, Simulation, Class_stock
-from ..logging import report
+from report.report import report
 
 """This module contains functions needed to implement the consumption action.
 """

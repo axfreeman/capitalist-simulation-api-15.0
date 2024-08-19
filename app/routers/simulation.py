@@ -3,7 +3,7 @@ from fastapi import  HTTPException, Security, status, Depends, APIRouter,status
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.logging import report
+from report.report import report
 from database.database import  get_session
 from models.models import Simulation, User
 from models.schemas import  ServerMessage, SimulationBase

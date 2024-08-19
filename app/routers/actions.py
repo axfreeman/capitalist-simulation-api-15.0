@@ -4,7 +4,7 @@ from database.database import get_session
 from models.schemas import ServerMessage
 from app.simulation.consumption import consume
 from app.authorization.auth import get_api_key
-from app.logging import report
+from report.report import report
 from app.simulation.reload import reload_table
 from app.simulation.demand import (
     class_demand,

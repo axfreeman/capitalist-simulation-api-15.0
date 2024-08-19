@@ -18,7 +18,7 @@ The sequence is:
 
 from models import models
 from models.models import Class_stock, Commodity,Industry, Industry_stock,SocialClass, Simulation
-from app.logging import report
+from report.report import report
 from sqlalchemy.orm import Session
 
 def initialise_demand(session: Session,simulation: Simulation):

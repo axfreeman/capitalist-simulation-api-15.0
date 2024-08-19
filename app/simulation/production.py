@@ -1,5 +1,5 @@
 from models.models import Simulation, Industry, Industry_stock
-from app.logging import report
+from report.report import report
 from sqlalchemy.orm import Session
 
 def produce(session:Session, simulation:Simulation):

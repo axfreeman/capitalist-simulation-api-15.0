@@ -2,7 +2,7 @@
 
 from sqlalchemy.orm import Session
 from models.models import Buyer, Class_stock, Industry_stock, Seller, Commodity, Simulation
-from app.logging import report
+from report.report import report
 
 def constrain_demand(session,simulation):
     """Constrain demand to supply.

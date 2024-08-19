@@ -1,8 +1,5 @@
-from fastapi import Depends
-
-from database.database import get_session
 from models.models import Trace
-from colorama import Fore # type: ignore
+from colorama import Fore 
 import logging
 
 FORMAT = "%(levelname)s:%(message)s"
