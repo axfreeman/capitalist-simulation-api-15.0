@@ -1,21 +1,21 @@
 from fastapi import Depends, APIRouter, Security, status
 from sqlalchemy.orm import Session
+from database.database import get_session
 from models.schemas import ServerMessage
 from app.simulation.consumption import consume
-from ..authorization.auth import get_api_key
-from ..logging import report
-from ..simulation.reload import reload_table
-from ..database import get_session
-from ..simulation.demand import (
+from app.authorization.auth import get_api_key
+from app.logging import report
+from app.simulation.reload import reload_table
+from app.simulation.demand import (
     class_demand,
     commodity_demand,
     initialise_demand,
     industry_demand,
 )
-from ..simulation.supply import initialise_supply, industry_supply, class_supply
-from ..simulation.trade import buy_and_sell, constrain_demand
-from ..simulation.production import produce
-from ..simulation.invest import invest
+from app.simulation.supply import initialise_supply, industry_supply, class_supply
+from app.simulation.trade import buy_and_sell, constrain_demand
+from app.simulation.production import produce
+from app.simulation.invest import invest
 from models.models import (
     Class_stock,
     Industry_stock,

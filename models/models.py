@@ -6,7 +6,7 @@ import typing
 from fastapi import Depends, HTTPException
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
 from sqlalchemy.orm import relationship, Session
-from app.database import Base
+from database.database import Base
 
 
 Industry_stock = typing.NewType("Industry_stock", None)

@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, Security
 from fastapi.security import APIKeyHeader
 from sqlalchemy.orm import Session
 from models.models import User
-from ..database import get_session
+from database.database import get_session
 from fastapi import Security, status
 
 """Login is handled by the client. Authorization is managed by api_keys

@@ -1,8 +1,8 @@
 from fastapi import Depends, APIRouter, HTTPException, Security
 from sqlalchemy.orm import Session
 from typing import List
-from ..authorization.auth import get_api_key
-from ..database import get_session
+from app.authorization.auth import get_api_key
+from database.database import get_session
 from models.models import Class_stock, Industry_stock, Simulation, User
 from models.schemas import Class_stock_base, Industry_stock_base
 

@@ -5,8 +5,8 @@ from fastapi import APIRouter, Depends, Security
 from sqlalchemy.orm import Session
 
 from models.schemas import SimulationBase
-from ..database import get_session
-from ..authorization.auth import get_api_key
+from database.database import get_session
+from app.authorization.auth import get_api_key
 from models.models import Simulation, User
 
 router = APIRouter(prefix="/templates", tags=["Templates"])

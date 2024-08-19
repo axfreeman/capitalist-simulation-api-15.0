@@ -4,8 +4,8 @@
 from typing import List
 from fastapi import Depends, APIRouter, HTTPException, Security
 from sqlalchemy.orm import Session
-from ..authorization.auth import get_api_key
-from ..database import  get_session
+from app.authorization.auth import get_api_key
+from database.database import  get_session
 from models.models import SocialClass,Simulation, User
 from models.schemas import SocialClassBase
 

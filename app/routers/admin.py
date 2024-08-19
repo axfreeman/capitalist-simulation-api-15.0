@@ -7,12 +7,12 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Security, status
 from sqlalchemy.orm import Session
 
-from app.logging import report
+from app.logging import report,logger
 from models.schemas import UserCreate, UserRegistrationMessage, ServerMessage
 
 from models.schemas import UserBase
-from ..database import get_session
-from ..authorization.auth import get_api_key
+from database.database import get_session
+from app.authorization.auth import get_api_key
 from models.models import User
 
 router = APIRouter(prefix="/admin", tags=["Admin"])

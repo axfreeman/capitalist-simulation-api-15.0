@@ -1,12 +1,12 @@
 """This module provides the endpoint for a user to clone a model."""
 
 from fastapi import APIRouter, Depends, Security, status, Response
-from app.database import get_session
+from database.database import get_session
 from app.logging import report
 from models.schemas import CloneMessage, ServerMessage
 from app.simulation.reload import initialise_buyers_and_sellers
 from app.simulation.utils import calculate_current_capitals, calculate_initial_capitals, revalue_commodities, revalue_stocks
-from ..authorization.auth import get_api_key
+from app.authorization.auth import get_api_key
 from models.models import Class_stock, Commodity, Industry, Industry_stock, SocialClass, Simulation, User
 
 from sqlalchemy.orm import Session

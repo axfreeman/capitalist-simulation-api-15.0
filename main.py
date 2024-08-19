@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from app.database import Base, engine
+from database.database import Base, engine
 
 from app.routers import (
     actions,
