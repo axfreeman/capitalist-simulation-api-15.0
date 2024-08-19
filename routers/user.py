@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends, Security, status, Response
 from database.database import get_session
 from report.report import report
 from models.schemas import CloneMessage, ServerMessage
-from app.simulation.reload import initialise_buyers_and_sellers
-from app.simulation.utils import calculate_current_capitals, calculate_initial_capitals, revalue_commodities, revalue_stocks
-from app.authorization.auth import get_api_key
+from simulation.reload import initialise_buyers_and_sellers
+from simulation.utils import calculate_current_capitals, calculate_initial_capitals, revalue_commodities, revalue_stocks
+from authorization.auth import get_api_key
 from models.models import Class_stock, Commodity, Industry, Industry_stock, SocialClass, Simulation, User
 
 from sqlalchemy.orm import Session

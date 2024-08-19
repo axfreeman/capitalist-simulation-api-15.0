@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from database.database import Base, engine
 
-from app.routers import (
+from routers import (
     actions,
     commodity,
     simulation,

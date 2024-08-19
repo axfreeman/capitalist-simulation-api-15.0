@@ -7,7 +7,7 @@ from report.report import report
 from database.database import  get_session
 from models.models import Simulation, User
 from models.schemas import  ServerMessage, SimulationBase
-from app.authorization.auth import get_api_key
+from authorization.auth import get_api_key
 
 """Endpoints to retrieve data about Simulations.
 At present these are all public.
