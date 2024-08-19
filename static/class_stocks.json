@@ -9,7 +9,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 1500,
+    "requirement": 1,
     "name": "Capitalists.Consumption.Consumption.(id_2)(sim_1)"
   },
   {
@@ -48,7 +48,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 1500,
+    "requirement": 0.5,
     "name": "Workers.Consumption.Consumption.(id_11)(sim_1)"
   },
   {
@@ -87,7 +87,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 1500,
+    "requirement": 1,
     "name": "Capitalists.Consumption.Consumption.(id_15)(sim_2)"
   },
   {
@@ -107,14 +107,14 @@
     "id": 28,
     "class_id": 22,
     "simulation_id": 2,
-    "commodity_id": 6,
+    "commodity_id": 38,
     "usage_type": "Sales",
     "size": 0,
     "value": 0,
     "price": 0,
     "demand": 0,
     "requirement": 0,
-    "name": "Capitalists.Sales.Labour Power.(id_28)(sim_2)"
+    "name": "Capitalists.Sales.Capital Services.(id_28)(sim_2)"
   },
   {
     "id": 25,
@@ -126,7 +126,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 1500,
+    "requirement": 0.5,
     "name": "Workers.Consumption.Consumption.(id_25)(sim_2)"
   },
   {
@@ -165,7 +165,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 750,
+    "requirement": 0.5,
     "name": "Capitalists.Consumption.Luxuries.(id_43)(sim_4)"
   },
   {
@@ -178,7 +178,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 750,
+    "requirement": 0.5,
     "name": "Capitalists.Consumption.Necessities.(id_45)(sim_4)"
   },
   {
@@ -198,14 +198,14 @@
     "id": 62,
     "class_id": 26,
     "simulation_id": 4,
-    "commodity_id": 13,
+    "commodity_id": 40,
     "usage_type": "Sales",
     "size": 0,
     "value": 0,
     "price": 0,
     "demand": 0,
     "requirement": 0,
-    "name": "Capitalists.Sales.Labour Power.(id_62)(sim_4)"
+    "name": "Capitalists.Sales.Capital Services.(id_62)(sim_4)"
   },
   {
     "id": 60,
@@ -230,7 +230,7 @@
     "value": 0,
     "price": 0,
     "demand": 0,
-    "requirement": 1500,
+    "requirement": 0.5,
     "name": "Workers.Consumption.Necessities.(id_61)(sim_4)"
   },
   {
