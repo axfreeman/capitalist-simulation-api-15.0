@@ -304,11 +304,11 @@
     "simulation_id": 4,
     "commodity_id": 17,
     "usage_type": "Sales",
-    "size": 3000,
+    "size": 2250,
     "requirement": 0,
     "demand": 0,
-    "value": 3000,
-    "price": 3000,
+    "value": 2250,
+    "price": 2250,
     "name": "Department IIa.Sales.Necessities.(id_55)(sim_4)"
   },
   {
@@ -356,11 +356,11 @@
     "simulation_id": 4,
     "commodity_id": 14,
     "usage_type": "Sales",
-    "size": 3000,
+    "size": 750,
     "requirement": 0,
     "demand": 0,
-    "value": 3000,
-    "price": 3000,
+    "value": 750,
+    "price": 750,
     "name": "Department IIb.Sales.Luxuries.(id_47)(sim_4)"
   },
   {

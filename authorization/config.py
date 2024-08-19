@@ -1,7 +1,6 @@
 import os
 from configparser import ConfigParser
 
-# TODO get this working
 config = ConfigParser()
 config.read('config.cfg')
 
