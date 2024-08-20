@@ -408,11 +408,11 @@
     "simulation_id": 5,
     "commodity_id": 18,
     "usage_type": "Sales",
-    "size": 3000,
+    "size": 5000,
     "requirement": 0,
     "demand": 0,
-    "value": 3000,
-    "price": 3000,
+    "value": 5000,
+    "price": 5000,
     "name": "Consumption.Sales.Consumption.(id_72)(sim_5)"
   },
   {
