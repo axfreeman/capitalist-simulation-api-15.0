@@ -455,7 +455,7 @@
     "name": "Means of Production.Production.Labour Power.(id_70)(sim_5)"
   },
   {
-    "id": 65,
+    "id": 65, 
     "industry_id": 11,
     "simulation_id": 5,
     "commodity_id": 20,
