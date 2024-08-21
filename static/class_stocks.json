@@ -252,9 +252,9 @@
     "simulation_id": 4,
     "commodity_id": 13,
     "usage_type": "Sales",
-    "size": 3000,
-    "value": 1500,
-    "price": 1500,
+    "size": 3500,
+    "value": 1750,
+    "price": 1750,
     "demand": 0,
     "requirement": 0,
     "name": "Workers.Sales.Labour Power.(id_59)(sim_4)"

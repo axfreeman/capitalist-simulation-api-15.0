@@ -95,7 +95,7 @@
     "name": "Department II",
     "simulation_id": 5,
     "output": "Consumption",
-    "output_scale": 5000,
+    "output_scale": 3000,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
     "work_in_progress": 0.0,
