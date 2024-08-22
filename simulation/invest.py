@@ -36,7 +36,9 @@ def expanded_reproduction_invest(simulation:Simulation,db:Session):
         report(1,simulation.id,"INDUSTRY PRODUCING MEANS OF PRODUCTION WAS NOT FOUND: GIVING UP ON INVESTMENT",db)
         return
     output_stock:Industry_stock=mp_industry.sales_stock(db)
-    report(2,simulation.id,f"Unconsumed Means of Production in Department I is {output_stock.value}",db)
+    report(2,simulation.id,f"Means of Production in Department I is {output_stock.value}",db)
+
+    
     return
 
 def standard_invest(simulation:Simulation,db:Session):
