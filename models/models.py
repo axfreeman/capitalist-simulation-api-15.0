@@ -44,6 +44,7 @@ class Simulation(Base):
     currency_symbol = Column(String)
     quantity_symbol = Column(String)
     melt = Column(Float)
+    investment_algorithm = Column(String)
 
     def set_state(self,state:str,session:Session):
         """Helper function sets the state of a simulation. Does not test 
@@ -206,9 +207,14 @@ class Industry(Base):
             )
         return result
 
-    def money_stock(self, session)->Industry_stock:
+    def money_stock(self, db)->Industry_stock:
         """Helper method yields the Money Stock of this industry."""
-        return get_industry_money_stock(self, session)  # workaround because pydantic won't easily accept this query in a built-in function
+        return get_industry_money_stock(self, db)  # workaround because pydantic won't easily accept this query in a built-in function
+    
+    def output_commodity(self, db)->Commodity:
+        sales_stock:Industry_stock=self.sales_stock(db)
+        sales_commodity:Commodity =sales_stock.commodity(db)
+        return sales_commodity
 
 class SocialClass(Base):
     __tablename__ = "social_classes"

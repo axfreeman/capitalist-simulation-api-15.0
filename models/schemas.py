@@ -37,6 +37,7 @@ class SimulationBase(BaseModel):
     currency_symbol: str
     quantity_symbol: str
     melt: float
+    investment_algorithm: str
 
 class CommodityBase(BaseModel):
     id: int
