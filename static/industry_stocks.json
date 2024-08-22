@@ -374,7 +374,7 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Consumption.Money.Money.(id_71)(sim_5)"
+    "name": "Department II.Money.Money.(id_71)(sim_5)"
   },
   {
     "id": 68,
@@ -387,7 +387,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Consumption.Production.Means of Production.(id_68)(sim_5)"
+    "name": "Department II.Production.Means of Production.(id_68)(sim_5)"
   },
   {
     "id": 69,
@@ -400,7 +400,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Consumption.Production.Labour Power.(id_69)(sim_5)"
+    "name": "Department II.Production.Labour Power.(id_69)(sim_5)"
   },
   {
     "id": 72,
@@ -413,7 +413,7 @@
     "demand": 0,
     "value": 5000,
     "price": 5000,
-    "name": "Consumption.Sales.Consumption.(id_72)(sim_5)"
+    "name": "Department II.Sales.Consumption.(id_72)(sim_5)"
   },
   {
     "id": 67,
@@ -426,7 +426,7 @@
     "demand": 0,
     "value": 9000,
     "price": 9000,
-    "name": "Means of Production.Money.Money.(id_67)(sim_5)"
+    "name": "Department I.Money.Money.(id_67)(sim_5)"
   },
   {
     "id": 66,
@@ -435,11 +435,11 @@
     "commodity_id": 20,
     "usage_type": "Production",
     "size": 0,
-    "requirement": 0.5,
+    "requirement": 0.666666667,
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Means of Production.Production.Means of Production.(id_66)(sim_5)"
+    "name": "Department I.Production.Means of Production.(id_66)(sim_5)"
   },
   {
     "id": 70,
@@ -448,11 +448,11 @@
     "commodity_id": 19,
     "usage_type": "Production",
     "size": 0,
-    "requirement": 0.25,
+    "requirement": 0.333333333,
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Means of Production.Production.Labour Power.(id_70)(sim_5)"
+    "name": "Department I.Production.Labour Power.(id_70)(sim_5)"
   },
   {
     "id": 65, 
@@ -465,7 +465,7 @@
     "demand": 0,
     "value": 6000,
     "price": 6000,
-    "name": "Means of Production.Sales.Means of Production.(id_65)(sim_5)"
+    "name": "Department I.Sales.Means of Production.(id_65)(sim_5)"
   },
   {
     "id": 83,
