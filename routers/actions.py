@@ -28,7 +28,7 @@ router = APIRouter(prefix="/action", tags=["Actions"])
 @router.get("/demand",response_model=ServerMessage)
 def demandHandler(
     u:User=Security(get_api_key),    
-    db: Session = Depends(get_session),
+    session: Session = Depends(get_session),
 
 )->str:
     """Handles calls to the 'Demand' action. Sets demand, then resets 
@@ -40,9 +40,9 @@ def demandHandler(
         returns: success message if there is a simulation
     """
     try:
-        simulation:Simulation=u.current_simulation(db)
-        calculate_demand(db,simulation)
-        simulation.set_state("SUPPLY",db) # set the next state in the circuit, obliging the user to do this next.
+        simulation:Simulation=u.current_simulation(session)
+        calculate_demand(session,simulation)
+        simulation.set_state("SUPPLY",session) # set the next state in the circuit, obliging the user to do this next.
     except Exception as e:
         return{"message":f"Error {e} processing demand for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
 

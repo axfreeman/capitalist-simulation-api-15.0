@@ -41,7 +41,7 @@ def constrain_demand(session,simulation):
                     stock.demand=stock.demand*commodity.allocation_ratio
                     report(4,simulation.id, f"constraining stock {stock.id} demand to {stock.demand}",session)
 
-def buy_and_sell(db:Session, simulation:Simulation):
+def buy_and_sell(session:Session, simulation:Simulation):
     """Implements buying and selling.
 
     Uses two helper classes 'Buyer' and 'Seller' which are created when the
@@ -60,61 +60,61 @@ def buy_and_sell(db:Session, simulation:Simulation):
     function - as indeed may be possible for the allocation of demand itself.
     """
 
-    report(1, simulation.id, f"Starting trade with simulation {simulation.id}", db)
-    for seller in db.query(Seller).where(Seller.simulation_id == simulation.id):
-        sales_stock = seller.sales_stock(db)
+    report(1, simulation.id, f"Starting trade with simulation {simulation.id}", session)
+    for seller in session.query(Seller).where(Seller.simulation_id == simulation.id):
+        sales_stock = seller.sales_stock(session)
         report(2,simulation.id,
-            f"seller {seller.owner_name(db)} can sell {sales_stock.size} and is looking for buyers {sales_stock.name}",db,
+            f"seller {seller.owner_name(session)} can sell {sales_stock.size} and is looking for buyers {sales_stock.name}",session,
         )
 
-        for buyer in db.query(Buyer).where(
+        for buyer in session.query(Buyer).where(
             Buyer.simulation_id == simulation.id,
             Buyer.commodity_id == seller.commodity_id,
         ):
             report(3,simulation.id,
-                f"buyer {buyer.owner_name(db)} will be asked to buy {buyer.purchase_stock(db).demand}",db,
+                f"buyer {buyer.owner_name(session)} will be asked to buy {buyer.purchase_stock(session).demand}",session,
             )
-            buy(buyer, seller, simulation, db)
-    db.commit()
+            buy(buyer, seller, simulation, session)
+    session.commit()
 
-def buy(buyer:Buyer, seller:Seller, simulation:Simulation, db:Session):
+def buy(buyer:Buyer, seller:Seller, simulation:Simulation, session:Session):
     """Tell seller to sell whatever the buyer demands and collect the money."""
     report(4,simulation.id,
-        f"buyer {buyer.owner_name(db)} is buying {buyer.purchase_stock(db).demand}",db,
+        f"buyer {buyer.owner_name(session)} is buying {buyer.purchase_stock(session).demand}",session,
     )
-    buyer_purchase_stock:Industry_stock|Class_stock = buyer.purchase_stock(db)
-    seller_sales_stock:Industry_stock|Class_stock = seller.sales_stock(db)
-    buyer_money_stock:Industry_stock|Class_stock = buyer.money_stock(db)
-    seller_money_stock:Industry_stock|Class_stock = seller.money_stock(db)
-    commodity:Commodity = seller.commodity(db)  # does not change yet, so no need to add it to the session
+    buyer_purchase_stock:Industry_stock|Class_stock = buyer.purchase_stock(session)
+    seller_sales_stock:Industry_stock|Class_stock = seller.sales_stock(session)
+    buyer_money_stock:Industry_stock|Class_stock = buyer.money_stock(session)
+    seller_money_stock:Industry_stock|Class_stock = seller.money_stock(session)
+    commodity:Commodity = seller.commodity(session)  # does not change yet, so no need to add it to the session
     amount = buyer_purchase_stock.demand
-    report(5,simulation.id,f"seller sales stock is {seller_sales_stock.name}",db)
-    report(5,simulation.id,f"buyer purchase stock is {buyer_purchase_stock.name}",db)
-    report(5,simulation.id,f"buyer money stock is {buyer_money_stock.name}",db)
-    report(5,simulation.id,f"seller money stock is {seller_money_stock.name}",db)
+    report(5,simulation.id,f"seller sales stock is {seller_sales_stock.name}",session)
+    report(5,simulation.id,f"buyer purchase stock is {buyer_purchase_stock.name}",session)
+    report(5,simulation.id,f"buyer money stock is {buyer_money_stock.name}",session)
+    report(5,simulation.id,f"seller money stock is {seller_money_stock.name}",session)
     report(4,simulation.id,
-        f"Buying {amount} at price {commodity.unit_price} and value {commodity.unit_value}",db,
+        f"Buying {amount} at price {commodity.unit_price} and value {commodity.unit_value}",session,
     )
 
 # Transfer the goods
 
-    db.add(buyer_purchase_stock)
-    db.add(seller_sales_stock)
-    buyer_purchase_stock.change_size(amount,db)
+    session.add(buyer_purchase_stock)
+    session.add(seller_sales_stock)
+    buyer_purchase_stock.change_size(amount,session)
     buyer_purchase_stock.demand -= amount
-    seller_sales_stock.change_size(-amount,db)
+    seller_sales_stock.change_size(-amount,session)
 
 # Pay for the goods
-    report(4,simulation.id,"Now you must pay",db)
+    report(4,simulation.id,"Now you must pay",session)
 
     if buyer_money_stock == seller_money_stock:  
         # Internal trade to the sector
-        report(4,simulation.id,"Internal transfer: no net payment effected",db,)
+        report(4,simulation.id,"Internal transfer: no net payment effected",session,)
     else:
-        db.add(buyer_purchase_stock)
-        db.add(seller_sales_stock)
+        session.add(buyer_purchase_stock)
+        session.add(seller_sales_stock)
         # TODO account for MELT. Money can have a value different from its price
-        seller_money_stock.change_size(amount * commodity.unit_price,db)
-        buyer_money_stock.change_size(-amount * commodity.unit_price,db)
+        seller_money_stock.change_size(amount * commodity.unit_price,session)
+        buyer_money_stock.change_size(-amount * commodity.unit_price,session)
     # db.commit() # TODO verify that this is achieved by the final commit.
 

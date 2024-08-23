@@ -27,88 +27,88 @@ def calculate_demand(session:Session, simulation:Simulation):
         class_demand(session, simulation)  # tell classes to register their demand with their stocks.
         commodity_demand(session, simulation)  # tell the commodities to tot up the demand from all stocks of them.
 
-def initialise_demand(db: Session,simulation: Simulation):
+def initialise_demand(session: Session,simulation: Simulation):
     """Set demand to zero for all commodities and stocks, prior to
     recalculating total demand."""
 
-    report(1,simulation.id, "INITIALISING DEMAND FOR COMMODITIES AND STOCKS",db)
-    cquery = db.query(Commodity).where(Commodity.simulation_id==simulation.id)
+    report(1,simulation.id, "INITIALISING DEMAND FOR COMMODITIES AND STOCKS",session)
+    cquery = session.query(Commodity).where(Commodity.simulation_id==simulation.id)
     for c in cquery:
-        report(2,simulation.id,f"Initialising demand for commodity {c.name}",db)
-        db.add(c)
+        report(2,simulation.id,f"Initialising demand for commodity {c.name}",session)
+        session.add(c)
         c.demand=0
-    squery = db.query(Industry_stock).where(Industry_stock.simulation_id==simulation.id)
+    squery = session.query(Industry_stock).where(Industry_stock.simulation_id==simulation.id)
     for s in squery:
-        report(2,simulation.id,f"Initialising demand for industry stock {s.name}",db)
-        db.add(s)
+        report(2,simulation.id,f"Initialising demand for industry stock {s.name}",session)
+        session.add(s)
         s.demand=0
-    squery = db.query(Class_stock).where(Class_stock.simulation_id==simulation.id)
+    squery = session.query(Class_stock).where(Class_stock.simulation_id==simulation.id)
     for s in squery:
-        report(2,simulation.id,f"Initialising demand for class stock {s.name}",db)
-        db.add(s)
+        report(2,simulation.id,f"Initialising demand for class stock {s.name}",session)
+        session.add(s)
         s.demand=0
-    db.commit()
+    session.commit()
 
-def industry_demand(db:Session,simulation:Simulation):
+def industry_demand(session:Session,simulation:Simulation):
     """Tell each industry to set demand for each of its productive stocks."""
-    query=db.query(Industry).where(Industry.simulation_id==simulation.id)
-    report(1,simulation.id, "CALCULATING DEMAND FROM INDUSTRIES",db)
+    query=session.query(Industry).where(Industry.simulation_id==simulation.id)
+    report(1,simulation.id, "CALCULATING DEMAND FROM INDUSTRIES",session)
     for industry in query:
-        report(2, simulation.id,f"Industry {industry.name} will set demand for all its productive stocks",db)
-        db.add(industry)
-        query=db.query(Industry_stock).filter(Industry_stock.industry_id==industry.id,Industry_stock.usage_type=="Production")
+        report(2, simulation.id,f"Industry {industry.name} will set demand for all its productive stocks",session)
+        session.add(industry)
+        query=session.query(Industry_stock).filter(Industry_stock.industry_id==industry.id,Industry_stock.usage_type=="Production")
         for stock in query:
-            db.add(stock)
-            commodity=stock.commodity(db)
-            demand=round(stock.flow_per_period(db),4)
+            session.add(stock)
+            commodity=stock.commodity(session)
+            demand=round(stock.flow_per_period(session),4)
             stock.demand+=demand
-            report(3,simulation.id,f'Demand for {stock.name} of {commodity.name} has been increased by {demand} to {stock.demand}',db)
-    db.commit()
+            report(3,simulation.id,f'Demand for {stock.name} of {commodity.name} has been increased by {demand} to {stock.demand}',session)
+    session.commit()
 
-def class_demand(db:Session,simulation:Simulation):
+def class_demand(session:Session,simulation:Simulation):
     """Tell each class to set demand for each of its consumption stocks."""
-    report(1,simulation.id, "CALCULATING DEMAND FROM SOCIAL CLASSES",db)
-    query=db.query(SocialClass).where(SocialClass.simulation_id==simulation.id)
+    report(1,simulation.id, "CALCULATING DEMAND FROM SOCIAL CLASSES",session)
+    query=session.query(SocialClass).where(SocialClass.simulation_id==simulation.id)
     for socialClass in query:
-        report(2, simulation.id,f"Asking class {socialClass.name} to set demand for all its consumption stocks",db)
-        db.add(socialClass)
-        query=db.query(Class_stock).filter(Class_stock.class_id==socialClass.id,Class_stock.usage_type=="Consumption")
+        report(2, simulation.id,f"Asking class {socialClass.name} to set demand for all its consumption stocks",session)
+        session.add(socialClass)
+        query=session.query(Class_stock).filter(Class_stock.class_id==socialClass.id,Class_stock.usage_type=="Consumption")
         for stock in query:
-            db.add(stock)
-            commodity=stock.commodity(db)
-            demand=round(stock.flow_per_period(db),4) 
+            session.add(stock)
+            commodity=stock.commodity(session)
+            demand=round(stock.flow_per_period(session),4) 
             stock.demand+=demand
-            report(3,simulation.id,f'Demand for {stock.name} of {commodity.name} has been increased by {demand} to {stock.demand}',db)
-    db.commit()
+            report(3,simulation.id,f'Demand for {stock.name} of {commodity.name} has been increased by {demand} to {stock.demand}',session)
+    session.commit()
 
-def commodity_demand(db:Session,simulation:Simulation):
+def commodity_demand(session:Session,simulation:Simulation):
     """For each commodity, add up the total demand by asking all its stocks what they need.
     Do this separately from the stocks as a kind of check - could be done at the same time.
     """
-    report(1,simulation.id,"ADDING UP DEMAND FOR COMMODITIES",db)
-    query=db.query(models.Commodity).where(Commodity.simulation_id==simulation.id)
+    report(1,simulation.id,"ADDING UP DEMAND FOR COMMODITIES",session)
+    query=session.query(models.Commodity).where(Commodity.simulation_id==simulation.id)
     for commodity in query:
        
 # Demand from Industry Stocks
 
-        db.add(commodity)
-        report(2,simulation.id, f'Calculating total demand for {commodity.name} from Industries',db)
-        squery=db.query(Industry_stock).filter(Industry_stock.commodity_id==commodity.id,Industry_stock.usage_type=="Production")
+        session.add(commodity)
+        report(2,simulation.id, f'Calculating total demand for {commodity.name} from Industries',session)
+        squery=session.query(Industry_stock).filter(Industry_stock.commodity_id==commodity.id,Industry_stock.usage_type=="Production")
         for stock in squery:
-            industry:Industry=stock.industry(db)
-            report(3,simulation.id,f'Demand for {commodity.name} from {stock.name} with owner ({industry.name}) is {stock.demand}',db)
+            industry:Industry=stock.industry(session)
+            report(3,simulation.id,f'Demand for {commodity.name} from {stock.name} with owner ({industry.name}) is {stock.demand}',session)
             commodity.demand+=stock.demand
-        report (2,simulation.id, f'Total demand for {commodity.name} is now {commodity.demand}',db)
+        report (2,simulation.id, f'Total demand for {commodity.name} is now {commodity.demand}',session)
 
 # Demand from Class Stocks
 
-        report(2,simulation.id, f'Calculating total demand for {commodity.name} from Classes',db)
-        squery=db.query(Class_stock).filter(Class_stock.commodity_id==commodity.id)
+        report(2,simulation.id, f'Calculating total demand for {commodity.name} from Classes',session)
+        squery=session.query(Class_stock).filter(Class_stock.commodity_id==commodity.id)
         for stock in squery:
-            social_class:SocialClass=stock.social_class(db)
-            report(3,simulation.id,f'Demand for {commodity.name} from {stock.name} with owner ({social_class.name}) is {stock.demand}',db)
+            social_class:SocialClass=stock.social_class(session)
+            report(3,simulation.id,f'Demand for {commodity.name} from {stock.name} with owner ({social_class.name}) is {stock.demand}',session)
             commodity.demand+=stock.demand
-        report (2,simulation.id, f'Total demand for {commodity.name} is now {commodity.demand}',db)
+        report (2,simulation.id, f'Total demand for {commodity.name} is now {commodity.demand}',session)
 
-    db.commit()
+    session.commit()
 
