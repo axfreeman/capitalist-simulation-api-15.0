@@ -3,7 +3,7 @@ the system, except for the User model which is in authorization.py.
 """
 
 import typing
-from fastapi import Depends, HTTPException
+from fastapi import HTTPException
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
 from sqlalchemy.orm import relationship, Session
 from database.database import Base
@@ -215,6 +215,32 @@ class Industry(Base):
         sales_stock:Industry_stock=self.sales_stock(db)
         sales_commodity:Commodity =sales_stock.commodity(db)
         return sales_commodity
+    
+    def input_stock(self,session:Session)->Session.query:
+        """
+        Returns all stocks of this industry which form inputs to production, including Labour Power
+        This will fail if there is more than one means of input
+        """
+        stocks=session.query(Industry_stock).where(
+            Industry_stock.industry_id==self.id,
+            Industry_stock.usage_type=="Production"
+        )
+        for stock in stocks:
+            input_commodity:Commodity=stock.commodity(session)
+            if input_commodity.origin=="INDUSTRIAL":
+                return stock
+        return None
+
+    def labour_power_stock(self,session:Session)->Session.query:
+        stocks=session.query(Industry_stock).where(
+            Industry_stock.industry_id==self.id,
+            Industry_stock.usage_type=="Productive"
+        )
+        for stock in stocks:
+            input_commodity:Commodity=stock.commodity(session).first()
+            if input_commodity.origin=="SOCIAL":
+                return stock
+        return None
 
 class SocialClass(Base):
     __tablename__ = "social_classes"
@@ -587,7 +613,7 @@ class Seller(Base):
         else:
             return session.get_one(SocialClass, self.sales_stock(session).class_id).id
 
-"""Helper functions which serve as workarounds for dealing with pydantic limitations."""
+"""Helper functions which serve as workarounds for dealing with pydantic limitations"""
 
 def get_industry_sales_stock(industry, session)->Industry_stock:
     """Workaround because pydantic won't accept this query in a built-in function."""
@@ -636,3 +662,28 @@ def get_class_money_stock(social_class, session)->Class_stock:
         )
         .first()
     )
+
+"""Helper functions which just put boilerplate code in one place"""
+
+def labour_power(simulation:Simulation, session:Session):
+    """Fetch the labour power commodity"""
+    return session.query(Commodity).where(
+        Commodity.simulation_id==simulation.id,
+        Commodity.name=="Labour Power" # bodge
+    ).first()
+
+def workers(simulation:Simulation, session:Session)->SocialClass:
+    """Fetch the social class workers"""
+    return session.query(SocialClass).where(
+        SocialClass.simulation_id==simulation.id,
+        SocialClass.name=="Workers" # bodge
+    ).first()
+
+def necessities(simulation:Simulation, session:Session)->Commodity:
+    result= session.query(Commodity).where(
+        Commodity.simulation_id==simulation.id,
+        Commodity.usage=="CONSUMPTION" 
+    ) # bodge will fail if there is more than one consumption commodity
+    return result.first()
+
+
