@@ -21,27 +21,33 @@ from models.models import Class_stock, Commodity,Industry, Industry_stock,Social
 from report.report import report
 from sqlalchemy.orm import Session
 
-def initialise_demand(session: Session,simulation: Simulation):
+def calculate_demand(session:Session, simulation:Simulation):
+        initialise_demand(session, simulation)
+        industry_demand(session, simulation) # tell industries to register their demand with their stocks.
+        class_demand(session, simulation)  # tell classes to register their demand with their stocks.
+        commodity_demand(session, simulation)  # tell the commodities to tot up the demand from all stocks of them.
+
+def initialise_demand(db: Session,simulation: Simulation):
     """Set demand to zero for all commodities and stocks, prior to
     recalculating total demand."""
 
-    report(1,simulation.id, "INITIALISING DEMAND FOR COMMODITIES AND STOCKS",session)
-    cquery = session.query(Commodity).where(Commodity.simulation_id==simulation.id)
+    report(1,simulation.id, "INITIALISING DEMAND FOR COMMODITIES AND STOCKS",db)
+    cquery = db.query(Commodity).where(Commodity.simulation_id==simulation.id)
     for c in cquery:
-        report(2,simulation.id,f"Initialising demand for commodity {c.name}",session)
-        session.add(c)
+        report(2,simulation.id,f"Initialising demand for commodity {c.name}",db)
+        db.add(c)
         c.demand=0
-    squery = session.query(Industry_stock).where(Industry_stock.simulation_id==simulation.id)
+    squery = db.query(Industry_stock).where(Industry_stock.simulation_id==simulation.id)
     for s in squery:
-        report(2,simulation.id,f"Initialising demand for industry stock {s.name}",session)
-        session.add(s)
+        report(2,simulation.id,f"Initialising demand for industry stock {s.name}",db)
+        db.add(s)
         s.demand=0
-    squery = session.query(Class_stock).where(Class_stock.simulation_id==simulation.id)
+    squery = db.query(Class_stock).where(Class_stock.simulation_id==simulation.id)
     for s in squery:
-        report(2,simulation.id,f"Initialising demand for class stock {s.name}",session)
-        session.add(s)
+        report(2,simulation.id,f"Initialising demand for class stock {s.name}",db)
+        db.add(s)
         s.demand=0
-    session.commit()
+    db.commit()
 
 def industry_demand(db:Session,simulation:Simulation):
     """Tell each industry to set demand for each of its productive stocks."""

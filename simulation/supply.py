@@ -5,8 +5,10 @@ preparation for Trade.
 
 Quite simple: supply is simply the size of the Sales Stock.
 """
-from models.models import Class_stock, Commodity,Industry, Industry_stock,SocialClass
+from models.models import Class_stock, Commodity,Industry, Industry_stock,SocialClass, Simulation
 from report.report import report
+from sqlalchemy.orm import Session
+
 
 def initialise_supply(session,simulation):
     """Set supply of every commodity to zero to prepare for the calculation."""
@@ -49,3 +51,13 @@ def class_supply(session,simulation):
         report(2,simulation.id,f'{socialClass.name} adds {ns:.0f} to the supply of {commodity.name}, which was previously {commodity.supply:.0f}',session)  
         commodity.supply+=ns
     session.commit()
+
+def calculate_supply(session:Session, simulation:Simulation):
+    """
+    Calculate the supply of all commodities from their sales stocks
+    and save the results in the commodity objects
+    """
+    initialise_supply(session, simulation)
+    industry_supply(session, simulation)  # tell industries to register their supply
+    class_supply(session, simulation)  # tell classes to register their supply 
+    

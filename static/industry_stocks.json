@@ -460,11 +460,11 @@
     "simulation_id": 5,
     "commodity_id": 20,
     "usage_type": "Sales",
-    "size": 6000,
+    "size": 5500,
     "requirement": 0,
     "demand": 0,
-    "value": 6000,
-    "price": 6000,
+    "value": 5500,
+    "price": 5500,
     "name": "Department I.Sales.Means of Production.(id_65)(sim_5)"
   },
   {

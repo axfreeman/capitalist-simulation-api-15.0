@@ -6,13 +6,8 @@ from simulation.consumption import consume
 from authorization.auth import get_api_key
 from report.report import report
 from simulation.reload import reload_table
-from simulation.demand import (
-    class_demand,
-    commodity_demand,
-    initialise_demand,
-    industry_demand,
-)
-from simulation.supply import initialise_supply, industry_supply, class_supply
+from simulation.demand import calculate_demand
+from simulation.supply import calculate_supply, initialise_supply, industry_supply, class_supply
 from simulation.trade import buy_and_sell, constrain_demand
 from simulation.production import produce
 from simulation.invest import invest
@@ -33,7 +28,7 @@ router = APIRouter(prefix="/action", tags=["Actions"])
 @router.get("/demand",response_model=ServerMessage)
 def demandHandler(
     u:User=Security(get_api_key),    
-    session: Session = Depends(get_session),
+    db: Session = Depends(get_session),
 
 )->str:
     """Handles calls to the 'Demand' action. Sets demand, then resets 
@@ -45,12 +40,9 @@ def demandHandler(
         returns: success message if there is a simulation
     """
     try:
-        simulation:Simulation=u.current_simulation(session)
-        initialise_demand(session, simulation)
-        industry_demand(session, simulation) # tell industries to register their demand with their stocks.
-        class_demand(session, simulation)  # tell classes to register their demand with their stocks.
-        commodity_demand(session, simulation)  # tell the commodities to tot up the demand from all stocks of them.
-        simulation.set_state("SUPPLY",session) # set the next state in the circuit, obliging the user to do this next.
+        simulation:Simulation=u.current_simulation(db)
+        calculate_demand(db,simulation)
+        simulation.set_state("SUPPLY",db) # set the next state in the circuit, obliging the user to do this next.
     except Exception as e:
         return{"message":f"Error {e} processing demand for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
 
@@ -71,12 +63,7 @@ def supplyHandler(
     """
     try:
         simulation:Simulation=u.current_simulation(session)
-        initialise_supply(session, simulation)
-        industry_supply(session, simulation)  # tell industries to register their supply
-        class_supply(session, simulation)  # tell classes to register their supply 
-
-        # (?) tell the commodities to tot up supply from all stocks of them (note supply was set directly) (? legacy comment)
-
+        calculate_supply(session, simulation)        
         simulation.set_state("TRADE",session) # set the next state in the circuit, obliging the user to do this next.
 
     except Exception as e:
