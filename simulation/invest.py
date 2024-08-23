@@ -34,21 +34,23 @@ def expanded_reproduction_invest(simulation:Simulation,session:Session):
 			ii. We could either override the 'requirement' OR reset it.
     """
     report(1,simulation.id,"APPLYING THE EXPANDED REPRODUCTION INVESTMENT ALGORITHM",session)
-    mp=session.query(Commodity).where(
+    mp:Commodity=session.query(Commodity).where(
         Commodity.simulation_id==simulation.id,
         Commodity.usage=="PRODUCTIVE",
         Commodity.origin=="INDUSTRIAL").first()
-    
-    # Legacy code. This was silly. We just calculate the supply using the function we already designed for the purpose
-    # if mp_industry==None:
-    #     report(1,simulation.id,"INDUSTRY PRODUCING MEANS OF PRODUCTION WAS NOT FOUND: GIVING UP ON INVESTMENT",session)
-    #     return
-    # output_stock:Industry_stock=mp_industry.sales_stock(session)
-
+    mp_industry:Industry=means_of_production_industry(simulation,session)
     calculate_supply(session,simulation)
     calculate_demand(session,simulation)
     excess_supply=mp.total_value-mp.demand*mp.unit_value
     report(2,simulation.id,f"Demand for MP is {mp.demand*mp.unit_value}, supply is {mp.supply} and excess is {excess_supply},",session)
+
+    mp_industry.output_scale*=(1+mp_industry.output_growth_rate)
+    calculate_demand(session,simulation)
+    excess_supply=mp.total_value-mp.demand*mp.unit_value
+    report(2,simulation.id,f"After increasing MP growth rate, demand for MP is {mp.demand*mp.unit_value}, supply is {mp.supply} and excess is {excess_supply},",session)
+
+    # TBA incomplete so far
+
     return
 
 def standard_invest(simulation:Simulation,session:Session):

@@ -109,7 +109,7 @@
     "simulation_id": 5,
     "output": "Means of Production",
     "output_scale": 6000,
-    "output_growth_rate": 0,
+    "output_growth_rate": 0.1,
     "initial_capital": 0.0,
     "work_in_progress": 0.0,
     "current_capital": 0.0,
