@@ -338,7 +338,7 @@
     {
         "id": 18,
         "simulation_id": 5,
-        "name": "Consumption",
+        "name": "Necessities",
         "origin": "INDUSTRIAL",
         "usage": "CONSUMPTION",
         "size": 0.0,

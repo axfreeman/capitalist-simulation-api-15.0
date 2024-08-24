@@ -267,6 +267,8 @@ class SocialClass(Base):
     def money_stock(self, session):
         """Helper method yields the Money Class_stock of this class."""
         return get_class_money_stock(self, session)
+    def consumption_stocks(self,session):
+        return get_class_consumption_stocks(self,session)
 
 class Industry_stock(Base):
     """Stocks are produced, consumed, and traded in a market economy.
@@ -663,6 +665,18 @@ def get_class_money_stock(social_class, session)->Class_stock:
         .first()
     )
 
+def get_class_consumption_stocks(social_class,session):
+    """Workaround because pydantic won't accept this query in a built-in function."""    
+    return (
+        session.query(Class_stock)
+        .filter(
+            Class_stock.class_id == social_class.id,
+            Class_stock.usage_type == "Consumption",
+            Class_stock.simulation_id == social_class.simulation_id,
+        )
+    )
+
+
 """Helper functions which just put boilerplate code in one place"""
 
 def labour_power(simulation:Simulation, session:Session):
@@ -686,11 +700,17 @@ def capitalists(simulation:Simulation, session:Session)->SocialClass:
         SocialClass.name=="Capitalists"
     ).first()
 
-def necessities(simulation:Simulation, session:Session)->Commodity:
+def necessities_commodity(simulation:Simulation, session:Session)->Commodity:
     result= session.query(Commodity).where(
         Commodity.simulation_id==simulation.id,
         Commodity.usage=="CONSUMPTION" 
     ) # bodge will fail if there is more than one consumption commodity
     return result.first()
 
-
+def means_of_production(simulation:Simulation, session:Session)->Commodity:
+        result=session.query(Commodity).where(
+            Commodity.simulation_id == simulation.id,
+            Commodity.usage == "PRODUCTIVE",
+            Commodity.origin == "INDUSTRIAL",
+        )# bodge will fail if there is more than one means of production commodity
+        return result.first()
