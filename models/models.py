@@ -216,7 +216,7 @@ class Industry(Base):
         sales_commodity:Commodity =sales_stock.commodity(db)
         return sales_commodity
     
-    def input_stock(self,session:Session)->Session.query:
+    def mp_stock(self,session:Session)->Session.query:
         """
         Returns all stocks of this industry which form inputs to production, including Labour Power
         This will fail if there is more than one means of input
@@ -673,10 +673,17 @@ def labour_power(simulation:Simulation, session:Session):
     ).first()
 
 def workers(simulation:Simulation, session:Session)->SocialClass:
-    """Fetch the social class workers"""
+    """Fetch the social class called Workers"""
     return session.query(SocialClass).where(
         SocialClass.simulation_id==simulation.id,
-        SocialClass.name=="Workers" # bodge
+        SocialClass.name=="Workers"
+    ).first()
+
+def capitalists(simulation:Simulation, session:Session)->SocialClass:
+    """Fetch the social class called Capitalists"""
+    return session.query(SocialClass).where(
+        SocialClass.simulation_id==simulation.id,
+        SocialClass.name=="Capitalists"
     ).first()
 
 def necessities(simulation:Simulation, session:Session)->Commodity:

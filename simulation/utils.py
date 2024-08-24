@@ -172,4 +172,12 @@ def calculate_current_capitals(
       industry.profit_rate=industry.profit/industry.initial_capital
     session.commit()
 
-
+def validate(object:any, name:str)->bool:
+   """
+   if object is empty, report a meaningful message and return false
+   """
+   if object is None:
+      print(f"The object called {name} does not exist")
+      return False
+   return True
+      

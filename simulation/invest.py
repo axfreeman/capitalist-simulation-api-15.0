@@ -1,7 +1,19 @@
 from fastapi import HTTPException
-from models.models import Industry_stock, Simulation, Industry, SocialClass, Commodity, labour_power, necessities, workers
+from models.models import (
+    Class_stock,
+    Industry_stock,
+    Simulation,
+    Industry,
+    SocialClass,
+    Commodity,
+    capitalists,
+    labour_power,
+    necessities,
+    workers,
+)
 from report.report import report
 from simulation.supply import calculate_supply
+from simulation.utils import validate
 from .demand import calculate_demand
 from sqlalchemy.orm import Session
 
@@ -16,6 +28,7 @@ def invest(simulation: Simulation, session: Session):
 
         case _:
             report(1, simulation.id, "UNKNOWN INVESTMENT ALGORITHM", session)
+
 
 def expanded_reproduction_invest(simulation: Simulation, session: Session):
     """
@@ -51,8 +64,57 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
         .first()
     )
     mp_industry: Industry = means_of_production_industry(simulation, session)
+    mc_industry: Industry = means_of_consumption_industry(simulation, session)
+    mc_industry_mp_stock: Industry_stock = mc_industry.mp_stock(session)
+
+    # A little check
+    mp_commodity_def_1: Commodity = mc_industry_mp_stock.commodity(session)
+    mp_commodity_def_2: Commodity = mp_industry.sales_stock().commodity(session)
+    report(
+        1,
+        simulation.id,
+        f"The two mp commodity ids are {mp_commodity_def_1} and {mp_commodity_def_2}",
+    )
+    mp_commodity = mp_commodity_def_1
+    mc_commodity: Commodity = necessities(simulation, session)
+
+    cc: SocialClass = capitalists(simulation, session)
+    wc: SocialClass = workers(simulation, session)
+    cc_consumption_stock: Class_stock = None  # TODO fill this out
+    wc_consumption_stock: Class_stock = None  # TODO fill this out
+
+    # Further checks
+    # TODO refactor validate to process a list?
+    if not (
+        validate("MC", mc_industry)
+        and validate(mp_industry, "mp industry")
+        and validate(mc_industry, "mc industry")
+        and validate(mc_industry_mp_stock, "mc industry mp stock")
+        and validate(mp_commodity, "mp commodity")
+        and validate(cc, "capitalists")
+        and validate(wc, "workers")
+        and validate(cc_consumption_stock, "capitaist consumption stock")
+        and validate(wc_consumption_stock, "workers consumption stock")
+        and validate(mc_commodity, "consumption commodity")
+    ):
+        report(1, simulation, "One or more objects is missing", session)
+        return
+
+    session.add(wc)
+    session.add(cc)
+    session.add(cc_consumption_stock)
+    session.add(wc_consumption_stock)
+    session.add(mp_industry)
+    session.add(mc_industry)
+    session.add(mc_industry_mp_stock)
+    session.add(mp_commodity)
+    session.add(cc_consumption_stock)
+    session.add(wc_consumption_stock)
+    session.add(mc_commodity)
+
     calculate_supply(session, simulation)
     calculate_demand(session, simulation)
+
     excess_supply = mp.total_value - mp.demand * mp.unit_value
     report(
         1,
@@ -60,7 +122,6 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
         f"*** Demand for MP is {mp.demand*mp.unit_value}, supply is {mp.supply} and excess is {excess_supply},",
         session,
     )
-    session.add(mp_industry)
     mp_industry.output_scale *= 1 + mp_industry.output_growth_rate
 
     # Recalculate demand at the new output scale
@@ -74,14 +135,8 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     )
 
     # Allocate the remaining means of production to DII
-    mc_industry:Industry = means_of_consumption_industry(simulation, session)
-    if mc_industry is None:
-        raise HTTPException(status_code=404,detail=f"*** Could not find the DII industry")
-
-    mc_industry_mc_stock: Industry_stock = mc_industry.input_stock(session)
-    input_commodity: Commodity = mc_industry_mc_stock.commodity(session)
     constant_capital = (
-        mc_industry_mc_stock.flow_per_period(session) * input_commodity.unit_value
+        mc_industry_mp_stock.flow_per_period(session) * mp_commodity.unit_value
     )
     report(
         1,
@@ -100,35 +155,48 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     )
 
     # Now we don't have enough workers, so we have to increase the labour supply
-    calculate_demand(session, simulation) # this will tell us the demand for labour power
-    lp_commodity:Commodity=labour_power(simulation, session)
-    working_class:SocialClass=workers(simulation, session)
+    calculate_demand(session, simulation)
+    # this will tell us the demand for labour power
+    lp_commodity: Commodity = labour_power(simulation, session)
     report(
         1,
         simulation.id,
-        f"*** Demand for labour power is now {lp_commodity.demand} and there are {working_class.population} workers. Call up the reserve army!!!",
+        f"*** Demand for labour power is now {lp_commodity.demand} and there are {wc.population} workers. Call up the reserve army!!!",
         session,
     )
-    session.add(working_class)
-    working_class.population=lp_commodity.demand
+    wc.population = lp_commodity.demand
 
     # Finally, we have to reduce bourgeois consumption demand to whatever is left after feeding the workers
-    calculate_supply(session, simulation) # this will tell us the supply of food
-    calculate_demand(session, simulation) # this will tell us the workers' new demand for food
+    calculate_supply(session, simulation)  
+    necessity_supply = mc_commodity.supply
+    # this will tell us the supply of necessities in the next circuit
 
-    necessity:Commodity=necessities(simulation,session)
-    food_supply=necessity.supply
+    wc_consumption=wc_consumption_stock.demand
+    # This will tell us the workers' demand for necessities in the next circuit
+
+    cc_consumption=cc_consumption_stock.demand
+    # This will tell us the workers' demand for necessities in the next circuit
 
     report(
         1,
         simulation.id,
-        f"*** Food supply is {food_supply} and demand for food is {necessity.demand}",
+        f"*** The supply of necessities is {necessity_supply} ",
         session,
     )
 
+    report(
+        1,
+        simulation.id,
+        f"*** workers demand for necessities is {wc_consumption} and capitalist demand is {cc_consumption}",
+        session,
+    )
+
+
     # TBA incomplete so far
-    session.commit()
+    session.rollback()
+    # session.commit()
     return
+
 
 def standard_invest(simulation: Simulation, session: Session):
     report(1, simulation.id, "APPLYING THE STANDARD INVESTMENT ALGORITHM", session)
@@ -220,6 +288,7 @@ def standard_invest(simulation: Simulation, session: Session):
     simulation.state = "DEMAND"
     session.commit()
 
+
 def means_of_production_industry(simulation: Simulation, session: Session) -> Industry:
     """
     Find the industry in this simulation that produces Means of Production
@@ -244,6 +313,7 @@ def means_of_production_industry(simulation: Simulation, session: Session) -> In
         if output_commodity.usage == "PRODUCTIVE":
             return industry
     return None
+
 
 def means_of_consumption_industry(simulation: Simulation, session: Session) -> Industry:
     """
