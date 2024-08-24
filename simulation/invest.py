@@ -154,7 +154,6 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     # Now we don't have enough workers, so we have to increase the labour supply
     calculate_demand(session, simulation)
-    # this will tell us the demand for labour power
     lp_commodity: Commodity = labour_power(simulation, session)
     report(
         1,
@@ -163,15 +162,9 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
         session,
     )
     wc.population = lp_commodity.demand
-
-    # Finally, we have to reduce bourgeois consumption demand to whatever is left after feeding the workers
     calculate_supply(session, simulation)  
     necessity_supply = mc_commodity.supply
-    # this will tell us the supply of necessities in the next circuit
-
     wc_consumption=wc_consumption_stock.demand
-    # This will tell us the workers' demand for necessities in the next circuit
-
     cc_consumption=cc_consumption_stock.demand
     # This will tell us the workers' demand for necessities in the next circuit
 
@@ -189,10 +182,25 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
         session,
     )
 
+    report(
+        1,
+        simulation.id,
+        f"*** capitalist demand for necessities will be reduced to {necessity_supply-wc_consumption}",
+        session,
+    )
 
-    # TBA incomplete so far
-    session.rollback()
-    # session.commit()
+    cc_requirement=(necessity_supply-wc_consumption)/cc.population
+    cc_consumption_stock.requirement=cc_requirement
+
+    report(
+        1,
+        simulation.id,
+        f"*** capitalist requirement per head for necessities has been reduced to {cc_requirement}",
+        session,
+    )
+
+    # session.rollback()
+    session.commit()
     return
 
 
