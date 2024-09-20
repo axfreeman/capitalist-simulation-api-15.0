@@ -86,6 +86,7 @@ class SocialClassBase(BaseModel):
     id: int
     simulation_id: int
     name: str
+    output: str
     username: str
     population: float
     consumption_ratio: float
@@ -102,6 +103,7 @@ class Industry_stock_base(BaseModel):
     username:str
     name:str
     usage_type: str
+    origin: str
     size: float
     value: float
     price: float

@@ -250,6 +250,7 @@ class SocialClass(Base):
         Integer, ForeignKey("simulations.id", ondelete="CASCADE"), nullable=False
     )
     name = Column(String)
+    output= Column(String)
     username = Column(String, nullable=True)
     population = Column(Float)
     consumption_ratio = Column(Float)
@@ -307,6 +308,7 @@ class Industry_stock(Base):
     name = Column(String)  # Owner.Name+Commodity.Name+usage_type
     username = Column(String, nullable=True)
     usage_type = Column(String)  # 'Consumption', 'Production' or 'Money'
+    origin = Column(String) # 'INDUSTRIAL','SOCIAL', 'MONEY' 
     size = Column(Float)
     value = Column(Float)
     price = Column(Float)
