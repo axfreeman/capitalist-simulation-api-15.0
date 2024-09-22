@@ -54,40 +54,26 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
         session,
     )
     mp_commodity: Commodity = production_commodity(simulation,session)
-    print(0)
     mc_commodity: Commodity = necessities_commodity(simulation, session)
-    print(1)
-    DI_Industry: Industry = DI_industry(simulation, session)
-    print(2)
-    DII_industry: Industry = DI_industry(simulation, session)
-    print(3)
-    if not (
-        validate(mp_commodity,"mp commodity")
-        and validate(mc_commodity, "mc commodity")
-        and validate(DI_Industry, "mp industry")
-        and validate(DII_industry, "mc industry")
-    ):
+    DI_industry: Industry = D1_industry(simulation, session)
+    DII_industry: Industry = D2_industry(simulation, session) # See comments against the definition to explain this quirky choice of name
+
+    print("DI industry is", DI_industry)
+    print("D2 industry is", DII_industry)
+
+    # DII_industry(simulation, session)
+    if not (validate(mp_commodity,"mp commodity")and validate(mc_commodity, "mc commodity")and validate(DI_industry, "mp industry")and validate(DII_industry, "mc industry")):
         report(1, simulation, "One or more industries or commodities is missing", session)
         return
-    print(4)
     cc: SocialClass = capitalists(simulation, session)
-    print(5)
     wc: SocialClass = workers(simulation, session)
-    if not (
-        validate(cc, "capitalists")
-        and validate(wc, "workers")
-    ):
+    if not (validate(cc, "capitalists")and validate(wc, "workers")):
         report(1, simulation, "One or more classes is missing", session)
         return
-    print(6)
     cc_consumption_stock: Class_stock = cc.consumption_stocks(session).first()
-    print(8)
     wc_consumption_stock: Class_stock = wc.consumption_stocks(session).first()
-    print(9)
-    DI_mp_stock: Industry_stock = DI_Industry.mp_stock(session)
-    print(10)
+    DI_mp_stock: Industry_stock = DI_industry.mp_stock(session)
     DII_mp_stock: Industry_stock = DII_industry.mp_stock(session)
-    print(11)
     if not(
         validate(cc_consumption_stock, "capitalists consumption stock")
         and validate(wc_consumption_stock, "workers consumption stock")
@@ -96,10 +82,9 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     ):
         report(1, simulation, "One or more stocks is missing", session)
         return
-    print(8)
     session.add(mp_commodity)
     session.add(mc_commodity)
-    session.add(DI_Industry)
+    session.add(DI_industry)
     session.add(DII_industry)
     session.add(cc)
     session.add(wc)
@@ -112,18 +97,18 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     calculate_supply(session, simulation)
     calculate_demand(session, simulation)
 
-    print(9)
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
-    report(
-        1,
-        simulation.id,
-        f"*** Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply},",
-        session,
-    )
-    DI_Industry.output_scale *= 1 + DI_Industry.output_growth_rate
+
+    report(1,simulation.id,f"*** Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply},",session,)
+    
+    DI_industry.output_scale *= 1 + DI_industry.output_growth_rate
+
+    report(1,simulation.id,f"*** DI Output Scale increased by {DI_industry.output_growth_rate} to {DI_industry.output_scale}",session,)
+
 
     # Recalculate demand at the new output scale
     calculate_demand(session, simulation)
+
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
     report(
         1,
@@ -134,23 +119,21 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     # Allocate the remaining means of production to DII
     constant_capital = (
-        DI_mp_stock.flow_per_period(session) * mp_commodity.unit_value
+        DII_mp_stock.flow_per_period(session) * mp_commodity.unit_value
     )
-    report(
-        1,
-        simulation.id,
-        f"*** DII Constant Capital Requirement is currently {constant_capital} and remaining excess capital is {excess_supply}",
-        session,
-    )
+    report(1,simulation.id,f"*** DII Constant Capital Requirement is currently {constant_capital} and remaining excess capital is {excess_supply}",session,)
+
+    print(0)
+
     expansion_ratio = excess_supply / constant_capital
-    session.add(DII_industry)
+
+    print(1)
+
     DII_industry.output_scale *= 1 + expansion_ratio
-    report(
-        1,
-        simulation.id,
-        f"*** DII output scale increased by {expansion_ratio}",
-        session,
-    )
+
+
+
+    report(1,simulation.id,f"*** DII output scale up by {expansion_ratio} to {DII_industry.output_scale}. DI scale is {DI_industry.output_scale}",session,)
 
     # Now we don't have enough workers, so we have to increase the labour supply
     calculate_demand(session, simulation)
@@ -294,7 +277,7 @@ def standard_invest(simulation: Simulation, session: Session):
     simulation.state = "DEMAND"
     session.commit()
 
-def DI_industry(simulation: Simulation, session: Session) -> Industry:
+def D1_industry(simulation: Simulation, session: Session) -> Industry:
     """
     Find the industry in this simulation that produces Means of Production
     Short-term fix for the ER algorithm only.
@@ -307,8 +290,7 @@ def DI_industry(simulation: Simulation, session: Session) -> Industry:
             return industry
     return None
 
-
-def DII_industry(simulation: Simulation, session: Session) -> Industry:
+def D2_industry(simulation: Simulation, session: Session) -> Industry:
     """
     Find the industry in this simulation that produces Means of Consumption
     Short-term fix for the ER algorithm only.
@@ -319,6 +301,7 @@ def DII_industry(simulation: Simulation, session: Session) -> Industry:
         output_commodity: Commodity = industry.output_commodity(session)
         if output_commodity.usage == "CONSUMPTION":
             return industry
+    report(1,simulation.id,"Consumption industry not found",session)
     return None
 
 def consumption_commodity(simulation: Simulation, session: Session) -> Commodity:

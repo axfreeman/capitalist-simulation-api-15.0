@@ -13,10 +13,10 @@ from sqlalchemy.orm import Session
 def initialise_supply(session,simulation):
     """Set supply of every commodity to zero to prepare for the calculation."""
     cquery = session.query(Commodity).where(Commodity.simulation_id==simulation.id)
-    for c in cquery:
-        report(1,simulation.id,f"Initialising commodity {c.name}",session)
-        session.add(c)
-        c.supply=0
+    # for c in cquery:
+    #     report(1,simulation.id,f"Initialising commodity {c.name}",session)
+    #     session.add(c)
+    #     c.supply=0
     session.commit()
 
 # Ask each industry to tell its sale commodity how much it has to sell
