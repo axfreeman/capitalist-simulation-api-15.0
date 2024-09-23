@@ -321,6 +321,12 @@ class Industry_stock(Base):
         """
         if self.usage_type == "Production":
             industry = db.query(Industry).where(Industry.id == self.industry_id).first()
+            
+            # TEMPORARY DIAGNOSTICS
+            print(f"Flow rate of {self.name}")
+            print(f"Output scale is {industry.output_scale}")
+            print(f"Requirement is {self.requirement}")
+            
             return round(industry.output_scale * self.requirement,4)
         else:
             return 0.0

@@ -105,45 +105,30 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     report(1,simulation.id,f"*** DI Output Scale increased by {DI_industry.output_growth_rate} to {DI_industry.output_scale}",session,)
 
-
     # Recalculate demand at the new output scale
     calculate_demand(session, simulation)
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
-    report(
-        1,
-        simulation.id,
-        f"*** After increasing MP growth rate, demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess capital is {excess_supply},",
-        session,
-    )
+    report(1,simulation.id,f"*** Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply},",session,)
 
     # Allocate the remaining means of production to DII
-    constant_capital = (
-        DII_mp_stock.flow_per_period(session) * mp_commodity.unit_value
-    )
-    report(1,simulation.id,f"*** DII Constant Capital Requirement is currently {constant_capital} and remaining excess capital is {excess_supply}",session,)
-
-    print(0)
+    constant_capital = DII_mp_stock.flow_per_period(session) * mp_commodity.unit_value
+    
+    report(1,simulation.id,f"*** DII Constant Capital Requirement is {constant_capital}",session,)
 
     expansion_ratio = excess_supply / constant_capital
 
-    print(1)
-
     DII_industry.output_scale *= 1 + expansion_ratio
 
-
-
-    report(1,simulation.id,f"*** DII output scale up by {expansion_ratio} to {DII_industry.output_scale}. DI scale is {DI_industry.output_scale}",session,)
+    report(1,simulation.id,f"*** DII expand output scale by {expansion_ratio}" )
+    report(1,simulation.id,f"*** DI scale is {DI_industry.output_scale} and DII scale is {DII_industry.output_scale}.",session,)
 
     # Now we don't have enough workers, so we have to increase the labour supply
     calculate_demand(session, simulation)
     lp_commodity: Commodity = labour_power(simulation, session)
-    report(
-        1,
-        simulation.id,
-        f"*** Demand for labour power is now {lp_commodity.demand} and there are {wc.population} workers. Call up the reserve army!!!",
-        session,
-    )
+
+    report(1,simulation.id,f"*** Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session,)
+    
     wc.population = lp_commodity.demand
     calculate_supply(session, simulation)  
     necessity_supply = mc_commodity.supply
@@ -151,12 +136,7 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     cc_consumption=cc_consumption_stock.demand
     # This will tell us the workers' demand for necessities in the next circuit
 
-    report(
-        1,
-        simulation.id,
-        f"*** The supply of necessities is {necessity_supply} ",
-        session,
-    )
+    report(1,simulation.id,f"*** The supply of necessities is {necessity_supply} ",session,)
 
     report(
         1,
