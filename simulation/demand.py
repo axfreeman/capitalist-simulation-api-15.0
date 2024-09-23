@@ -62,7 +62,7 @@ def industry_demand(session:Session,simulation:Simulation):
             commodity=stock.commodity(session)
             demand=round(stock.flow_per_period(session),4)
             stock.demand+=demand
-            report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from {stock.name}',session)
+            report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from [{stock.name}]',session)
     session.commit()
 
 def class_demand(session:Session,simulation:Simulation):
@@ -78,7 +78,7 @@ def class_demand(session:Session,simulation:Simulation):
             commodity=stock.commodity(session)
             demand=round(stock.flow_per_period(session),4) 
             stock.demand+=demand
-            report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from {stock.name}',session)
+            report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from [{stock.name}]',session)
     session.commit()
 
 def commodity_demand(session:Session,simulation:Simulation):
@@ -96,7 +96,7 @@ def commodity_demand(session:Session,simulation:Simulation):
         squery=session.query(Industry_stock).filter(Industry_stock.commodity_id==commodity.id,Industry_stock.usage_type=="Production")
         for stock in squery:
             industry:Industry=stock.industry(session)
-            report(3,simulation.id,f'Demand for {commodity.name} with owner ({industry.name}) is {stock.demand}, from {stock.name} ',session)
+            report(3,simulation.id,f'Demand for {commodity.name} with owner ({industry.name}) is {stock.demand}, from [{stock.name}] ',session)
             commodity.demand+=stock.demand
         report (2,simulation.id, f'Total demand from industries for {commodity.name} is {commodity.demand}',session)
 
@@ -106,7 +106,7 @@ def commodity_demand(session:Session,simulation:Simulation):
         squery=session.query(Class_stock).filter(Class_stock.commodity_id==commodity.id)
         for stock in squery:
             social_class:SocialClass=stock.social_class(session)
-            report(3,simulation.id,f'Demand for {commodity.name} from {stock.name} with owner ({social_class.name}) is {stock.demand}',session)
+            report(3,simulation.id,f'Demand for {commodity.name}  with owner ({social_class.name}) is {stock.demand} from [{stock.name}]',session)
             commodity.demand+=stock.demand
         report (2,simulation.id, f'Total demand from classes for {commodity.name} is now {commodity.demand}',session)
 

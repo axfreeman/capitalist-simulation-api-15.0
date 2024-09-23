@@ -119,7 +119,7 @@ def create_simulation_from_template(
     stocks = session.query(Industry_stock).filter(Industry_stock.simulation_id == template.id)
     for stock in stocks:
         report(3,1,
-            f"Cloning industry stock {stock.name} with id {stock.id}, industry id {stock.industry(session).id} , and commodity  {stock.commodity(session).name} [id {stock.commodity(session).id}]",
+            f"Cloning industry stock [{stock.name}] with id {stock.id}, industry id {stock.industry(session).id} , and commodity  {stock.commodity(session).name} [id {stock.commodity(session).id}]",
             session,
         )
         old_industry = stock.industry(session)
@@ -145,7 +145,7 @@ def create_simulation_from_template(
     stocks = session.query(Class_stock).filter(Class_stock.simulation_id == template.id)
     for stock in stocks:
         report(3,1,
-            f"Cloning class stock {stock.name} with id {stock.id}, class id {stock.social_class(session).id} , and commodity  {stock.commodity(session).name} [id {stock.commodity(session).id}]",
+            f"Cloning class stock [{stock.name}] with id {stock.id}, class id {stock.social_class(session).id} , and commodity  {stock.commodity(session).name} [id {stock.commodity(session).id}]",
             session,
         )
         old_class = stock.social_class(session)

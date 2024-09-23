@@ -52,11 +52,11 @@ def class_consume(
     for stock in consumption_stocks_query:
         session.add(stock)
         commodity=stock.commodity(session)
-        report(3,simulation.id,f"Consuming stock of {stock.name} with size  {stock.size} and value {stock.value}",session)
+        report(3,simulation.id,f"Consuming size  {stock.size} and value {stock.value} by stock [{stock.name}]",session)
         stock.size -=stock.flow_per_period(session)  # eat according to defined consumption standards
         stock.price-=stock.flow_per_period(session)*commodity.unit_price
         stock.value-=stock.flow_per_period(session)*commodity.unit_value
-        report(3,simulation.id,f"Consumption stock {stock.name} now has size {stock.size}, value {stock.value} and price {stock.price}",session)
+        report(3,simulation.id,f"Consumption stock size {stock.size}, value {stock.value} and price {stock.price} for [{stock.name}] ",session)
     
     # Currently no population dynamics and no differential labour intensity
     # Capitalists are assumed here (as per Cheng et al.) to supply services

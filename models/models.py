@@ -187,7 +187,7 @@ class Industry(Base):
             .where(Industry_stock.usage_type == "Production")
         ):
             print(
-                f"Stock called {stock.name} is adding {stock.unit_cost(db)} to its industry's unit cost"
+                f"Stock called [{stock.name}] is adding {stock.unit_cost(db)} to its industry's unit cost"
             )
             cost += stock.unit_cost(db)
         return cost

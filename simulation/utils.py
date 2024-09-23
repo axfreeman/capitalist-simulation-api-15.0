@@ -31,7 +31,7 @@ def revalue_commodities(
 # Calculate the contribution of all stocks belonging to industries
       istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==commodity.id)
       for stock in istocks:
-          report(2,simulation.id,f"Processing the industrial stock called {stock.name}",session)
+          report(2,simulation.id,f"Processing the industrial stock called [{stock.name}]",session)
           commodity.total_value+=stock.value
           commodity.total_price+=stock.price
           commodity.size+=stock.size
@@ -42,7 +42,7 @@ def revalue_commodities(
 # Calculate the contribution of all stocks belonging to classes
       cstocks=session.query(Class_stock).where(Class_stock.commodity_id==commodity.id)
       for stock in cstocks:
-          report(2,simulation.id,f"Processing the class stock called {stock.name}",session)
+          report(2,simulation.id,f"Processing the class stock called [{stock.name}]",session)
           commodity.total_value+=stock.value
           commodity.total_price+=stock.price
           commodity.size+=stock.size
@@ -82,7 +82,7 @@ def revalue_stocks(
       session.add(stock)
       stock.value=stock.size*commodity.unit_value
       stock.price=stock.size*commodity.unit_price
-      report(3,simulation.id,f"Setting the value of the stock [{stock.name}] to {stock.value} and its price to {stock.price}",session)
+      report(3,simulation.id,f"Setting value {stock.value} and price {stock.price} for stock  of the stock [{stock.name}]",session)
   session.commit()
 
 # Class stocks
@@ -94,7 +94,7 @@ def revalue_stocks(
       session.add(stock)
       stock.value=stock.size*commodity.unit_value
       stock.price=stock.size*commodity.unit_price
-      report(3,simulation.id,f"Setting the value of the stock [{stock.name}] to {stock.value} and its price to {stock.price}",session)
+      report(3,simulation.id,f"Setting value to {stock.value} and price to {stock.price} for stock  of the stock [{stock.name}] ",session)
   session.commit()
 
 # TODO this should be a method of the Industry object
@@ -122,7 +122,7 @@ def capital(
     result=0
     istocks=session.query(Industry_stock).where(Industry_stock.industry_id==industry.id)
     for stock in istocks:
-        report(3,simulation.id,f"Industry stock [{stock.name}] is adding {stock.price} to the capital of {industry.name}",session)
+        report(3,simulation.id,f"Adding {stock.price} to capital of {industry.name} for Industry stock [{stock.name}]",session)
         result+=stock.price
     return result
 

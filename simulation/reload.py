@@ -55,7 +55,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
         sales_stock_id = stock.id
         commodity_id = commodity.id
         report(2,simulation_id,
-            f"Adding seller {owner.name} selling {stock.name} ({commodity.name}) for money {money_stock_id}",db,
+            f"Adding seller {owner.name} selling [{stock.name}] ({commodity.name}) for money {money_stock_id}",db,
         )
         seller = {
             "simulation_id": simulation_id,
@@ -79,7 +79,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
         sales_stock_id = stock.id
         commodity_id = commodity.id
         report(2,simulation_id,
-            f"Adding seller {owner.name} selling {stock.name} ({commodity.name})for money {money_stock_id}",db,
+            f"Adding seller {owner.name} selling [{stock.name}] ({commodity.name})for money {money_stock_id}",db,
         )
         seller = {
             "simulation_id": simulation_id,
@@ -112,7 +112,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
         purchase_stock_id = stock.id
         commodity_id = commodity.id
         report(2,simulation_id,
-            f"Adding buyer {owner.name} buying {stock.name} ({commodity.name}) using money {money_stock_id}",db,
+            f"Adding buyer {owner.name} buying [{stock.name}] ({commodity.name}) using money {money_stock_id}",db,
         )
         buyer = {
             "simulation_id": simulation_id,
@@ -138,7 +138,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
         purchase_stock_id = stock.id
         commodity_id = commodity.id
         report(2,simulation_id,
-            f"Adding buyer {owner.name} buying {stock.name} ({commodity.name}) using money {money_stock_id}",db,
+            f"Adding buyer {owner.name} buying [{stock.name}] ({commodity.name}) using money {money_stock_id}",db,
         )
         buyer = {
             "simulation_id": simulation_id,
