@@ -82,14 +82,12 @@ def tradeHandler(
         If there is no current simulation, returns None
         Otherwise, return success message
     """
-    try:
-        simulation:Simulation=u.current_simulation(session)
-        constrain_demand(session, simulation)
-        buy_and_sell(session, simulation)
-        simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.
-    except Exception as e:
-        return{"message":f"Error {e} processing trade for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
+    simulation:Simulation=u.current_simulation(session)
+    constrain_demand(session, simulation)
+    buy_and_sell(session, simulation)
+    simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.
 
+    report(1,1,"TRADE IS COMPLETE",session)
     # TODO I don't think it's necessary to revalue, but check this.
     # This is because trade only involves a change of ownership.
     # revalue_stocks(session,simulation) 

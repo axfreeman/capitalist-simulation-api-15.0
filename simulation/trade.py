@@ -63,36 +63,33 @@ def buy_and_sell(session:Session, simulation:Simulation):
     report(1, simulation.id, f"Starting trade with simulation {simulation.id}", session)
     for seller in session.query(Seller).where(Seller.simulation_id == simulation.id):
         sales_stock = seller.sales_stock(session)
-        report(2,simulation.id,
-            f"seller {seller.owner_name(session)} can sell {sales_stock.size} and is looking for buyers {sales_stock.name}",session,
-        )
+        try:
+            report(2,simulation.id,f"seller {seller.owner_name(session)} can sell {sales_stock.size} and is looking for buyers {sales_stock.name}",session,)
 
-        for buyer in session.query(Buyer).where(
-            Buyer.simulation_id == simulation.id,
-            Buyer.commodity_id == seller.commodity_id,
-        ):
-            report(3,simulation.id,
-                f"buyer {buyer.owner_name(session)} will be asked to buy {buyer.purchase_stock(session).demand}",session,
-            )
-            buy(buyer, seller, simulation, session)
+            for buyer in session.query(Buyer).where(
+                Buyer.simulation_id == simulation.id,
+                Buyer.commodity_id == seller.commodity_id,
+            ):
+                report(3,simulation.id,f"buyer {buyer.owner_name(session)} will be asked to buy {buyer.purchase_stock(session).demand}",session,)
+                buy(buyer, seller, simulation, session)
+        except Exception as e:
+            print(f"Error {e} looking for buyers")
     session.commit()
 
 def buy(buyer:Buyer, seller:Seller, simulation:Simulation, session:Session):
     """Tell seller to sell whatever the buyer demands and collect the money."""
-    report(4,simulation.id,
-        f"buyer {buyer.owner_name(session)} is buying {buyer.purchase_stock(session).demand}",session,
-    )
+    report(3,simulation.id,f"buyer {buyer.owner_name(session)} is buying {buyer.purchase_stock(session).demand}",session,)
     buyer_purchase_stock:Industry_stock|Class_stock = buyer.purchase_stock(session)
     seller_sales_stock:Industry_stock|Class_stock = seller.sales_stock(session)
     buyer_money_stock:Industry_stock|Class_stock = buyer.money_stock(session)
     seller_money_stock:Industry_stock|Class_stock = seller.money_stock(session)
     commodity:Commodity = seller.commodity(session)  # does not change yet, so no need to add it to the session
     amount = buyer_purchase_stock.demand
-    report(5,simulation.id,f"seller sales stock is {seller_sales_stock.name}",session)
-    report(5,simulation.id,f"buyer purchase stock is {buyer_purchase_stock.name}",session)
-    report(5,simulation.id,f"buyer money stock is {buyer_money_stock.name}",session)
-    report(5,simulation.id,f"seller money stock is {seller_money_stock.name}",session)
-    report(4,simulation.id,
+    report(4,simulation.id,f"seller sales stock is {seller_sales_stock.name}",session)
+    report(4,simulation.id,f"buyer purchase stock is {buyer_purchase_stock.name}",session)
+    report(4,simulation.id,f"buyer money stock is {buyer_money_stock.name}",session)
+    report(4,simulation.id,f"seller money stock is {seller_money_stock.name}",session)
+    report(3,simulation.id,
         f"Buying {amount} at price {commodity.unit_price} and value {commodity.unit_value}",session,
     )
 

@@ -22,6 +22,7 @@ def reload_table(session: Session, baseModel, filename: str, reload: bool, simul
         except Exception as e:
             print(f"could not load because of exception {e}")
             print (f"trying to load ",item)
+
 def initialise_buyers_and_sellers(db, simulation_id):
 
     """

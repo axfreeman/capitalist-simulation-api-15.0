@@ -235,7 +235,7 @@
     "demand": 0,
     "value": 6000,
     "price": 6000,
-    "name": "Department I.Money.Money.(id_53)(sim_4)"
+    "name": "Department I.Money.Money"
   },
   {
     "id": 51,
@@ -249,7 +249,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department I.Production.Labour Power.(id_51)(sim_4)"
+    "name": "Department I.Production.Labour Power"
   },
   {
     "id": 52,
@@ -263,7 +263,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department I.Production.Means of Production.(id_52)(sim_4)"
+    "name": "Department I.Production.Means of Production"
   },
   {
     "id": 50,
@@ -277,7 +277,7 @@
     "demand": 0,
     "value": 6000,
     "price": 6000,
-    "name": "Department I.Sales.Means of Production.(id_50)(sim_4)"
+    "name": "Department I.Sales.Means of Production"
   },
   {
     "id": 54,
@@ -291,7 +291,7 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department IIa.Money.Money.(id_54)(sim_4)"
+    "name": "Department IIa.Money.Money"
   },
   {
     "id": 46,
@@ -305,7 +305,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department IIa.Production.Labour Power.(id_46)(sim_4)"
+    "name": "Department IIa.Production.Labour Power"
   },
   {
     "id": 49,
@@ -319,7 +319,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department IIa.Production.Means of Production.(id_49)(sim_4)"
+    "name": "Department IIa.Production.Means of Production"
   },
   {
     "id": 55,
@@ -333,7 +333,7 @@
     "demand": 0,
     "value": 2250,
     "price": 2250,
-    "name": "Department IIa.Sales.Necessities.(id_55)(sim_4)"
+    "name": "Department IIa.Sales.Necessities"
   },
   {
     "id": 57,
@@ -347,7 +347,7 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department IIb.Money.Money.(id_57)(sim_4)"
+    "name": "Department IIb.Money.Money"
   },
   {
     "id": 48,
@@ -361,7 +361,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department IIb.Production.Means of Production.(id_48)(sim_4)"
+    "name": "Department IIb.Production.Means of Production"
   },
   {
     "id": 56,
@@ -375,7 +375,7 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department IIb.Production.Labour Power.(id_56)(sim_4)"
+    "name": "Department IIb.Production.Labour Power"
   },
   {
     "id": 47,
@@ -389,7 +389,7 @@
     "demand": 0,
     "value": 750,
     "price": 750,
-    "name": "Department IIb.Sales.Luxuries.(id_47)(sim_4)"
+    "name": "Department IIb.Sales.Luxuries"
   },
   {
     "id": 71,
@@ -483,7 +483,7 @@
     "usage_type": "Production",
     "origin": "SOCIAL",    
     "size": 0,
-    "requirement": 0.333333333,
+    "requirement": 0.166666666,
     "demand": 0,
     "value": 0,
     "price": 0,

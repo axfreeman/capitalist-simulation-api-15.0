@@ -113,15 +113,16 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     # Allocate the remaining means of production to DII
     constant_capital = DII_mp_stock.flow_per_period(session) * mp_commodity.unit_value
-    
+
     report(1,simulation.id,f"*** DII Constant Capital Requirement is {constant_capital}",session,)
 
     expansion_ratio = excess_supply / constant_capital
 
+    report(1,simulation.id,f"*** DII expand output scale by {expansion_ratio}",session )
+
     DII_industry.output_scale *= 1 + expansion_ratio
 
-    report(1,simulation.id,f"*** DII expand output scale by {expansion_ratio}" )
-    report(1,simulation.id,f"*** DI scale is {DI_industry.output_scale} and DII scale is {DII_industry.output_scale}.",session,)
+    report(1,simulation.id,f"*** DI scale is now {DI_industry.output_scale} and DII scale is {DII_industry.output_scale}.",session,)
 
     # Now we don't have enough workers, so we have to increase the labour supply
     calculate_demand(session, simulation)

@@ -321,12 +321,6 @@ class Industry_stock(Base):
         """
         if self.usage_type == "Production":
             industry = db.query(Industry).where(Industry.id == self.industry_id).first()
-            
-            # TEMPORARY DIAGNOSTICS
-            print(f"Flow rate of {self.name}")
-            print(f"Output scale is {industry.output_scale}")
-            print(f"Requirement is {self.requirement}")
-            
             return round(industry.output_scale * self.requirement,4)
         else:
             return 0.0
@@ -370,7 +364,7 @@ class Industry_stock(Base):
         """Really just for diagnostic purposes """
         return db.get_one(Industry, self.industry_id)
     
-    def change_size(self,amount:float,db:Session)->bool:
+    def change_size(self,amount:float,session:Session)->bool:
         """Change the size of this Industry_stock by 'amount'.
         
         Change the value and price using the unit_value and unit_price 
@@ -383,9 +377,12 @@ class Industry_stock(Base):
         Do NOT use this in production or consumption, which can change
         unit values and prices.
         """
+        print(f"Changing the size of {self.name}") #TEMPORARY
         self.size += amount
-        self.price=self.size*self.commodity(db).unit_value
-        self.value=self.size*self.commodity(db).unit_price
+        self.price=self.size*self.commodity(session).unit_value
+        self.value=self.size*self.commodity(session).unit_price
+        print(f"{self.name} size is now {self.size:.2f}, value is {self.value:'2f'}, price is {self.price:'2f'}")#TEMPORARY
+
 
 class Class_stock(Base):
     """Stocks are produced, consumed, and traded in a
@@ -503,6 +500,8 @@ class Trace(Base):
     username = Column(String, nullable=True)
     level = Column(Integer)
     message = Column(String)
+
+
 
 class Buyer(Base):
     """The Buyer class is initialized when a simulation is created,
