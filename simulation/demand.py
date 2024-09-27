@@ -63,6 +63,7 @@ def industry_demand(session:Session,simulation:Simulation):
             demand=round(stock.flow_per_period(session),4)
             stock.demand+=demand
             report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from [{stock.name}]',session)
+        report(2, simulation.id,f"Industry {industry.name} has finished setting demand",session)
     session.commit()
 
 def class_demand(session:Session,simulation:Simulation):
@@ -79,6 +80,7 @@ def class_demand(session:Session,simulation:Simulation):
             demand=round(stock.flow_per_period(session),4) 
             stock.demand+=demand
             report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from [{stock.name}]',session)
+        report(2, simulation.id,f"Class {socialClass.name} has finished setting demand",session)
     session.commit()
 
 def commodity_demand(session:Session,simulation:Simulation):

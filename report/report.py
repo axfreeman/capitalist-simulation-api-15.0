@@ -13,7 +13,7 @@ logger.info("Started Logging")
 # Logs both to the console and
 # As the simulation proceeds, create entries in the 'Trace' file which can be accesed via an endpoint
 
-def report(level, simulation_id, message, session: Session):
+def report(level: int, simulation_id: int, message: str, session: Session):
     """
     Prints a message on the terminal (comment out for less verbose logging).  
     
@@ -40,9 +40,9 @@ def report(level, simulation_id, message, session: Session):
         case 4:
             colour= Fore.BLUE
         case 5:
-            colour=Fore.LIGHTRED_EX
+            colour=Fore.LIGHTRED_EXS
 
-    user_message = " " * level + f"Level {level}: {message}"
+    user_message = " " * level + f"{message}"
     log_message = " " * level+colour + message + Fore.WHITE
     logging.info(log_message)
     entry = Trace(

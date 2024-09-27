@@ -32,14 +32,15 @@ def constrain_demand(session,simulation):
                 for stock in stock_query:
                     session.add(stock)
                     stock.demand=stock.demand*commodity.allocation_ratio
-                    report(4,simulation.id, f"constraining stock {stock.id} demand to {stock.demand}",session)
+                    report(3,simulation.id, f"constraining stock {stock.id} demand to {stock.demand}",session)
 
 # Tell class stocks the bad news.
                 stock_query=session.query(Class_stock).where(Class_stock.commodity_id==commodity.id)
                 for stock in stock_query:
                     session.add(stock)
                     stock.demand=stock.demand*commodity.allocation_ratio
-                    report(4,simulation.id, f"constraining stock {stock.id} demand to {stock.demand}",session)
+                    report(3,simulation.id, f"constraining stock {stock.id} demand to {stock.demand}",session)
+            report(2,simulation.id,f'Finished constraining demand',session)
 
 def buy_and_sell(session:Session, simulation:Simulation):
     """Implements buying and selling.

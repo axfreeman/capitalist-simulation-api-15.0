@@ -6,7 +6,8 @@ from report.report import report
 
 def reload_table(session: Session, baseModel, filename: str, reload: bool, simulation_id:int):
 
-    """Initialise one table,specified by baseModel, from JSON fixture data specified by filename."""
+    """Initialise one table,specified by baseModel, from JSON fixture data specified by filename.
+      reload: if 'false' just delete whatever is in the database but do not load """
     
     report(2,simulation_id,f"Initialising table {filename}", session)
     query = session.query(baseModel)
@@ -18,11 +19,11 @@ def reload_table(session: Session, baseModel, filename: str, reload: bool, simul
             for item in jason:
                 new_object = baseModel(**item)
                 session.add(new_object)
-            session.commit()
         except Exception as e:
             print(f"could not load because of exception {e}")
             print (f"trying to load ",item)
-
+    session.commit()
+    
 def initialise_buyers_and_sellers(db, simulation_id):
 
     """
@@ -40,7 +41,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
 
 # Create seller list
 
-    report(1, simulation_id, "Creating a list of sellers for simulation {simulation_id}", db)
+    report(1, simulation_id, f"CREATING A LIST OF SELLERS FOR SIMULATION {simulation_id}", db)
     query = db.query(Seller)
     query.delete(synchronize_session=False)
 
@@ -95,7 +96,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
 
 # Create buyer list
 
-    report(1, simulation_id, "Creating a list of buyers for simulation {simulation_id}", db)
+    report(1, simulation_id, f"CREATING A LIST OF BUYERS FOR SIMULATION {simulation_id}", db)
     query = db.query(Buyer)
     query.delete(synchronize_session=False)
 

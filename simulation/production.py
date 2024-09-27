@@ -90,4 +90,5 @@ def industry_produce(
     sales_stock.price=sales_stock.value
     report(3, simulation.id, f"Sales price after production is {sales_stock.price}", session)
     session.commit()
+    report(2, simulation.id, f"Industry {industry.name} has finished producing", session)
 

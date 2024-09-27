@@ -56,7 +56,7 @@ def revalue_commodities(
         report(2,simulation.id,f"Commodity {commodity.name} has size {commodity.size}, total value {commodity.total_value} and total price {commodity.total_price}",session)
         commodity.unit_value=commodity.total_value/commodity.size
         commodity.unit_price=commodity.total_price/commodity.size
-        report(3,simulation.id,f"Setting its unit value to {commodity.unit_value} and its unit price to {commodity.unit_price}",session)
+        report(2,simulation.id,f"Setting its unit value to {commodity.unit_value} and its unit price to {commodity.unit_price}",session)
 
 def revalue_stocks(
       session:Session, 
@@ -96,6 +96,7 @@ def revalue_stocks(
       stock.price=stock.size*commodity.unit_price
       report(3,simulation.id,f"Setting value to {stock.value} and price to {stock.price} for stock  of the stock [{stock.name}] ",session)
   session.commit()
+  report(2,simulation.id,"Finished revaluing stocks",session)
 
 # TODO this should be a method of the Industry object
 def capital(
@@ -124,7 +125,9 @@ def capital(
     for stock in istocks:
         report(3,simulation.id,f"Adding {stock.price} to capital of {industry.name} for Industry stock [{stock.name}]",session)
         result+=stock.price
+    report(2,simulation.id,"Finished calculating capital",session)
     return result
+
 
 def calculate_initial_capitals(
       session:Session, 

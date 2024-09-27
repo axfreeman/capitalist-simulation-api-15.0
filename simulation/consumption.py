@@ -73,3 +73,4 @@ def class_consume(
     sales_stock.price += (social_class.population/simulation.periods_per_year)*sales_commodity.unit_price
     report(3,simulation.id,f"Its size is now {sales_stock.size}, value {sales_stock.value} and price {sales_stock.price}",session)
     session.commit()
+    report(2, simulation.id, f"Social Class {social_class.name} has finished consuming", session)

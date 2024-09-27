@@ -187,6 +187,7 @@ def get_json(session: Session = Depends(get_session)):
 
         Logs out all users and sets their current simulation to 0.  
         Should only be available to admin since it reinitialises everything.  
+        If 'reload' is false in the call to reload_table, does not re-initialise
     """
     report(1,1,"RESETTING ENTIRE DATABASE",session)
     reload_table(session, Simulation, "static/simulations.json", True, 1)
@@ -196,7 +197,7 @@ def get_json(session: Session = Depends(get_session)):
     reload_table(session, Class_stock, "static/class_stocks.json", True, 1)
     reload_table(session, Industry_stock, "static/industry_stocks.json", True, 1)
     reload_table(session, User,"static/users.json", True, 1)
-    reload_table(session, Trace, "Trace table: no reload required", False, 1)
+    reload_table(session, Trace, "Trace (no reload)", False, 1)
 
     return "Database reloaded"
 
