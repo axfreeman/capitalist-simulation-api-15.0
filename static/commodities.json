@@ -33,7 +33,7 @@
         "unit_price": 0.5,
         "turnover_time": 1.0,
         "demand": 0.0,
-        "supply": 0.0,
+        "supply": 3000.0,
         "allocation_ratio": 0.0,
         "display_order": 2,
         "image_name": "labourPower.png",

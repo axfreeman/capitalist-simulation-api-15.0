@@ -381,8 +381,7 @@ class Industry_stock(Base):
         self.size += amount
         self.price=self.size*self.commodity(session).unit_value
         self.value=self.size*self.commodity(session).unit_price
-        print(f"{self.name} size is now {self.size:.2f}, value is {self.value:'2f'}, price is {self.price:'2f'}")#TEMPORARY
-
+        print(f"{self.name} size is now {self.size:.2f}, value is {self.value:.2f}, price is {self.price:.2f}")#TEMPORARY
 
 class Class_stock(Base):
     """Stocks are produced, consumed, and traded in a
@@ -500,8 +499,6 @@ class Trace(Base):
     username = Column(String, nullable=True)
     level = Column(Integer)
     message = Column(String)
-
-
 
 class Buyer(Base):
     """The Buyer class is initialized when a simulation is created,
