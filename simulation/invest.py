@@ -47,19 +47,13 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
                         i. The issue is that they have to release sufficient funds to pay for the MP
                         ii. We could either override the 'requirement' OR reset it.
     """
-    report(
-        1,
-        simulation.id,
-        "APPLYING THE EXPANDED REPRODUCTION INVESTMENT ALGORITHM",
-        session,
-    )
+    report(1,simulation.id,"APPLYING THE EXPANDED REPRODUCTION INVESTMENT ALGORITHM",session)
     mp_commodity: Commodity = production_commodity(simulation,session)
     mc_commodity: Commodity = necessities_commodity(simulation, session)
     DI_industry: Industry = D1_industry(simulation, session)
     DII_industry: Industry = D2_industry(simulation, session) # See comments against the definition to explain this quirky choice of name
 
-    print("DI industry is", DI_industry)
-    print("D2 industry is", DII_industry)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # DII_industry(simulation, session)
     if not (validate(mp_commodity,"mp commodity")and validate(mc_commodity, "mc commodity")and validate(DI_industry, "mp industry")and validate(DII_industry, "mc industry")):
@@ -68,7 +62,7 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     cc: SocialClass = capitalists(simulation, session)
     wc: SocialClass = workers(simulation, session)
     if not (validate(cc, "capitalists")and validate(wc, "workers")):
-        report(1, simulation, "One or more classes is missing", session)
+        report(2, simulation, "One or more classes is missing", session)
         return
     cc_consumption_stock: Class_stock = cc.consumption_stocks(session).first()
     wc_consumption_stock: Class_stock = wc.consumption_stocks(session).first()
@@ -80,7 +74,7 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
         and validate(DI_mp_stock, "Means of production used by DI")
         and validate(DII_mp_stock, "Means of production used by DII")
     ):
-        report(1, simulation, "One or more stocks is missing", session)
+        report(2, simulation, "One or more stocks is missing", session)
         return
     session.add(mp_commodity)
     session.add(mc_commodity)
@@ -99,36 +93,43 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
 
-    report(1,simulation.id,f"*** Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply},",session,)
+    report(2,simulation.id,f"*** Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply}",session)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
     
     DI_industry.output_scale *= 1 + DI_industry.output_growth_rate
 
-    report(1,simulation.id,f"*** DI Output Scale increased by {DI_industry.output_growth_rate} to {DI_industry.output_scale}",session,)
+    report(2,simulation.id,f"*** DI Output Scale increased by {DI_industry.output_growth_rate} to {DI_industry.output_scale}",session,)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Recalculate demand at the new output scale
     calculate_demand(session, simulation)
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
-    report(1,simulation.id,f"*** Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply},",session,)
+    report(2,simulation.id,f"*** Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply}",session)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Allocate the remaining means of production to DII
     constant_capital = DII_mp_stock.flow_per_period(session) * mp_commodity.unit_value
 
-    report(1,simulation.id,f"*** DII Constant Capital Requirement is {constant_capital}",session,)
+    report(2,simulation.id,f"*** DII Constant Capital Requirement is {constant_capital}",session,)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     expansion_ratio = excess_supply / constant_capital
 
-    report(1,simulation.id,f"*** DII expand output scale by {expansion_ratio}",session )
+    report(2,simulation.id,f"*** DII expand output scale by {expansion_ratio}",session )
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     DII_industry.output_scale *= 1 + expansion_ratio
 
-    report(1,simulation.id,f"*** DI scale is now {DI_industry.output_scale} and DII scale is {DII_industry.output_scale}.",session,)
+    report(2,simulation.id,f"*** DI scale is now {DI_industry.output_scale} and DII scale is {DII_industry.output_scale}.",session)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Now we don't have enough workers, so we have to increase the labour supply
     calculate_demand(session, simulation)
     lp_commodity: Commodity = labour_power(simulation, session)
 
-    report(1,simulation.id,f"*** Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session,)
+    report(2,simulation.id,f"*** Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
     
     wc.population = lp_commodity.demand
     calculate_supply(session, simulation)  
@@ -137,31 +138,16 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     cc_consumption=cc_consumption_stock.demand
     # This will tell us the workers' demand for necessities in the next circuit
 
-    report(1,simulation.id,f"*** The supply of necessities is {necessity_supply} ",session,)
-
-    report(
-        1,
-        simulation.id,
-        f"*** workers demand for necessities is {wc_consumption} and capitalist demand is {cc_consumption}",
-        session,
-    )
-
-    report(
-        1,
-        simulation.id,
-        f"*** capitalist demand for necessities will be reduced to {necessity_supply-wc_consumption}",
-        session,
-    )
+    report(2,simulation.id,f"The supply of necessities is {necessity_supply} ",session)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"Workers demand for necessities is {wc_consumption} and capitalist demand is {cc_consumption}",session)
+    report(2,simulation.id,f"Capitalist demand for necessities will be reduced to {necessity_supply-wc_consumption}",session)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     cc_requirement=(necessity_supply-wc_consumption)/cc.population
     cc_consumption_stock.requirement=cc_requirement
 
-    report(
-        1,
-        simulation.id,
-        f"*** capitalist requirement per head for necessities has been reduced to {cc_requirement}",
-        session,
-    )
+    report(2,simulation.id,f"*** capitalist requirement per head for necessities has been reduced to {cc_requirement}",session)
 
     # session.rollback()
     session.commit()

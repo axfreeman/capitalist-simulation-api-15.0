@@ -61,7 +61,7 @@ def buy_and_sell(session:Session, simulation:Simulation):
     function - as indeed may be possible for the allocation of demand itself.
     """
 
-    report(1, simulation.id, f"Starting trade with simulation {simulation.id}", session)
+    report(1, simulation.id, f"TRADE", session)
     for seller in session.query(Seller).where(Seller.simulation_id == simulation.id):
         sales_stock = seller.sales_stock(session)
         try:
@@ -73,6 +73,7 @@ def buy_and_sell(session:Session, simulation:Simulation):
             ):
                 report(3,simulation.id,f"buyer {buyer.owner_name(session)} will be asked to buy {buyer.purchase_stock(session).demand}",session,)
                 buy(buyer, seller, simulation, session)
+            report(2,simulation.id,"Finished selling",session,)
         except Exception as e:
             print(f"Error {e} looking for buyers")
     session.commit()
@@ -115,4 +116,5 @@ def buy(buyer:Buyer, seller:Seller, simulation:Simulation, session:Session):
         seller_money_stock.change_size(amount * commodity.unit_price,session)
         buyer_money_stock.change_size(-amount * commodity.unit_price,session)
     # db.commit() # TODO verify that this is achieved by the final commit.
-
+    report(3,simulation.id,"Finished Paying",session,)
+    

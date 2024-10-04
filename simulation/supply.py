@@ -14,7 +14,7 @@ def initialise_supply(session,simulation):
     """Set supply of every commodity to zero to prepare for the calculation."""
     cquery = session.query(Commodity).where(Commodity.simulation_id==simulation.id)
     for c in cquery:
-        report(1,simulation.id,f"Initialising the supply of commodity {c.name}",session)
+        report(2,simulation.id,f"Initialising the supply of commodity {c.name}",session)
         session.add(c)
         c.supply=0
     session.commit()

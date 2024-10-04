@@ -81,7 +81,7 @@ def industry_produce(
             stock.price-= stock.flow_per_period(session)*commodity.unit_price
             report(4,simulation.id,f"{stock.name} transfers value {value_contribution} at unit value {commodity.unit_value} ",session)
         sales_stock.value += value_contribution
-        report(3, simulation.id, f"Sales value is {sales_stock.value}after inputs from [{stock.name}]", session)
+        report(3, simulation.id, f"Sales value is {sales_stock.value} after inputs from [{stock.name}]", session)
     # report(4, simulation.id, f"output scale is {industry.output_scale}", session) # Uncomment for more verbose diagnostics
     sales_stock.size += industry.output_scale/simulation.periods_per_year
     report(3, simulation.id, f"Sales value after production is {sales_stock.value} and size {sales_stock.size}", session)

@@ -60,6 +60,8 @@ def industry_demand(session:Session,simulation:Simulation):
         for stock in query:
             session.add(stock)
             commodity=stock.commodity(session)
+            print(".")
+            print(f"           Industry demand is processing the stock with name {stock.name} id {stock.id} and requirement {stock.requirement}")
             demand=round(stock.flow_per_period(session),4)
             stock.demand+=demand
             report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from [{stock.name}]',session)
