@@ -377,11 +377,10 @@ class Industry_stock(Base):
         Do NOT use this in production or consumption, which can change
         unit values and prices.
         """
-        print(f"Changing the size of {self.name}") #TEMPORARY
         self.size += amount
         self.price=self.size*self.commodity(session).unit_value
         self.value=self.size*self.commodity(session).unit_price
-        print(f"{self.name} size is now {self.size:.2f}, value is {self.value:.2f}, price is {self.price:.2f}")#TEMPORARY
+        # print(f"{self.name} size is now {self.size:.2f}, value is {self.value:.2f}, price is {self.price:.2f}")#TEMPORARY
 
 class Class_stock(Base):
     """Stocks are produced, consumed, and traded in a

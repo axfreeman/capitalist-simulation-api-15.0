@@ -32,14 +32,14 @@ def constrain_demand(session,simulation):
                 for stock in stock_query:
                     session.add(stock)
                     stock.demand=stock.demand*commodity.allocation_ratio
-                    report(3,simulation.id, f"constraining stock {stock.id} demand to {stock.demand}",session)
+                    report(3,simulation.id, f"constraining demand in industry stock {stock.id} called {stock.name} to {stock.demand}",session)
 
 # Tell class stocks the bad news.
                 stock_query=session.query(Class_stock).where(Class_stock.commodity_id==commodity.id)
                 for stock in stock_query:
                     session.add(stock)
                     stock.demand=stock.demand*commodity.allocation_ratio
-                    report(3,simulation.id, f"constraining stock {stock.id} demand to {stock.demand}",session)
+                    report(3,simulation.id, f"constraining demand in class stock {stock.id} called {stock.name} {stock.demand}",session)
             report(2,simulation.id,f'Finished constraining demand',session)
 
 def buy_and_sell(session:Session, simulation:Simulation):
@@ -71,7 +71,7 @@ def buy_and_sell(session:Session, simulation:Simulation):
                 Buyer.simulation_id == simulation.id,
                 Buyer.commodity_id == seller.commodity_id,
             ):
-                report(3,simulation.id,f"buyer {buyer.owner_name(session)} will be asked to buy {buyer.purchase_stock(session).demand}",session,)
+                # report(3,simulation.id,f"buyer {buyer.owner_name(session)} will be asked to buy {buyer.purchase_stock(session).demand}",session,)
                 buy(buyer, seller, simulation, session)
             report(2,simulation.id,"Finished selling",session,)
         except Exception as e:
@@ -87,12 +87,12 @@ def buy(buyer:Buyer, seller:Seller, simulation:Simulation, session:Session):
     seller_money_stock:Industry_stock|Class_stock = seller.money_stock(session)
     commodity:Commodity = seller.commodity(session)  # does not change yet, so no need to add it to the session
     amount = buyer_purchase_stock.demand
-    report(4,simulation.id,f"seller sales stock is {seller_sales_stock.name}",session)
-    report(4,simulation.id,f"buyer purchase stock is {buyer_purchase_stock.name}",session)
-    report(4,simulation.id,f"buyer money stock is {buyer_money_stock.name}",session)
-    report(4,simulation.id,f"seller money stock is {seller_money_stock.name}",session)
+    # report(4,simulation.id,f"seller sales stock is {seller_sales_stock.name}",session)
+    # report(4,simulation.id,f"buyer purchase stock is {buyer_purchase_stock.name}",session)
+    # report(4,simulation.id,f"buyer money stock is {buyer_money_stock.name}",session)
+    # report(4,simulation.id,f"seller money stock is {seller_money_stock.name}",session)
     report(3,simulation.id,
-        f"Buying {amount} at price {commodity.unit_price} and value {commodity.unit_value}",session,
+        f"{buyer.owner_name(session)} is buying {amount} at price {commodity.unit_price} and value {commodity.unit_value}",session,
     )
 
 # Transfer the goods
@@ -104,7 +104,7 @@ def buy(buyer:Buyer, seller:Seller, simulation:Simulation, session:Session):
     seller_sales_stock.change_size(-amount,session)
 
 # Pay for the goods
-    report(4,simulation.id,"Now you must pay",session)
+    report(3,simulation.id,"Paying",session)
 
     if buyer_money_stock == seller_money_stock:  
         # Internal trade to the sector
