@@ -83,6 +83,7 @@ def tradeHandler(
         Otherwise, return success message
     """
     simulation:Simulation=u.current_simulation(session)
+    report(1, simulation.id, f"TRADE", session)
     constrain_demand(session, simulation)
     buy_and_sell(session, simulation)
     simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.

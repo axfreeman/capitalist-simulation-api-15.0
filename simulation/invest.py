@@ -93,43 +93,43 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
 
-    report(2,simulation.id,f"*** Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply}",session)
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply}",session)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
     
     DI_industry.output_scale *= 1 + DI_industry.output_growth_rate
 
-    report(2,simulation.id,f"*** DI Output Scale increased by {DI_industry.output_growth_rate} to {DI_industry.output_scale}",session,)
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"DI Output Scale increased by {DI_industry.output_growth_rate} to {DI_industry.output_scale}",session,)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Recalculate demand at the new output scale
     calculate_demand(session, simulation)
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
-    report(2,simulation.id,f"*** Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply}",session)
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply}",session)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Allocate the remaining means of production to DII
     constant_capital = DII_mp_stock.flow_per_period(session) * mp_commodity.unit_value
 
-    report(2,simulation.id,f"*** DII Constant Capital Requirement is {constant_capital}",session,)
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"DII Constant Capital Requirement is {constant_capital}",session,)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     expansion_ratio = excess_supply / constant_capital
 
-    report(2,simulation.id,f"*** DII expand output scale by {expansion_ratio}",session )
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"DII expand output scale by {expansion_ratio}",session )
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     DII_industry.output_scale *= 1 + expansion_ratio
 
-    report(2,simulation.id,f"*** DI scale is now {DI_industry.output_scale} and DII scale is {DII_industry.output_scale}.",session)
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"DI scale is now {DI_industry.output_scale} and DII scale is {DII_industry.output_scale}.",session)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Now we don't have enough workers, so we have to increase the labour supply
     calculate_demand(session, simulation)
     lp_commodity: Commodity = labour_power(simulation, session)
 
-    report(2,simulation.id,f"*** Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session)
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
     
     wc.population = lp_commodity.demand
     calculate_supply(session, simulation)  
@@ -142,12 +142,12 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
     report(2,simulation.id,f"Workers demand for necessities is {wc_consumption} and capitalist demand is {cc_consumption}",session)
     report(2,simulation.id,f"Capitalist demand for necessities will be reduced to {necessity_supply-wc_consumption}",session)
-    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     cc_requirement=(necessity_supply-wc_consumption)/cc.population
     cc_consumption_stock.requirement=cc_requirement
 
-    report(2,simulation.id,f"*** capitalist requirement per head for necessities has been reduced to {cc_requirement}",session)
+    report(2,simulation.id,f"capitalist requirement per head for necessities has been reduced to {cc_requirement}",session)
 
     # session.rollback()
     session.commit()
@@ -189,40 +189,15 @@ def standard_invest(simulation: Simulation, session: Session):
         ims.change_size(-private_capitalist_consumption, session)
         session.commit()
 
-        report(
-            3,
-            simulation.id,
-            f"Capitalists now have a money stock of {capitalists.money_stock(session).size}",
-            session,
-        )
-        report(
-            3,
-            simulation.id,
-            f"Industry {industry.name} now has a money stock of {industry.money_stock(session).size}",
-            session,
-        )
-        report(
-            2,
-            simulation.id,
-            "Estimating the output scale which can be financed",
-            session,
-        )
+        report(3,simulation.id,f"Capitalists now have a money stock of {capitalists.money_stock(session).size}",session,)
+        report(3,simulation.id,f"Industry {industry.name} now has a money stock of {industry.money_stock(session).size}",session )
+        report(2,simulation.id,"Estimating the output scale which can be financed",session,)
 
         cost = industry.unit_cost(session) * industry.output_scale
-        report(
-            3,
-            simulation.id,
-            f"Industry {industry.name} has unit cost {industry.unit_cost(session)} so needs to spend {cost} to produce at the same scale.",
-            session,
-        )
+        report(3,simulation.id,f"Industry {industry.name} has unit cost {industry.unit_cost(session)} so needs to spend {cost} to produce at the same scale.",session,)
 
         spare = industry.money_stock(session).size - cost
-        report(
-            3,
-            simulation.id,
-            f"It has {industry.money_stock(session).size} to spend and so can invest {spare}",
-            session,
-        )
+        report(3,simulation.id,f"It has {industry.money_stock(session).size} to spend and so can invest {spare}",session,)
 
         possible_increase = spare / industry.unit_cost(session)
         monetarily_potential_growth = possible_increase / cost
