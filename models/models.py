@@ -268,6 +268,7 @@ class SocialClass(Base):
     def money_stock(self, session):
         """Helper method yields the Money Class_stock of this class."""
         return get_class_money_stock(self, session)
+    
     def consumption_stocks(self,session):
         return get_class_consumption_stocks(self,session)
 
@@ -678,7 +679,6 @@ def get_class_consumption_stocks(social_class,session):
             Class_stock.simulation_id == social_class.simulation_id,
         )
     )
-
 
 """Helper functions which just put boilerplate code in one place"""
 

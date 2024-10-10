@@ -61,7 +61,6 @@ def buy_and_sell(session:Session, simulation:Simulation):
     function - as indeed may be possible for the allocation of demand itself.
     """
 
-    report(1, simulation.id, f"TRADE", session)
     for seller in session.query(Seller).where(Seller.simulation_id == simulation.id):
         sales_stock = seller.sales_stock(session)
         try:
@@ -71,7 +70,7 @@ def buy_and_sell(session:Session, simulation:Simulation):
                 Buyer.simulation_id == simulation.id,
                 Buyer.commodity_id == seller.commodity_id,
             ):
-                # report(3,simulation.id,f"buyer {buyer.owner_name(session)} will be asked to buy {buyer.purchase_stock(session).demand}",session,)
+                report(3,simulation.id,f"buyer {buyer.owner_name(session)} will buy {buyer.purchase_stock(session).demand}",session,)
                 buy(buyer, seller, simulation, session)
             report(2,simulation.id,"Finished selling",session,)
         except Exception as e:
