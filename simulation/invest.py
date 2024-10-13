@@ -99,6 +99,8 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     report(2,simulation.id,f"Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply}",session)
     report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"Demand for MP is {mp_commodity.demand*mp_commodity.unit_value}, supply is {mp_commodity.supply} and excess is {excess_supply}",session)
+    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
     
     DI_industry.output_scale *= 1 + DI_industry.output_growth_rate
 
@@ -109,8 +111,8 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     calculate_demand(session, simulation)
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
-    report(2,simulation.id,f"Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply}",session)
-    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    report(2,simulation.id,f"*** Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply}",session)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Allocate the remaining means of production to DII
     constant_capital = DII_mp_stock.flow_per_period(session) * mp_commodity.unit_value
@@ -130,8 +132,10 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
 
     # Now we don't have enough workers, so we have to increase the labour supply
     calculate_demand(session, simulation)
-    report(2,simulation.id,f"Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session)
-    report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
+    lp_commodity: Commodity = labour_power(simulation, session)
+
+    report(2,simulation.id,f"*** Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session)
+    report(2,simulation.id,f"*** Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
     
     wc.population = lp_commodity.demand
     print(0)
