@@ -1,0 +1,86 @@
+[
+	{
+		"username": "admin",
+		"current_simulation_id": 0,
+		"api_key": "adminkey",
+		"is_locked": true,
+		"role":"admin"
+	},
+	{
+		"username": "guest",
+		"current_simulation_id": 0,
+		"api_key": "guestkey",
+		"is_locked": false,
+		"role": "user"
+	},
+	{
+		"username": "Zeus",
+		"current_simulation_id": 0,
+		"api_key": "Zeuskey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Hera",
+		"current_simulation_id": 0,
+		"api_key": "Herakey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Poseidon",
+		"current_simulation_id": 0,
+		"api_key": "Poseidonkey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Demeter",
+		"current_simulation_id": 0,
+		"api_key": "Demeterkey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Athena",
+		"current_simulation_id": 0,
+		"api_key": "Athenakey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Apollo",
+		"current_simulation_id": 0,
+		"api_key": "Apollokey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Ares",
+		"current_simulation_id": 0,
+		"api_key": "Areskey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Hephaestus",
+		"current_simulation_id": 0,
+		"api_key": "Hephaestuskey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Hermes",
+		"current_simulation_id": 0,
+		"api_key": "Hermeskey",
+		"is_locked": false,
+		"role": "player"
+	},
+	{
+		"username": "Hestia",
+		"current_simulation_id": 0,
+		"api_key": "Hestiakey",
+		"is_locked": false,
+		"role": "player"
+	}
+]

@@ -191,13 +191,13 @@ def get_json(session: Session = Depends(get_session)):
         If 'reload' is false in the call to reload_table, does not re-initialise
     """
     report(1,1,"RESETTING ENTIRE DATABASE",session)
-    reload_table(session, Simulation, "static/simulations.json", True, 1)
-    reload_table(session, SocialClass, "static/classes.json", True, 1)
-    reload_table(session, Commodity, "static/commodities.json", True, 1)
-    reload_table(session, Industry, "static/industries.json", True, 1)
-    reload_table(session, Class_stock, "static/class_stocks.json", True, 1)
-    reload_table(session, Industry_stock, "static/industry_stocks.json", True, 1)
-    reload_table(session, User,"static/users.json", True, 1)
+    reload_table(session, Simulation, "static/1/simulations.json", True, 1)
+    reload_table(session, SocialClass, "static/1/classes.json", True, 1)
+    reload_table(session, Commodity, "static/1/commodities.json", True, 1)
+    reload_table(session, Industry, "static/1/industries.json", True, 1)
+    reload_table(session, Class_stock, "static/1/class_stocks.json", True, 1)
+    reload_table(session, Industry_stock, "static/1/industry_stocks.json", True, 1)
+    reload_table(session, User,"static/1/users.json", True, 1)
     reload_table(session, Trace, "Trace (no reload)", False, 1)
 
     return "Database reloaded"
