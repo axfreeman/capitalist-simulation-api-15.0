@@ -1,11 +1,11 @@
 [
-  {
-    "id": 2,
-    "name": "SR with two periods per year",
+   {
+    "id": 3,
+    "name": "SR two consumption goods",
     "time_stamp": 0,
     "username": "admin",
     "state": "TEMPLATE",
-    "periods_per_year": 2,
+    "periods_per_year": 1,
     "population_growth_rate": 1,
     "investment_ratio": 1,
     "labour_supply_response": "UNDEFINED",
@@ -15,6 +15,5 @@
     "quantity_symbol": "#",
     "melt": 1,
     "investment_algorithm": "Standard"
-
   }
 ]

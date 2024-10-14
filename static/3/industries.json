@@ -1,0 +1,41 @@
+[
+  {
+    "id": 7,
+    "name": "Department I",
+    "simulation_id": 3,
+    "output": "Means of Production",
+    "output_scale": 6000,
+    "output_growth_rate": 0,
+    "initial_capital": 0.0,
+    "work_in_progress": 0.0,
+    "current_capital": 0.0,
+    "profit": 0.0,
+    "profit_rate": 0.0
+  },
+  {
+    "id": 8,
+    "name": "Department IIa",
+    "simulation_id": 3,
+    "output": "Necessities",
+    "output_scale": 2250,
+    "output_growth_rate": 0,
+    "initial_capital": 0.0,
+    "work_in_progress": 0.0,
+    "current_capital": 0.0,
+    "profit": 0.0,
+    "profit_rate": 0.0
+  },
+  {
+    "id": 9,
+    "name": "Department IIb",
+    "simulation_id": 3,
+    "output": "Luxuries",
+    "output_scale": 750,
+    "output_growth_rate": 0,
+    "initial_capital": 0.0,
+    "work_in_progress": 0.0,
+    "current_capital": 0.0,
+    "profit": 0.0,
+    "profit_rate": 0.0
+  }
+]

@@ -1,7 +1,7 @@
 [
   {
-    "id": 22,
-    "simulation_id": 2,
+    "id": 26,
+    "simulation_id": 3,
     "name": "Capitalists",
     "output": "Capital Services",
     "population": 1500,
@@ -10,8 +10,8 @@
     "assets": 0.0
   },
   {
-    "id": 23,
-    "simulation_id": 2,
+    "id": 27,
+    "simulation_id": 3,
     "name": "Workers",
     "output": "Labour Power",
     "population": 3000,

@@ -1,11 +1,11 @@
 [
   {
-    "id": 2,
-    "name": "SR with two periods per year",
+    "id": 5,
+    "name": "Expanded Reproduction",
     "time_stamp": 0,
     "username": "admin",
     "state": "TEMPLATE",
-    "periods_per_year": 2,
+    "periods_per_year": 1,
     "population_growth_rate": 1,
     "investment_ratio": 1,
     "labour_supply_response": "UNDEFINED",
@@ -14,7 +14,6 @@
     "currency_symbol": "$",
     "quantity_symbol": "#",
     "melt": 1,
-    "investment_algorithm": "Standard"
-
+    "investment_algorithm": "Expanded"
   }
 ]

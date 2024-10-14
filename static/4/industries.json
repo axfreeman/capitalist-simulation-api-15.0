@@ -1,8 +1,8 @@
 [
-    {
-    "id": 3,
+  {
+    "id": 10,
     "name": "Department II",
-    "simulation_id": 2,
+    "simulation_id": 4,
     "output": "Consumption",
     "output_scale": 3000,
     "output_growth_rate": 0,
@@ -13,12 +13,12 @@
     "profit_rate": 0.0
   },
   {
-    "id": 4,
+    "id": 11,
     "name": "Department I",
-    "simulation_id": 2,
+    "simulation_id": 4,
     "output": "Means of Production",
     "output_scale": 6000,
-    "output_growth_rate": 0,
+    "output_growth_rate": 0.1,
     "initial_capital": 0.0,
     "work_in_progress": 0.0,
     "current_capital": 0.0,

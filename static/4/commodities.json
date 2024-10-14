@@ -1,8 +1,8 @@
 [
     {
-        "id": 5,
-        "simulation_id": 2,
-        "name": "Consumption",
+        "id": 18,
+        "simulation_id": 4,
+        "name": "Necessities",
         "origin": "INDUSTRIAL",
         "usage": "CONSUMPTION",
         "size": 0.0,
@@ -21,8 +21,8 @@
         "investment_proportion": 0.0
     },
     {
-        "id": 6,
-        "simulation_id": 2,
+        "id": 19,
+        "simulation_id": 4,
         "name": "Labour Power",
         "origin": "SOCIAL",
         "usage": "PRODUCTIVE",
@@ -42,8 +42,8 @@
         "investment_proportion": 0.0
     },
     {
-        "id": 7,
-        "simulation_id": 2,
+        "id": 20,
+        "simulation_id": 4,
         "name": "Means of Production",
         "origin": "INDUSTRIAL",
         "usage": "PRODUCTIVE",
@@ -63,8 +63,8 @@
         "investment_proportion": 0.0
     },
     {
-        "id": 8,
-        "simulation_id": 2,
+        "id": 21,
+        "simulation_id": 4,
         "name": "Money",
         "origin": "MONEY",
         "usage": "MONEY",
@@ -84,8 +84,8 @@
         "investment_proportion": 0.0
     },
     {
-        "id": 38,
-        "simulation_id": 2,
+        "id": 41,
+        "simulation_id": 4,
         "name": "Capital Services",
         "origin": "SOCIAL",
         "usage": "Useless",

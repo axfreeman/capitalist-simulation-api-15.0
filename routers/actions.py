@@ -200,7 +200,7 @@ def get_json(session: Session = Depends(get_session)):
     clear_table(session, User, 1)
     clear_table(session, Trace, 1)
 
-    for i in range(1,3):
+    for i in range(1,5):
         load_table(session, Simulation, f"static/{i}/simulations.json", True, 1)
         load_table(session, SocialClass, f"static/{i}/classes.json", True, 1)
         load_table(session, Commodity, f"static/{i}/commodities.json", True, 1)
