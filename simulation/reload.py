@@ -1,27 +1,35 @@
 from sqlalchemy.orm import Session
+from database.database import Base
 import json
 from sqlalchemy import insert
 from models.models import Buyer, Class_stock, Industry_stock, Seller
 from report.report import report
 
-def reload_table(session: Session, baseModel, filename: str, reload: bool, simulation_id:int):
+def clear_table(session: Session, baseModel, simulation_id:int):
 
-    """Initialise one table,specified by baseModel, from JSON fixture data specified by filename.
-      reload: if 'false' just delete whatever is in the database but do not load """
+    """Clear one table,specified by baseModel, of all content, but leave its structure"""
+
+    report(2,simulation_id,f"Clearing table {baseModel}", session)
+    query = session.query(baseModel)
+    query.delete(synchronize_session=False)
+    session.commit()
+
+def load_table(session: Session, baseModel, filename: str, reload: bool, simulation_id:int):
+
+    """Populate one table,specified by baseModel, from JSON fixture data specified by filename.
+    This action is cumulative; if several fixtures are loaded, they all persist. To clear a
+    table, use empty_table()"""
     
     report(2,simulation_id,f"Initialising table {filename}", session)
     query = session.query(baseModel)
-    query.delete(synchronize_session=False)
-    if reload:
+    file = open(filename)
+    jason = json.load(file)
+    for item in jason:
         try:
-            file = open(filename)
-            jason = json.load(file)
-            for item in jason:
-                new_object = baseModel(**item)
-                session.add(new_object)
+            new_object = baseModel(**item)
+            session.add(new_object)
         except Exception as e:
-            print(f"could not load because of exception {e}")
-            print (f"trying to load ",item)
+            print(f"could not load {filename} because of exception {e} ")
     session.commit()
     
 def initialise_buyers_and_sellers(db, simulation_id):

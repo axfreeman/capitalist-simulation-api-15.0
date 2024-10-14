@@ -5,7 +5,7 @@ from models.schemas import ServerMessage
 from simulation.consumption import consume
 from authorization.auth import get_api_key
 from report.report import report
-from simulation.reload import reload_table
+from simulation.reload import clear_table, load_table
 from simulation.demand import calculate_demand
 from simulation.supply import calculate_supply, initialise_supply, industry_supply, class_supply
 from simulation.trade import buy_and_sell, constrain_demand
@@ -191,14 +191,24 @@ def get_json(session: Session = Depends(get_session)):
         If 'reload' is false in the call to reload_table, does not re-initialise
     """
     report(1,1,"RESETTING ENTIRE DATABASE",session)
-    reload_table(session, Simulation, "static/1/simulations.json", True, 1)
-    reload_table(session, SocialClass, "static/1/classes.json", True, 1)
-    reload_table(session, Commodity, "static/1/commodities.json", True, 1)
-    reload_table(session, Industry, "static/1/industries.json", True, 1)
-    reload_table(session, Class_stock, "static/1/class_stocks.json", True, 1)
-    reload_table(session, Industry_stock, "static/1/industry_stocks.json", True, 1)
-    reload_table(session, User,"static/1/users.json", True, 1)
-    reload_table(session, Trace, "Trace (no reload)", False, 1)
+    clear_table(session, Simulation, 1)
+    clear_table(session, SocialClass, 1)
+    clear_table(session, Commodity, 1)
+    clear_table(session, Industry, 1)
+    clear_table(session, Industry_stock, 1)
+    clear_table(session, Class_stock, 1)
+    clear_table(session, User, 1)
+    clear_table(session, Trace, 1)
+
+    for i in range(1,3):
+        load_table(session, Simulation, f"static/{i}/simulations.json", True, 1)
+        load_table(session, SocialClass, f"static/{i}/classes.json", True, 1)
+        load_table(session, Commodity, f"static/{i}/commodities.json", True, 1)
+        load_table(session, Industry, f"static/{i}/industries.json", True, 1)
+        load_table(session, Class_stock, f"static/{i}/class_stocks.json", True, 1)
+        load_table(session, Industry_stock, f"static/{i}/industry_stocks.json", True, 1)
+
+    load_table(session, User,"static/users.json", True, 1)
 
     return "Database reloaded"
 
