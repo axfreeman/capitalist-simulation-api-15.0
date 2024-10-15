@@ -1,19 +1,19 @@
 [
-  {
-    "id": 5,
-    "name": "SR with equalisation",
-    "time_stamp": 0,
-    "username": "admin",
-    "state": "TEMPLATE",
-    "periods_per_year": 1,
-    "population_growth_rate": 1,
-    "investment_ratio": 1,
-    "labour_supply_response": "UNDEFINED",
-    "price_response_type": "UNDEFINED",
-    "melt_response_type": null,
-    "currency_symbol": "$",
-    "quantity_symbol": "#",
-    "melt": 1,
-    "investment_algorithm": "Standard"
-  }
+	{
+		"id" : 5,
+		"name" : "SR with money prices",
+		"time_stamp" : 0,
+		"username" : "admin",
+		"state" : "TEMPLATE",
+		"periods_per_year" : 1.0,
+		"population_growth_rate" : 1.0,
+		"investment_ratio" : 1.0,
+		"labour_supply_response" : "UNDEFINED",
+		"price_response_type" : "UNDEFINED",
+		"melt_response_type" : null,
+		"currency_symbol" : "$",
+		"quantity_symbol" : "#",
+		"melt" : 1.0,
+		"investment_algorithm" : "Standard"
+	}
 ]

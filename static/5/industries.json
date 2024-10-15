@@ -1,28 +1,32 @@
 [
-  {
-    "id": 12,
-    "name": "Department I",
-    "simulation_id": 5,
-    "output": "Means of Production",
-    "output_scale": 6000,
-    "output_growth_rate": 0,
-    "initial_capital": 0.0,
-    "work_in_progress": 0.0,
-    "current_capital": 0.0,
-    "profit": 0.0,
-    "profit_rate": 0.0
-  },
-  {
-    "id": 13,
-    "name": "Department II",
-    "simulation_id": 5,
-    "output": "Consumption",
-    "output_scale": 6000,
-    "output_growth_rate": 0,
-    "initial_capital": 0.0,
-    "work_in_progress": 0.0,
-    "current_capital": 0.0,
-    "profit": 0.0,
-    "profit_rate": 0.0
-  }
+	{
+		"id" : 12,
+		"simulation_id" : 5,
+		"username" : null,
+		"name" : "Department I",
+		"output" : "Means of Production",
+		"output_scale" : 16000.0,
+		"output_growth_rate" : 0.0,
+		"initial_capital" : 0.0,
+		"work_in_progress" : 0.0,
+		"current_capital" : 0.0,
+		"profit" : 0.0,
+		"profit_rate" : 0.0,
+		"successor_id" : null
+	},
+	{
+		"id" : 13,
+		"simulation_id" : 5,
+		"username" : null,
+		"name" : "Department II",
+		"output" : "Consumption",
+		"output_scale" : 16000.0,
+		"output_growth_rate" : 0.0,
+		"initial_capital" : 0.0,
+		"work_in_progress" : 0.0,
+		"current_capital" : 0.0,
+		"profit" : 0.0,
+		"profit_rate" : 0.0,
+		"successor_id" : null
+	}
 ]
