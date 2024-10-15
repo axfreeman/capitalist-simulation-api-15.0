@@ -2,7 +2,7 @@
   {
     "id": 12,
     "name": "Department I",
-    "simulation_id": 5,
+    "simulation_id": 6,
     "output": "Means of Production",
     "output_scale": 6000,
     "output_growth_rate": 0,
@@ -15,7 +15,7 @@
   {
     "id": 13,
     "name": "Department II",
-    "simulation_id": 5,
+    "simulation_id": 6,
     "output": "Consumption",
     "output_scale": 6000,
     "output_growth_rate": 0,

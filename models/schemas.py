@@ -7,6 +7,11 @@ class UserRegistrationMessage(BaseModel):
     username: str
     apikey:str
 
+# Return message for posting a commodity price
+class PricePostMessage(BaseModel):
+    commodityName: str
+    unitPrice: float
+
 class ServerMessage(BaseModel):
     message:str
     statusCode:http.HTTPStatus
@@ -24,7 +29,13 @@ class UserBase(BaseModel):
 
 class UserCreate(BaseModel):
     username: str
-        
+
+# Defines the fields in a form to set the unit price of a commodity
+class PostedPrice(BaseModel):
+    commodityID: int
+    simulationID: int
+    unitPrice: float
+
 class SimulationBase(BaseModel):
     id:int
     name: str

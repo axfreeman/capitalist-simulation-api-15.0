@@ -1,0 +1,80 @@
+[
+  {
+    "id": 115,
+    "class_id": 35,
+    "simulation_id": 8,
+    "commodity_id": 31,
+    "usage_type": "Consumption",
+    "size": 0,
+    "value": 0,
+    "price": 0,
+    "demand": 0,
+    "requirement": 0,
+    "name": "Capitalists.Consumption.Consumption.(id_115)(sim_8)"
+  },
+  {
+    "id": 116,
+    "class_id": 35,
+    "simulation_id": 8,
+    "commodity_id": 34,
+    "usage_type": "Money",
+    "size": 1500,
+    "value": 1500,
+    "price": 1500,
+    "demand": 0,
+    "requirement": 0,
+    "name": "Capitalists.Money.Money.(id_116)(sim_8)"
+  },
+  {
+    "id": 117,
+    "class_id": 35,
+    "simulation_id": 8,
+    "commodity_id": 33,
+    "usage_type": "Sales",
+    "size": 0,
+    "value": 0,
+    "price": 0,
+    "demand": 0,
+    "requirement": 0,
+    "name": "Capitalists.Sales.Labour Power.(id_117)(sim_8)"
+  },
+  {
+    "id": 133,
+    "class_id": 36,
+    "simulation_id": 8,
+    "commodity_id": 31,
+    "usage_type": "Consumption",
+    "size": 0,
+    "value": 0,
+    "price": 0,
+    "demand": 0,
+    "requirement": 0,
+    "name": "Workers.Consumption.Consumption.(id_133)(sim_8)"
+  },
+  {
+    "id": 134,
+    "class_id": 36,
+    "simulation_id": 8,
+    "commodity_id": 34,
+    "usage_type": "Money",
+    "size": 1500,
+    "value": 1500,
+    "price": 1500,
+    "demand": 0,
+    "requirement": 0,
+    "name": "Workers.Money.Money.(id_134)(sim_8)"
+  },
+  {
+    "id": 135,
+    "class_id": 36,
+    "simulation_id": 8,
+    "commodity_id": 33,
+    "usage_type": "Sales",
+    "size": 3000,
+    "value": 1500,
+    "price": 1500,
+    "demand": 0,
+    "requirement": 0,
+    "name": "Workers.Sales.Labour Power.(id_135)(sim_8)"
+  }
+]

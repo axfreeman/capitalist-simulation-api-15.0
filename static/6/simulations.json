@@ -1,6 +1,6 @@
 [
   {
-    "id": 5,
+    "id": 6,
     "name": "SR with equalisation",
     "time_stamp": 0,
     "username": "admin",
@@ -15,5 +15,6 @@
     "quantity_symbol": "#",
     "melt": 1,
     "investment_algorithm": "Standard"
+
   }
 ]

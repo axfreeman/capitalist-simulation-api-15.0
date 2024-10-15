@@ -2,7 +2,7 @@
   {
     "id": 77,
     "class_id": 30,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 22,
     "usage_type": "Consumption",
     "size": 0,
@@ -15,7 +15,7 @@
   {
     "id": 78,
     "class_id": 30,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 25,
     "usage_type": "Money",
     "size": 3000,
@@ -28,7 +28,7 @@
   {
     "id": 90,
     "class_id": 30,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 23,
     "usage_type": "Sales",
     "size": 0,
@@ -41,7 +41,7 @@
   {
     "id": 87,
     "class_id": 31,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 22,
     "usage_type": "Consumption",
     "size": 0,
@@ -54,7 +54,7 @@
   {
     "id": 88,
     "class_id": 31,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 25,
     "usage_type": "Money",
     "size": 1500,
@@ -67,7 +67,7 @@
   {
     "id": 89,
     "class_id": 31,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 23,
     "usage_type": "Sales",
     "size": 6000,

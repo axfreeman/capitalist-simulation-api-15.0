@@ -1,7 +1,7 @@
 [
     {
         "id": 22,
-        "simulation_id": 5,
+        "simulation_id": 6,
         "name": "Consumption",
         "origin": "INDUSTRIAL",
         "usage": "CONSUMPTION",
@@ -22,7 +22,7 @@
     },
     {
         "id": 23,
-        "simulation_id": 5,
+        "simulation_id": 6,
         "name": "Labour Power",
         "origin": "SOCIAL",
         "usage": "PRODUCTIVE",
@@ -43,7 +43,7 @@
     },
     {
         "id": 24,
-        "simulation_id": 5,
+        "simulation_id": 6,
         "name": "Means of Production",
         "origin": "INDUSTRIAL",
         "usage": "PRODUCTIVE",
@@ -64,7 +64,7 @@
     },
     {
         "id": 25,
-        "simulation_id": 5,
+        "simulation_id": 6,
         "name": "Money",
         "origin": "MONEY",
         "usage": "MONEY",
@@ -85,7 +85,7 @@
     },
     {
         "id": 42,
-        "simulation_id": 5,
+        "simulation_id": 6,
         "name": "Capital Services",
         "origin": "SOCIAL",
         "usage": "Useless",

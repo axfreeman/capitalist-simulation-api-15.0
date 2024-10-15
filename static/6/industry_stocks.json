@@ -2,7 +2,7 @@
   {
     "id": 83,
     "industry_id": 12,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 25,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -16,7 +16,7 @@
   {
     "id": 81,
     "industry_id": 12,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 23,
     "usage_type": "Production",
     "origin": "SOCIAL",
@@ -30,7 +30,7 @@
   {
     "id": 84,
     "industry_id": 12,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 24,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -44,7 +44,7 @@
   {
     "id": 79,
     "industry_id": 12,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 24,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",    
@@ -58,7 +58,7 @@
   {
     "id": 80,
     "industry_id": 13,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 25,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -72,7 +72,7 @@
   {
     "id": 82,
     "industry_id": 13,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 23,
     "usage_type": "Production",
     "origin": "SOCIAL",    
@@ -86,7 +86,7 @@
   {
     "id": 85,
     "industry_id": 13,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 24,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -100,7 +100,7 @@
   {
     "id": 86,
     "industry_id": 13,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "commodity_id": 22,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",    
@@ -110,5 +110,4 @@
     "value": 6000,
     "price": 6000,
     "name": "Department II.Sales.Consumption"
-  }
-]
+  }]

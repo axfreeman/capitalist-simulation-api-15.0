@@ -4,7 +4,8 @@ from typing import List
 from authorization.auth import get_api_key
 from database.database import get_session
 from models.models import Commodity, Simulation, User
-from models.schemas import CommodityBase
+from models.schemas import CommodityBase, PostedPrice, PricePostMessage
+from report.report import report
  
 router = APIRouter(prefix="/commodity", tags=["Commodity"])
 
@@ -47,3 +48,49 @@ def get_commodity(
     if commodity is None:
         raise HTTPException(status_code=404, detail=f'Commodity {id} does not exist')
     return commodity
+
+@router.post("/setprice", status_code=201,response_model=PricePostMessage)
+def setPrice(
+    # form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    user_data:PostedPrice,
+    session: Session = Depends(get_session),
+    u:User=Security(get_api_key)
+)->str:
+    """Accept a form that sets the unit price of a commodity, externally to the simulation.
+    Validates the commodity exists and belongs to the simulation in the post request
+        
+        form_data: commodityID, SimulationID, unit Price.
+
+        Return status: 201 if the post succeeds.
+        Return status: 401 if access not authorised (supplied by fastapi)
+        Return status: 404 if the commodity does not exist
+        Return status: 422 if the input has the wrong format (supplied by fastapi)
+        Return status: 422 if the commodity exists but not in the specified simulation
+    """
+    report(1,0,f"The user {u.username} wants to set the price of a commodity",session)
+
+    # Contents of user_data are:
+        # user_data.commodityID
+        # user_data.simulationID
+        # user_data.unitPrice
+
+    commodity:Commodity=session.query(Commodity).where(
+        Commodity.id == user_data.commodityID
+        ).first()
+    
+    if commodity is None:
+        raise HTTPException(status_code=404, detail=f'Commodity {user_data.commodityID} does not exist')
+
+    if commodity.simulation_id!=user_data.simulationID:
+        raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {user_data.simulationID}')
+
+    # TODO reset what needs to be reset.
+    # TODO log an appropriate trace message (tricky: what Level to use?)
+
+    # Contents of the return message are:
+        # commodityName: str
+        # magnitude: float
+
+    message={'commodityName': commodity.name,'magnitude':user_data.unitPrice}
+    return message
+

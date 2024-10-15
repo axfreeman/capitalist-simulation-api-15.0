@@ -1,7 +1,7 @@
 [
   {
-    "id": 5,
-    "name": "SR with equalisation",
+    "id": 8,
+    "name": "SR two production goods",
     "time_stamp": 0,
     "username": "admin",
     "state": "TEMPLATE",
@@ -15,5 +15,6 @@
     "quantity_symbol": "#",
     "melt": 1,
     "investment_algorithm": "Standard"
+
   }
 ]

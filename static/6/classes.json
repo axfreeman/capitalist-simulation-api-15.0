@@ -1,7 +1,7 @@
 [
    {
     "id": 30,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "name": "Capitalists",
     "output": "Capital Services",
     "population": 3000,
@@ -11,7 +11,7 @@
   },
   {
     "id": 31,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "name": "Workers",
     "output": "Labour Power",
     "population": 6000,
@@ -21,11 +21,10 @@
   },
   {
     "id": 32,
-    "simulation_id": 5,
+    "simulation_id": 6,
     "name": "Bankers",
     "population": 10,
     "consumption_ratio": 2.0,
     "revenue": 10.0,
     "assets": 0.0
-  }
-]
+  }]
