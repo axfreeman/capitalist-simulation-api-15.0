@@ -4,6 +4,7 @@ the system, except for the User model which is in authorization.py.
 
 import typing
 from fastapi import HTTPException
+# from report.report import report
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
 from sqlalchemy.orm import relationship, Session
 from database.database import Base
@@ -178,18 +179,19 @@ class Industry(Base):
     profit_rate = Column(Float)
     successor_id = Column(Integer, nullable=True)  # Helper column to use when cloning
 
-    def unit_cost(self, db: Session)->float:
+    def unit_cost(self, session: Session)->float:
         """Calculate the cost of producing a single unit of output."""
         cost = 0
         for stock in (
-            db.query(Industry_stock)
+            session.query(Industry_stock)
             .where(Industry_stock.industry_id == self.id)
             .where(Industry_stock.usage_type == "Production")
         ):
-            print(
-                f"Stock called [{stock.name}] is adding {stock.unit_cost(db)} to its industry's unit cost"
-            )
-            cost += stock.unit_cost(db)
+            # TODO resolve circular import problem with 'report'
+            # report(3,self.simulation_id(),
+            #     f"Stock called [{stock.name}] is adding {stock.unit_cost(session)} to its industry's unit cost",session
+            # )
+            cost += stock.unit_cost(session)
         return cost
 
     def simulation(self, db: Session)->Simulation:
@@ -210,7 +212,24 @@ class Industry(Base):
     def money_stock(self, db)->Industry_stock:
         """Helper method yields the Money Stock of this industry."""
         return get_industry_money_stock(self, db)  # workaround because pydantic won't easily accept this query in a built-in function
-    
+
+    def get_capitalist_help(self, shortfall, session:Session)->float:
+        """ ask for help if funds are insufficient to maintain production.
+        There are three options:
+        1) Create money and give it to me
+        2) Give me money out of state funds
+        3) Buy my excess stock
+        """
+        print("HELP IS ON THE WAY!!!!! Money requested was ", shortfall)
+        # (Initial test) just give money, to see if it works
+        money_stock:Industry_stock=self.money_stock(session)
+        print("Money stock is", money_stock.name, money_stock.size)
+        session.add(money_stock)
+        money_stock.change_size(shortfall,session)
+        print ("Money was donated")
+        session.commit()
+        return shortfall
+
     def output_commodity(self, db)->Commodity:
         sales_stock:Industry_stock=self.sales_stock(db)
         sales_commodity:Commodity =sales_stock.commodity(db)
@@ -378,10 +397,12 @@ class Industry_stock(Base):
         Do NOT use this in production or consumption, which can change
         unit values and prices.
         """
+        print(f"{self.name} size being changed")
+        print(f"size is now {self.size:.2f}, value is {self.value:.2f}, price is {self.price:.2f}")#TEMPORARY
         self.size += amount
         self.price=self.size*self.commodity(session).unit_value
         self.value=self.size*self.commodity(session).unit_price
-        # print(f"{self.name} size is now {self.size:.2f}, value is {self.value:.2f}, price is {self.price:.2f}")#TEMPORARY
+        print(f"{self.name} size is now {self.size:.2f}, value is {self.value:.2f}, price is {self.price:.2f}")#TEMPORARY
 
 class Class_stock(Base):
     """Stocks are produced, consumed, and traded in a

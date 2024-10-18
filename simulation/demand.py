@@ -3,17 +3,6 @@
 They are all called by 'demandHandler' but are available for use 
 elsewhere.
 
-The end result is to set demand for all stocks and commodities in one 
-simulation.
-
-The sequence is:
-
-    First, initialise demand to zero.
-    
-    Then ask every industry to calculate demand for its productive 
-    stocks, and every social class to calculate consumer demand.
-    
-    Finally, tell every commodity to add up demand from stocks of it.
 """
 
 from models import models
@@ -22,29 +11,35 @@ from report.report import report
 from sqlalchemy.orm import Session
 
 def calculate_demand(session:Session, simulation:Simulation):
-        initialise_demand(session, simulation)
-        industry_demand(session, simulation) # tell industries to register their demand with their stocks.
-        class_demand(session, simulation)  # tell classes to register their demand with their stocks.
-        commodity_demand(session, simulation)  # tell the commodities to tot up the demand from all stocks of them.
+        
+    """Set demand for all stocks and commodities in one simulation.
+
+        First, initialise demand to zero.
+    
+        Then ask every industry to calculate demand for its productive 
+        stocks, and every social class to calculate consumer demand.
+    
+        Finally, tell every commodity to add up demand from stocks of it."""
+
+    initialise_demand(session, simulation)
+    industry_demand(session, simulation) # tell industries to register their demand with their stocks.
+    class_demand(session, simulation)  # tell classes to register their demand with their stocks.
+    commodity_demand(session, simulation)  # tell the commodities to tot up the demand from all stocks of them.
 
 def initialise_demand(session: Session,simulation: Simulation):
-    """Set demand to zero for all commodities and stocks, prior to
-    recalculating total demand."""
+    """Set demand to zero for all commodities and stocks, prior to recalculating total demand."""
 
     report(1,simulation.id, "INITIALISING DEMAND FOR COMMODITIES AND STOCKS",session)
     cquery = session.query(Commodity).where(Commodity.simulation_id==simulation.id)
     for c in cquery:
-        # report(3,simulation.id,f"Initialising demand for commodity {c.name}",session)
         session.add(c)
         c.demand=0
     squery = session.query(Industry_stock).where(Industry_stock.simulation_id==simulation.id)
     for s in squery:
-        # report(3,simulation.id,f"Initialising demand for industry stock {s.name}",session)
         session.add(s)
         s.demand=0
     squery = session.query(Class_stock).where(Class_stock.simulation_id==simulation.id)
     for s in squery:
-        # report(3,simulation.id,f"Initialising demand for class stock {s.name}",session)
         session.add(s)
         s.demand=0
     session.commit()
@@ -53,17 +48,27 @@ def industry_demand(session:Session,simulation:Simulation):
     """Tell each industry to set demand for each of its productive stocks."""
     query=session.query(Industry).where(Industry.simulation_id==simulation.id)
     report(1,simulation.id, "CALCULATING DEMAND FROM INDUSTRIES",session)
+    industry:Industry
     for industry in query:
         report(2, simulation.id,f"Industry {industry.name} will set demand for all its productive stocks",session)
         session.add(industry)
+        cost:float =0
+        money_stock:Industry_stock=industry.money_stock(session)
+        money=money_stock.size
         query=session.query(Industry_stock).filter(Industry_stock.industry_id==industry.id,Industry_stock.usage_type=="Production")
         for stock in query:
             session.add(stock)
-            commodity=stock.commodity(session)
+            commodity: Commodity=stock.commodity(session)
             demand=round(stock.flow_per_period(session),4)
             stock.demand+=demand
+            cost+=demand*commodity.unit_price
             report(3,simulation.id,f'Demand for {commodity.name} has grown by {demand} to {stock.demand}, from [{stock.name}]',session)
-        report(2, simulation.id,f"Industry {industry.name} has finished setting demand",session)
+        report(2, simulation.id,f"Industry {industry.name} has {money} to finance costs of {cost}",session)
+        if money<cost:
+            report(2, simulation.id,f"Insufficient money to maintain production: CALL FOR HELP!",session)
+            finance_ratio=industry.get_capitalist_help(cost-money,session)
+            report(2, simulation.id,f"After getting help, industry has {money_stock.size}",session)
+            # TODO adjust demand depending on finance? I think this is done in Trade
     session.commit()
 
 def class_demand(session:Session,simulation:Simulation):
