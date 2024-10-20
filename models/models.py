@@ -42,9 +42,11 @@ class Simulation(Base):
     labour_supply_response = Column(String)
     price_response_type = Column(String)
     melt_response_type = Column(String)
+    total_value= Column(Float)
+    total_price= Column (Float)
+    melt = Column(Float)
     currency_symbol = Column(String)
     quantity_symbol = Column(String)
-    melt = Column(Float)
     investment_algorithm = Column(String)
 
     def set_state(self,state:str,session:Session):
@@ -131,6 +133,7 @@ class Commodity(Base):
     simulation_name = relationship("Simulation")
 
 class Industry(Base):
+
     """Each Industry is a basic productive unit.
 
     It owns:
@@ -162,7 +165,6 @@ class Industry(Base):
     """
 
     __tablename__ = "industries"
-
     id = Column(Integer, primary_key=True, nullable=False)
     simulation_id = Column(
         Integer, ForeignKey("simulations.id", ondelete="CASCADE"), nullable=False
@@ -335,42 +337,42 @@ class Industry_stock(Base):
     requirement = Column(Float)
     demand = Column(Float)
 
-    def annual_flow_rate(self, db: Session) -> float:
+    def annual_flow_rate(self, session: Session) -> float:
         """The annual rate at which this Stock is consumed.
         Returns zero for Money and Sales Stocks.
         """
         if self.usage_type == "Production":
-            industry = db.query(Industry).where(Industry.id == self.industry_id).first()
+            industry = session.query(Industry).where(Industry.id == self.industry_id).first()
             return round(industry.output_scale * self.requirement,4)
         else:
             return 0.0
 
-    def flow_per_period(self, db: Session) -> float:
-        return round(self.annual_flow_rate(db) / self.simulation(db).periods_per_year,4)
+    def flow_per_period(self, session: Session) -> float:
+        return round(self.annual_flow_rate(session) / self.simulation(session).periods_per_year,4)
 
-    def standard_stock(self, db: Session) -> float:
+    def standard_stock(self, session: Session) -> float:
         """The size of the normal stock which an industry must maintain in order to conduct
         production.
 
         Returns zero for non-productive Stocks.
         """
         if self.usage_type == "Production":
-            commodity = db.query(Commodity).where(Commodity.id == self.commodity_id).first()
-            return self.annual_flow_rate(db) * commodity.turnover_time
+            commodity = session.query(Commodity).where(Commodity.id == self.commodity_id).first()
+            return self.annual_flow_rate(session) * commodity.turnover_time
         else:
             return 0.0
 
-    def industry(self, db: Session)->Industry:
+    def industry(self, session: Session)->Industry:
         """Returns the  Industry to which this stock belongs."""
-        return db.get_one(Industry, self.industry_id)
+        return session.get_one(Industry, self.industry_id)
 
-    def commodity(self, db: Session)->Commodity:
-        return db.get_one(Commodity, self.commodity_id)
+    def commodity(self, session: Session)->Commodity:
+        return session.get_one(Commodity, self.commodity_id)
 
     def simulation(self, session)->Simulation:
         return session.get_one(Simulation, self.simulation_id)
 
-    def unit_cost(self, db: Session)->float:
+    def unit_cost(self, session: Session)->float:
         """Money price of using this Stock to make one unit of output
         in a period.
 
@@ -378,7 +380,7 @@ class Industry_stock(Base):
         nevertheless, caller should invoke this method only on productive
         Stocks.
         """
-        return self.requirement * self.commodity(db).unit_price
+        return self.requirement * self.commodity(session).unit_price
 
     def owner(self, db:Session)->Industry: 
         """Really just for diagnostic purposes """

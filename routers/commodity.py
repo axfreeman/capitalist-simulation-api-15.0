@@ -6,6 +6,7 @@ from database.database import get_session
 from models.models import Commodity, Simulation, User
 from models.schemas import CommodityBase, PostedPrice, PricePostMessage
 from report.report import report
+from simulation.price import calculate_melt
  
 router = APIRouter(prefix="/commodity", tags=["Commodity"])
 
@@ -49,7 +50,7 @@ def get_commodity(
         raise HTTPException(status_code=404, detail=f'Commodity {id} does not exist')
     return commodity
 
-@router.post("/setprice", status_code=201,response_model=PricePostMessage)
+@router.post("/setprice", status_code=201,response_model=CommodityBase)
 def setPrice(
     # form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     user_data:PostedPrice,
@@ -59,7 +60,7 @@ def setPrice(
     """Accept a form that sets the unit price of a commodity, externally to the simulation.
     Validates the commodity exists and belongs to the simulation in the post request
         
-        form_data: commodityID, SimulationID, unit Price.
+        form_data: commodityId, SimulationId, unitPrice.
 
         Return status: 201 if the post succeeds.
         Return status: 401 if access not authorised (supplied by fastapi)
@@ -70,27 +71,23 @@ def setPrice(
     report(1,0,f"The user {u.username} wants to set the price of a commodity",session)
 
     # Contents of user_data are:
-        # user_data.commodityID
-        # user_data.simulationID
+        # user_data.commodityId
+        # user_data.simulationId
         # user_data.unitPrice
 
     commodity:Commodity=session.query(Commodity).where(
-        Commodity.id == user_data.commodityID
+        Commodity.id == user_data.commodityId
         ).first()
     
     if commodity is None:
-        raise HTTPException(status_code=404, detail=f'Commodity {user_data.commodityID} does not exist')
+        raise HTTPException(status_code=404, detail=f'Commodity {user_data.commodityId} does not exist')
 
-    if commodity.simulation_id!=user_data.simulationID:
+    if commodity.simulation_id!=user_data.simulationId:
         raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {user_data.simulationID}')
 
     # TODO reset what needs to be reset.
     # TODO log an appropriate trace message (tricky: what Level to use?)
 
-    # Contents of the return message are:
-        # commodityName: str
-        # magnitude: float
-
-    message={'commodityName': commodity.name,'magnitude':user_data.unitPrice}
-    return message
+    calculate_melt(session,user_data.simulationId)
+    return commodity
 

@@ -32,8 +32,8 @@ class UserCreate(BaseModel):
 
 # Defines the fields in a form to set the unit price of a commodity
 class PostedPrice(BaseModel):
-    commodityID: int
-    simulationID: int
+    commodityId: int
+    simulationId: int
     unitPrice: float
 
 class SimulationBase(BaseModel):
@@ -47,6 +47,8 @@ class SimulationBase(BaseModel):
     investment_ratio: float
     currency_symbol: str
     quantity_symbol: str
+    total_value:float
+    total_price: float
     melt: float
     investment_algorithm: str
 

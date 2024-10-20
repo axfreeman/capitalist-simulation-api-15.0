@@ -13,6 +13,8 @@
 		"melt_response_type" : null,
 		"currency_symbol" : "$",
 		"quantity_symbol" : "#",
+		"total_value": 0,
+		"total_price": 0,
 		"melt" : 1.0,
 		"investment_algorithm" : "Standard"
 	}
