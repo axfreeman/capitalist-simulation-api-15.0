@@ -50,7 +50,7 @@ def get_commodity(
         raise HTTPException(status_code=404, detail=f'Commodity {id} does not exist')
     return commodity
 
-@router.post("/setprice", status_code=201,response_model=CommodityBase)
+@router.post("/setprice", status_code=200,response_model=CommodityBase)
 def setPrice(
     # form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     user_data:PostedPrice,
@@ -62,7 +62,7 @@ def setPrice(
         
         form_data: commodityId, SimulationId, unitPrice.
 
-        Return status: 201 if the post succeeds.
+        Return status: 200 if the post succeeds.
         Return status: 401 if access not authorised (supplied by fastapi)
         Return status: 404 if the commodity does not exist
         Return status: 422 if the input has the wrong format (supplied by fastapi)
