@@ -26,11 +26,17 @@ def calculate_melt(session:Session,simulation_id:int)->float:
     total_value=0
     total_price=0
     for commodity in commodities:
+        session.add(commodity)
         report(3,simulation_id,f"Processing prices for commodity {commodity.name} with value {commodity.total_value} and price {commodity.total_price}",session)
         simulation.total_value+=commodity.total_value
         simulation.total_price+=commodity.total_price
     simulation.melt=simulation.total_price/simulation.total_value
     report(2,simulation_id,f"Total price is {simulation.total_price} total value is {simulation.total_value} and melt is {simulation.melt}",session)
+    for commodity in commodities:
+        report(3,simulation_id,f"Recalculating unit value of commodity {commodity.name}, currently {commodity.unit_value}",session)
+        commodity.unit_value/=simulation.melt
+        report(3,simulation_id,f"Unit value of commodity {commodity.name} is now {commodity.unit_value}",session)
+    report(2,simulation_id,f"Finished recalculating unit values",session)
     session.commit()
     return simulation.melt
 

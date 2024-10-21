@@ -27,8 +27,9 @@ def industry_produce(
     Add the used-up size of each socially-produced productive Stock to 
     the value of self.sales_stock.
 
-    Once Production and Reproduction are both complete, recalculate
+    Once Production and Consumptioon are both complete, we recalculate
     unit values and prices and then revalue all Stocks from their sizes.
+    But we do not do that here; it is done in the Consumption action.
 
     This is a separate calculation and is not done inside production,
     because it can only calculated after Social Classes have restored

@@ -40,7 +40,6 @@ def class_consume(
     sales_stock = social_class.sales_stock(session)
     sales_commodity:Commodity=sales_stock.commodity(session)
     session.add(sales_stock)
-
     report(2,simulation.id,f"Sales stock size before consumption is {sales_stock.size} with value {sales_stock.value}",session)
 
     consumption_stocks_query = session.query(Class_stock).where(

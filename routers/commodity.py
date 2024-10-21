@@ -7,6 +7,7 @@ from models.models import Commodity, Simulation, User
 from models.schemas import CommodityBase, PostedPrice, PricePostMessage
 from report.report import report
 from simulation.price import calculate_melt
+from simulation.utils import revalue_stocks
  
 router = APIRouter(prefix="/commodity", tags=["Commodity"])
 
@@ -83,11 +84,17 @@ def setPrice(
         raise HTTPException(status_code=404, detail=f'Commodity {user_data.commodityId} does not exist')
 
     if commodity.simulation_id!=user_data.simulationId:
-        raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {user_data.simulationID}')
+        raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {user_data.simulationId}')
 
+    simulation:Simulation=session.query(Simulation).where(
+        Simulation.id==user_data.simulationId
+    ).first()
+    
     # TODO reset what needs to be reset.
     # TODO log an appropriate trace message (tricky: what Level to use?)
 
     calculate_melt(session,user_data.simulationId)
+    revalue_stocks(session, simulation)
+
     return commodity
 
