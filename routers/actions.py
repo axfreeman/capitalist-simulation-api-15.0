@@ -2,15 +2,15 @@ from fastapi import Depends, APIRouter, Security, status
 from sqlalchemy.orm import Session
 from database.database import get_session
 from models.schemas import ServerMessage
-from simulation.consumption import consume
+from actions.consumption import consume
 from authorization.auth import get_api_key
 from report.report import report
-from simulation.reload import clear_table, load_table
-from simulation.demand import calculate_demand
-from simulation.supply import calculate_supply, initialise_supply, industry_supply, class_supply
-from simulation.trade import buy_and_sell, constrain_demand
-from simulation.production import produce
-from simulation.invest import invest
+from actions.reload import clear_table, load_table
+from actions.demand import calculate_demand
+from actions.supply import calculate_supply
+from actions.trade import buy_and_sell, constrain_demand
+from actions.production import produce
+from actions.invest import invest
 from models.models import (
     Class_stock,
     Industry_stock,
@@ -21,7 +21,7 @@ from models.models import (
     Trace,
     User,
 )
-from simulation.utils import calculate_current_capitals, revalue_stocks, revalue_commodities
+from actions.utils import calculate_current_capitals, revalue_stocks, revalue_commodities
 
 router = APIRouter(prefix="/action", tags=["Actions"])
 

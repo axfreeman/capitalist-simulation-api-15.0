@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, Security, status, Respons
 from database.database import get_session
 from report.report import report
 from models.schemas import CloneMessage, ServerMessage
-from simulation.reload import initialise_buyers_and_sellers
-from simulation.utils import calculate_current_capitals, calculate_initial_capitals, revalue_commodities, revalue_stocks
+from actions.reload import initialise_buyers_and_sellers
+from actions.utils import calculate_current_capitals, calculate_initial_capitals, revalue_commodities, revalue_stocks
 from authorization.auth import get_api_key
 from models.models import Class_stock, Commodity, Industry, Industry_stock, SocialClass, Simulation, User
 

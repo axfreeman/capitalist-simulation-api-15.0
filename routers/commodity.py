@@ -6,8 +6,8 @@ from database.database import get_session
 from models.models import Commodity, Simulation, User
 from models.schemas import CommodityBase, PostedPrice, PricePostMessage
 from report.report import report
-from simulation.price import calculate_melt
-from simulation.utils import revalue_stocks
+from actions.price import calculate_melt
+from actions.utils import revalue_stocks
  
 router = APIRouter(prefix="/commodity", tags=["Commodity"])
 

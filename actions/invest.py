@@ -12,8 +12,8 @@ from models.models import (
     workers,
 )
 from report.report import report
-from simulation.supply import calculate_supply
-from simulation.utils import validate
+from actions.supply import calculate_supply
+from actions.utils import validate
 from .demand import calculate_demand
 from sqlalchemy.orm import Session
 
