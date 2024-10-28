@@ -138,13 +138,13 @@ def consumeHandler(
     try:
         simulation:Simulation=u.current_simulation(session)
         consume(session, simulation)
-        simulation.set_state("INVEST",session) # set the next state in the circuit, obliging the user to do this next.
+        
+        # set the next state in the circuit, obliging the user to do this next.        
+        simulation.set_state("INVEST",session) 
 
-        # Now recalculate the price and value of every stock
-
+        # Recalculate the price and value of every stock, then calculate capital
         revalue_commodities(session,simulation)
         revalue_stocks(session, simulation)
-
         calculate_current_capitals(session,simulation)
     except Exception as e:
         return{"message":f"Error {e} processing social consumption for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
@@ -176,7 +176,8 @@ def investHandler(
     try:
         simulation:Simulation=u.current_simulation(session)
         invest(simulation,session)
-        simulation.set_state("DEMAND",session) # set the next state in the circuit, obliging the user to do this next.
+        # set the next state in the circuit, obliging the user to do this next.
+        simulation.set_state("DEMAND",session) 
     except Exception as e:
         return{"message":f"Error {e} processing investment for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Investment conducted for user {u.username}","statusCode":status.HTTP_200_OK}
