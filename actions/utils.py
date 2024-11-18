@@ -119,13 +119,11 @@ def capital(
       returns(float):
           the capital of the industry concerned
     """
-    report(2,simulation.id,f"Calculating the capital of {industry.name}",session)
     result=0
     istocks=session.query(Industry_stock).where(Industry_stock.industry_id==industry.id)
     for stock in istocks:
         report(3,simulation.id,f"Adding {stock.price} to capital of {industry.name} for Industry stock [{stock.name}]",session)
         result+=stock.price
-    report(2,simulation.id,"Finished calculating capital",session)
     return result
 
 
@@ -145,9 +143,11 @@ def calculate_initial_capitals(
     report(1,simulation.id,f"Calculate initial capital for simulation {simulation.id}",session)
     industries=session.query(Industry).where(Industry.simulation_id==simulation.id)
     for industry in industries:
-      report(2,simulation.id,f"Asking for the capital of {industry.name}",session)      
       session.add(industry)
+      report(2,simulation.id,f"Calculating the initial capital of {industry.name}",session)
       industry.initial_capital=capital(session,simulation,industry)
+    report(2,simulation.id,f"Finished calculating initial capital",session)
+
     session.commit()
 
 def calculate_current_capitals(
@@ -166,13 +166,15 @@ def calculate_current_capitals(
           the simulation that is currently being processed    
 
     """
-    report(1,simulation.id,"Calculate current capital for simulation {simulation.id}",session)
+    report(1,simulation.id,f"Calculate current capital for simulation {simulation.id}",session)
     industries=session.query(Industry).where(Industry.simulation_id==simulation.id)
     for industry in industries:
+      report(2,simulation.id,f"Calculating the current capital of {industry.name}",session)
       session.add(industry)
       industry.current_capital=capital(session,simulation,industry)
       industry.profit=industry.current_capital-industry.initial_capital
       industry.profit_rate=industry.profit/industry.initial_capital
+    report(2,simulation.id,f"Finished calculating current capital",session)
     session.commit()
 
 def validate(object:any, name:str)->bool:

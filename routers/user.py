@@ -179,7 +179,8 @@ def create_simulation_from_template(
     calculate_initial_capitals(session,new_simulation)
     calculate_current_capitals(session,new_simulation)
     message=f"Cloned Template with id {id} into simulation with id {new_simulation.id}"
-    report(1,new_simulation.id,f"Finished cloning",session)
+    report(1,new_simulation.id,message,session)
+    session.commit()   # TODO think about when to make Trace commits
     return {
         "message":message,
         "statusCode":status.HTTP_200_OK, 
