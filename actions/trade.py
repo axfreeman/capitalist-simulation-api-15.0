@@ -8,7 +8,7 @@ def constrain_demand(session,simulation):
     """Constrain demand to supply.
     TODO mostly untested
     """
-    report(1,simulation.id,"CONSTRAINING DEMAND TO SUPPLY",session)
+    report(1,simulation.id,"Constraining demand to supply",session)
     query=session.query(Commodity).where(Commodity.simulation_id==simulation.id)
     for commodity in query:
         session.add(commodity)

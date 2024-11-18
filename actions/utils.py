@@ -20,7 +20,7 @@ def revalue_commodities(
           The simulation to which this calculation refers
   """
 
-  report(1,simulation.id,"CALCULATE THE SIZE, VALUE AND PRICE OF ALL COMMODITIES",session)
+  report(1,simulation.id,"Calculate the size, value and price of all commodities",session)
   commodities=session.query(Commodity).where(Commodity.simulation_id==simulation.id)
   for commodity in commodities:
       session.add(commodity)
@@ -71,7 +71,7 @@ def revalue_stocks(
       simulation(Simulation):
           the simulation that is currently being processed    
   """
-  report(1,simulation.id,"RESETTING PRICES AND VALUES",session)
+  report(1,simulation.id,"Reset values the and prices of stocks from the unit values and prices of their commodities",session)
 
 # Industry stocks
 
@@ -142,7 +142,7 @@ def calculate_initial_capitals(
       simulation(Simulation):
           the simulation that is currently being processed    
     """
-    report(1,simulation.id,f"CALCULATING INITIAL CAPITAL for simulation {simulation.id}",session)
+    report(1,simulation.id,f"Calculate initial capital for simulation {simulation.id}",session)
     industries=session.query(Industry).where(Industry.simulation_id==simulation.id)
     for industry in industries:
       report(2,simulation.id,f"Asking for the capital of {industry.name}",session)      
@@ -166,7 +166,7 @@ def calculate_current_capitals(
           the simulation that is currently being processed    
 
     """
-    report(1,simulation.id,"CALCULATING CURRENT CAPITAL",session)
+    report(1,simulation.id,"Calculate current capital for simulation {simulation.id}",session)
     industries=session.query(Industry).where(Industry.simulation_id==simulation.id)
     for industry in industries:
       session.add(industry)

@@ -46,7 +46,7 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
                         i. The issue is that they have to release sufficient funds to pay for the MP
                         ii. We could either override the 'requirement' OR reset it.
     """
-    report(1,simulation.id,"APPLYING THE EXPANDED REPRODUCTION INVESTMENT ALGORITHM",session)
+    report(1,simulation.id,"Applying the expanded reproduction algorithm for investment",session)
     mp_commodity: Commodity = production_commodity(simulation,session)
     mc_commodity: Commodity = necessities_commodity(simulation, session)
     DI_industry: Industry = D1_industry(simulation, session)
@@ -176,7 +176,7 @@ def standard_invest(simulation: Simulation, session: Session):
     For now this is a kind of test bed for development
     """
     
-    report(1, simulation.id, "APPLYING THE STANDARD INVESTMENT ALGORITHM", session)
+    report(1, simulation.id, "Applying the standard investment algorithm", session)
     industries = session.query(Industry).where(Industry.simulation_id == simulation.id)
     for industry in industries:
         session.add(industry)

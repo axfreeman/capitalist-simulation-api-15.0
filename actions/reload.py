@@ -49,7 +49,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
 
 # Create seller list
 
-    report(1, simulation_id, f"CREATING A LIST OF SELLERS FOR SIMULATION {simulation_id}", db)
+    report(1, simulation_id, f"Creating a list of sellers for simulation {simulation_id}", db)
     query = db.query(Seller)
     query.delete(synchronize_session=False)
 
@@ -104,7 +104,7 @@ def initialise_buyers_and_sellers(db, simulation_id):
 
 # Create buyer list
 
-    report(1, simulation_id, f"CREATING A LIST OF BUYERS FOR SIMULATION {simulation_id}", db)
+    report(1, simulation_id, f"Creating a list of buyers for simulation {simulation_id}", db)
     query = db.query(Buyer)
     query.delete(synchronize_session=False)
 

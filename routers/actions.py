@@ -41,6 +41,7 @@ def demandHandler(
     """
     try:
         simulation:Simulation=u.current_simulation(session)
+        report(0, simulation.id, "CALCULATE DEMAND", session) # TODO note this is boilerplate
         calculate_demand(session,simulation)
         simulation.set_state("SUPPLY",session) # set the next state in the circuit, obliging the user to do this next.
     except Exception as e:
@@ -61,8 +62,10 @@ def supplyHandler(
         returns: None if there is no current simulation
         returns: success message if there is a simulation
     """
+
     try:
         simulation:Simulation=u.current_simulation(session)
+        report(0, simulation.id, "CALCULATE SUPPLY", session) # TODO note this is boilerplate
         calculate_supply(session, simulation)        
         simulation.set_state("TRADE",session) # set the next state in the circuit, obliging the user to do this next.
 
@@ -83,12 +86,12 @@ def tradeHandler(
         Otherwise, return success message
     """
     simulation:Simulation=u.current_simulation(session)
-    report(1, simulation.id, f"TRADE", session)
+    report(0, simulation.id, f"TRADE", session)
     constrain_demand(session, simulation)
     buy_and_sell(session, simulation)
     simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.
 
-    report(1,1,"TRADE IS COMPLETE",session)
+    report(1,1,"Trade is complete",session)
     # TODO I don't think it's necessary to revalue, but check this.
     # This is because trade only involves a change of ownership.
     # revalue_stocks(session,simulation) 
@@ -110,6 +113,7 @@ def produceHandler(
 
     try:
         simulation:Simulation=u.current_simulation(session)
+        report(0, simulation.id, "PRODUCE", session) # TODO note this is boilerplate
         produce(session, simulation)
         simulation.set_state("CONSUME",session) # set the next state in the circuit, obliging the user to do this next.
     except Exception as e:
@@ -131,12 +135,14 @@ def consumeHandler(
 
     Instructs every social class to consume and reproduce anything it sells.
 
+    return: 
         If there is no current simulation, returns None
         Otherwise, return success message
     """
 
     try:
         simulation:Simulation=u.current_simulation(session)
+        report(0, simulation.id, "CONSUME", session) # TODO note this is boilerplate
         consume(session, simulation)
         
         # set the next state in the circuit, obliging the user to do this next.        
@@ -175,6 +181,7 @@ def investHandler(
     """
     try:
         simulation:Simulation=u.current_simulation(session)
+        report(0, simulation.id, "INVEST", session) # TODO note this is boilerplate
         invest(simulation,session)
         # set the next state in the circuit, obliging the user to do this next.
         simulation.set_state("DEMAND",session) 

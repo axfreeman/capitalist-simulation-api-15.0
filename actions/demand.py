@@ -29,7 +29,7 @@ def calculate_demand(session:Session, simulation:Simulation):
 def initialise_demand(session: Session,simulation: Simulation):
     """Set demand to zero for all commodities and stocks, prior to recalculating total demand."""
 
-    report(1,simulation.id, "INITIALISING DEMAND FOR COMMODITIES AND STOCKS",session)
+    report(1,simulation.id, "Initialising demand for commodities and stocks",session)
     cquery = session.query(Commodity).where(Commodity.simulation_id==simulation.id)
     for c in cquery:
         session.add(c)
@@ -47,7 +47,7 @@ def initialise_demand(session: Session,simulation: Simulation):
 def industry_demand(session:Session,simulation:Simulation):
     """Tell each industry to set demand for each of its productive stocks."""
     query=session.query(Industry).where(Industry.simulation_id==simulation.id)
-    report(1,simulation.id, "CALCULATING DEMAND FROM INDUSTRIES",session)
+    report(1,simulation.id, "Calculating demand from industries",session)
     industry:Industry
     for industry in query:
         report(2, simulation.id,f"Industry {industry.name} will set demand for all its productive stocks",session)
@@ -73,7 +73,7 @@ def industry_demand(session:Session,simulation:Simulation):
 
 def class_demand(session:Session,simulation:Simulation):
     """Tell each class to set demand for each of its consumption stocks."""
-    report(1,simulation.id, "CALCULATING DEMAND FROM SOCIAL CLASSES",session)
+    report(1,simulation.id, "Calculating demand from social classes",session)
     query=session.query(SocialClass).where(SocialClass.simulation_id==simulation.id)
     for socialClass in query:
         report(2, simulation.id,f"Asking class {socialClass.name} to set demand for all its consumption stocks",session)
@@ -92,7 +92,7 @@ def commodity_demand(session:Session,simulation:Simulation):
     """For each commodity, add up the total demand by asking all its stocks what they need.
     Do this separately from the stocks as a kind of check - could be done at the same time.
     """
-    report(1,simulation.id,"ADDING UP DEMAND FOR COMMODITIES",session)
+    report(1,simulation.id,"Adding up demand for commodities",session)
     query=session.query(models.Commodity).where(Commodity.simulation_id==simulation.id)
     for commodity in query:
        

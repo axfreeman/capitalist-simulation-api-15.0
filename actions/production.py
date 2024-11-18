@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 def produce(session:Session, simulation:Simulation):
     """Tell all industries to produce."""
-    report(1, simulation.id, "PRODUCTION", session)
+    report(1, simulation.id, "Tell all industries to produce", session)
     iquery = session.query(Industry).where(Industry.simulation_id == simulation.id)
 
     for ind in iquery:

@@ -31,16 +31,18 @@ def report(level: int, simulation_id: int, message: str, session: Session):
     Does not commit the change. Assumes this will be done by the caller.
     """
     match level:
+        case 0:
+            colour = Fore.WHITE
         case 1:
-            colour = Fore.YELLOW
+            colour = Fore.GREEN
         case 2:
             colour = Fore.RED
         case 3:
-            colour = Fore.GREEN
+            colour = Fore.BLUE
         case 4:
-            colour= Fore.BLUE
+            colour= Fore.LIGHTRED_EX
         case 5:
-            colour=Fore.LIGHTRED_EXS
+            colour=Fore.LIGHTMAGENTA_EX
 
     user_message = " " * level + f"{message}"
     log_message = " " * level+colour + message + Fore.WHITE

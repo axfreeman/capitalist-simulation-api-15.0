@@ -23,7 +23,7 @@ def initialise_supply(session,simulation):
 def industry_supply(session,simulation):
     """Calculate supply from every industries for each commodity it produces."""
 
-    report(1,simulation.id, "CALCULATING SUPPLY FROM INDUSTRIES",session)
+    report(1,simulation.id, "Calculating supply from industries",session)
     query=session.query(Industry).where(Industry.simulation_id==simulation.id)
     for industry in query:
         sales_stock:Industry_stock=industry.sales_stock(session)
@@ -41,7 +41,7 @@ def industry_supply(session,simulation):
 def class_supply(session,simulation):
     """Calculate supply from every class for each commodity it produces."""
 
-    report(1,simulation.id, "CALCULATING SUPPLY FROM SOCIAL CLASSES",session)
+    report(1,simulation.id, "Calculating supply from social classes",session)
     query=session.query(SocialClass).where(SocialClass.simulation_id==simulation.id)
     for socialClass in query:
         sales_stock:Class_stock=socialClass.sales_stock(session)
