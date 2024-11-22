@@ -14,7 +14,6 @@ def initialise_supply(session,simulation):
     """Set supply of every commodity to zero to prepare for the calculation."""
     cquery = session.query(Commodity).where(Commodity.simulation_id==simulation.id)
     for c in cquery:
-        report(2,simulation.id,f"Initialising the supply of commodity {c.name}",session)
         session.add(c)
         c.supply=0
     session.commit()
@@ -23,7 +22,6 @@ def initialise_supply(session,simulation):
 def industry_supply(session,simulation):
     """Calculate supply from every industries for each commodity it produces."""
 
-    report(1,simulation.id, "Calculating supply from industries",session)
     query=session.query(Industry).where(Industry.simulation_id==simulation.id)
     for industry in query:
         sales_stock:Industry_stock=industry.sales_stock(session)
@@ -41,7 +39,6 @@ def industry_supply(session,simulation):
 def class_supply(session,simulation):
     """Calculate supply from every class for each commodity it produces."""
 
-    report(1,simulation.id, "Calculating supply from social classes",session)
     query=session.query(SocialClass).where(SocialClass.simulation_id==simulation.id)
     for socialClass in query:
         sales_stock:Class_stock=socialClass.sales_stock(session)
@@ -58,6 +55,9 @@ def calculate_supply(session:Session, simulation:Simulation):
     and save the results in the commodity objects
     """
     initialise_supply(session, simulation)
+    report(1,simulation.id, "Calculating supply from industries",session)
     industry_supply(session, simulation)  # tell industries to register their supply
+    report(1,simulation.id, "Calculating supply from social classes",session)
     class_supply(session, simulation)  # tell classes to register their supply 
+    report(1,simulation.id, "Finished calculating supply",session)
     

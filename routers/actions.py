@@ -199,6 +199,7 @@ def get_json(session: Session = Depends(get_session)):
         If 'reload' is false in the call to reload_table, does not re-initialise
     """
     report(1,1,"RESETTING ENTIRE DATABASE",session)
+    clear_table(session, Trace, 1) # This should be done first, to ensure the Trace table includes what follows
     clear_table(session, Simulation, 1)
     clear_table(session, SocialClass, 1)
     clear_table(session, Commodity, 1)
@@ -206,7 +207,6 @@ def get_json(session: Session = Depends(get_session)):
     clear_table(session, Industry_stock, 1)
     clear_table(session, Class_stock, 1)
     clear_table(session, User, 1)
-    clear_table(session, Trace, 1)
 
     for i in range(1,6):
         load_table(session, Simulation, f"static/{i}/simulations.json", True, 1)

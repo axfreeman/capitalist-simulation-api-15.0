@@ -71,7 +71,7 @@ def revalue_stocks(
       simulation(Simulation):
           the simulation that is currently being processed    
   """
-  report(1,simulation.id,"Reset values the and prices of stocks from the unit values and prices of their commodities",session)
+  report(1,simulation.id,"Reset stock values and prices from the unit values and prices of their commodities",session)
 
 # Industry stocks
 
