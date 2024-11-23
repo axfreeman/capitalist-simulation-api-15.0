@@ -143,6 +143,7 @@ def consumeHandler(
     try:
         simulation:Simulation=u.current_simulation(session)
         report(0, simulation.id, "CONSUME", session) # TODO note this is boilerplate
+        session.commit()
         consume(session, simulation)
         
         # set the next state in the circuit, obliging the user to do this next.        
