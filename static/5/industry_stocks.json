@@ -8,9 +8,9 @@
 		"username" : null,
 		"usage_type" : "Sales",
 		"origin" : "INDUSTRIAL",
-		"size" : 16000.0,
-		"value" : 16000.0,
-		"price" : 16000.0,
+		"size" : 12000.0,
+		"value" : 12000.0,
+		"price" : 12000.0,
 		"requirement" : 0.0,
 		"demand" : 0.0
 	},
@@ -26,7 +26,7 @@
 		"size" : 0.0,
 		"value" : 0.0,
 		"price" : 0.0,
-		"requirement" : 0.25,
+		"requirement" : 0.66666667,
 		"demand" : 0.0
 	},
 	{
@@ -56,7 +56,7 @@
 		"size" : 0.0,
 		"value" : 0.0,
 		"price" : 0.0,
-		"requirement" : 0.5,
+		"requirement" : 0.33333333,
 		"demand" : 0.0
 	},
 	{
@@ -86,7 +86,7 @@
 		"size" : 0.0,
 		"value" : 0.0,
 		"price" : 0.0,
-		"requirement" : 0.5,
+		"requirement" : 0.33333333,
 		"demand" : 0.0
 	},
 	{
@@ -101,7 +101,7 @@
 		"size" : 0.0,
 		"value" : 0.0,
 		"price" : 0.0,
-		"requirement" : 0.5,
+		"requirement" : 0.66666667,
 		"demand" : 0.0
 	},
 	{
@@ -113,9 +113,9 @@
 		"username" : null,
 		"usage_type" : "Sales",
 		"origin" : "INDUSTRIAL",
-		"size" : 16000.0,
-		"value" : 16000.0,
-		"price" : 16000.0,
+		"size" : 12000.0,
+		"value" : 12000.0,
+		"price" : 12000.0,
 		"requirement" : 0.0,
 		"demand" : 0.0
 	}

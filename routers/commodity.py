@@ -69,8 +69,6 @@ def setPrice(
         Return status: 422 if the input has the wrong format (supplied by fastapi)
         Return status: 422 if the commodity exists but not in the specified simulation
     """
-    report(1,0,f"The user {u.username} wants to set the price of a commodity",session)
-
     # Contents of user_data are:
         # user_data.commodityId
         # user_data.simulationId
@@ -86,14 +84,13 @@ def setPrice(
     if commodity.simulation_id!=user_data.simulationId:
         raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {user_data.simulationId}')
 
+
     simulation:Simulation=session.query(Simulation).where(
         Simulation.id==user_data.simulationId
     ).first()
     
-    # TODO reset what needs to be reset.
-    # TODO log an appropriate trace message (tricky: what Level to use?)
-
-    calculate_melt(session,user_data.simulationId)
+    report(0,simulation.id,f"USER {u.username} IS SETTING THE PRICE OF COMMODITY {commodity.name} in simulation {simulation.id}",session)
+    calculate_melt(session,simulation)
     revalue_stocks(session, simulation)
 
     return commodity

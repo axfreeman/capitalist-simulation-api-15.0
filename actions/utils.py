@@ -95,8 +95,8 @@ def revalue_stocks(
       stock.value=stock.size*commodity.unit_value
       stock.price=stock.size*commodity.unit_price
       report(3,simulation.id,f"Setting value to {stock.value} and price to {stock.price} for stock  of the stock [{stock.name}] ",session)
+  report(1,simulation.id,"Finished revaluing stocks",session)
   session.commit()
-  report(2,simulation.id,"Finished revaluing stocks",session)
 
 # TODO this should be a method of the Industry object
 def capital(
