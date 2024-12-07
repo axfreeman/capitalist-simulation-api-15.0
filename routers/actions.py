@@ -314,5 +314,5 @@ def setPrices(
     calculate_melt(session,simulation)
     revalue_stocks(session, simulation)
 
-    return {'message': f'Received price change request',"statusCode":status.HTTP_200_OK}
+    return {'message': f'Processed price change request',"statusCode":status.HTTP_200_OK}
 
