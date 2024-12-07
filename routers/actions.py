@@ -270,7 +270,7 @@ def setPrice(
 
 # TODO set this up to receive an array of prices not just a single price
 @router.post("/setprices", status_code=200,response_model=ServerMessage)
-def setPrice(
+def setPrices(
     # form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     user_data:List[PostedPrice],
     session: Session = Depends(get_session),
@@ -287,6 +287,32 @@ def setPrice(
         Return status: 422 if the input has the wrong format (supplied by fastapi)
         Return status: 422 if the commodity exists but not in the specified simulation
     """
-    print("Received setprices request")
+
+    simulationId=user_data[0].simulationId
+    report(0,simulationId,f"USER {u.username} IS RESETTING PRICES IN SIMULATION {simulationId}",session)
+
+    for datum in user_data:
+        commodity:Commodity=session.query(Commodity).where(
+        Commodity.id == datum.commodityId
+        ).first()
+    
+        if commodity is None:
+            raise HTTPException(status_code=404, detail=f'Commodity {datum.commodityId} does not exist')
+
+        if commodity.simulation_id!=datum.simulationId:
+            raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {datum.simulationId}')
+
+        simulation:Simulation=session.query(Simulation).where(
+            Simulation.id==datum.simulationId
+        ).first()
+        
+        session.add(commodity)
+        report(1,simulation.id,f"Setting the price of {commodity.name} to {datum.unitPrice}",session)
+        commodity.unit_price=datum.unitPrice
+
+    session.commit()
+    calculate_melt(session,simulation)
+    revalue_stocks(session, simulation)
+
     return {'message': f'Received price change request',"statusCode":status.HTTP_200_OK}
 
