@@ -51,6 +51,9 @@ def get_commodity(
         raise HTTPException(status_code=404, detail=f'Commodity {id} does not exist')
     return commodity
 
+
+# This is the first experimental code for price setting
+# It should be removed once the /action/setprice action is complete
 @router.post("/setprice", status_code=200,response_model=CommodityBase)
 def setPrice(
     # form_data: Annotated[OAuth2PasswordRequestForm, Depends()],

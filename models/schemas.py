@@ -36,6 +36,7 @@ class PostedPrice(BaseModel):
     simulationId: int
     unitPrice: float
 
+
 class SimulationBase(BaseModel):
     id:int
     name: str
