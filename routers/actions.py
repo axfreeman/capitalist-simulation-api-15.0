@@ -91,9 +91,9 @@ def tradeHandler(
     report(0, simulation.id, f"TRADE", session)
     constrain_demand(session, simulation)
     buy_and_sell(session, simulation)
+    report(1,simulation.id,"Trade is complete",session)
     simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.
 
-    report(1,1,"Trade is complete",session)
     # TODO I don't think it's necessary to revalue, but check this.
     # This is because trade only involves a change of ownership.
     # revalue_stocks(session,simulation) 
@@ -118,12 +118,14 @@ def produceHandler(
         report(0, simulation.id, "PRODUCE", session) # TODO note this is boilerplate
         produce(session, simulation)
         simulation.set_state("CONSUME",session) # set the next state in the circuit, obliging the user to do this next.
+
     except Exception as e:
         return{"message":f"Error {e} processing trade for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
 
     # Don't revalue yet, because consumption (social reproduction) has to
     # be complete before all the facts are in. 
     calculate_current_capitals(session,simulation)
+    report(1,simulation.id,"PRODUCE is complete",session)
     return {"message":f"Production conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/consume",response_model=ServerMessage)
@@ -144,7 +146,7 @@ def consumeHandler(
 
     try:
         simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "CONSUME", session) # TODO note this is boilerplate
+        report(0, simulation.id, "CONSUME", session) 
         session.commit()
         consume(session, simulation)
         
@@ -155,6 +157,8 @@ def consumeHandler(
         revalue_commodities(session,simulation)
         revalue_stocks(session, simulation)
         calculate_current_capitals(session,simulation)
+        report(1,simulation.id,"CONSUME is complete",session)
+
     except Exception as e:
         return{"message":f"Error {e} processing social consumption for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Social Consumption conducted for user {u.username}","statusCode":status.HTTP_200_OK}

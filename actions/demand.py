@@ -116,6 +116,6 @@ def commodity_demand(session:Session,simulation:Simulation):
             report(3,simulation.id,f'Demand for {commodity.name}  with owner ({social_class.name}) is {stock.demand} from [{stock.name}]',session)
             commodity.demand+=stock.demand
         report (2,simulation.id, f'Total demand from classes for {commodity.name} is now {commodity.demand}',session)
-
+    report (1,simulation.id, f'Finished calculating demand for {commodity.name} is now {commodity.demand}',session)
     session.commit()
 

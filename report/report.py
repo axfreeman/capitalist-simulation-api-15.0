@@ -51,19 +51,21 @@ def report(level: int, simulation_id: int, message: str, session: Session):
 
     user_message = " " * level + f"{message}"
     log_message = " " * level+colour + message + Fore.WHITE
-    logging.info(log_message)
+    logging.debug(log_message)
 
     # Get the last trace record that was added
-    lastRecord=session.query(Trace).where(Trace.simulation_id==simulation_id).order_by(Trace.id.desc()).first()
+    lastRecord: Trace =session.query(Trace).where(Trace.simulation_id==simulation_id).order_by(Trace.id.desc()).first()
     if lastRecord is not None:
     # print(f"The id of the last Trace record was {lastRecord.id} and its level was {lastRecord.level}")
         if lastRecord.level - level >1:
             logging.warning(f"A subitem was not closed. Last record had level {lastRecord.level} and this trace entry has level {level}")
+            logging.warning(f"The last record said {lastRecord.message}")
+
             gapentry = Trace(
                 simulation_id=simulation_id,
                 level=lastRecord.level-1,
                 time_stamp=1,
-                message="Finished: NOTE there was a minor API error here. Please tell the developer",
+                message=f"CORRECTION to Minor API error. Previous level was {lastRecord.level} and this entry was {level}. Please tell the developer",
             )
             session.add(gapentry)
 
@@ -75,4 +77,4 @@ def report(level: int, simulation_id: int, message: str, session: Session):
         message=user_message,
     )
     session.add(entry)
-    # db.commit()
+    session.commit() # TODO ideally we should not commit every time a new report is made...
