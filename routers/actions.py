@@ -1,18 +1,20 @@
+# TODO rationalise to remove boilerplate
+
 from typing import List
 from fastapi import Depends, APIRouter, HTTPException, Security, status
 from sqlalchemy.orm import Session
-from actions.price import calculate_melt
 from database.database import get_session
-from models.schemas import CommodityBase, PostedPrice, ServerMessage
-from actions.consumption import consume
+from models.schemas import PostedPrice, ServerMessage
 from authorization.auth import get_api_key
 from report.report import report
 from actions.reload import clear_table, load_table
-from actions.demand import calculate_demand
-from actions.supply import calculate_supply
-from actions.trade import buy_and_sell, constrain_demand
-from actions.production import produce
-from actions.invest import invest
+from actions.demand import process_demand
+from actions.supply import process_supply
+from actions.trade import process_trade
+from actions.production import process_produce
+from actions.invest import process_invest
+from actions.price import process_price_reset
+from actions.consumption import process_consume
 from models.models import (
     Class_stock,
     Industry_stock,
@@ -23,7 +25,7 @@ from models.models import (
     Trace,
     User,
 )
-from actions.utils import calculate_current_capitals, revalue_stocks, revalue_commodities
+from actions.utils import revalue_stocks
 
 router = APIRouter(prefix="/action", tags=["Actions"])
 
@@ -44,11 +46,11 @@ def demandHandler(
     try:
         simulation:Simulation=u.current_simulation(session)
         report(0, simulation.id, "CALCULATE DEMAND", session) # TODO note this is boilerplate
-        calculate_demand(session,simulation)
+        process_demand(session,simulation)
         simulation.set_state("SUPPLY",session) # set the next state in the circuit, obliging the user to do this next.
+        report(1,simulation.id, "Finished DEMAND",session)
     except Exception as e:
         return{"message":f"Error {e} processing demand for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-
     return {"message":f"Demand initialised for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/supply",response_model=ServerMessage)
@@ -64,13 +66,12 @@ def supplyHandler(
         returns: None if there is no current simulation
         returns: success message if there is a simulation
     """
-
     try:
         simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "CALCULATE SUPPLY", session) # TODO note this is boilerplate
-        calculate_supply(session, simulation)        
+        report(0, simulation.id, "CALCULATE SUPPLY", session) 
+        process_supply(session, simulation)        
         simulation.set_state("TRADE",session) # set the next state in the circuit, obliging the user to do this next.
-
+        report(1,simulation.id, "Finished SUPPLY",session)
     except Exception as e:
         return{"message":f"Error {e} processing supply for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Supply initialised for user {u.username}","statusCode":status.HTTP_200_OK}
@@ -87,17 +88,14 @@ def tradeHandler(
         If there is no current simulation, returns None
         Otherwise, return success message
     """
-    simulation:Simulation=u.current_simulation(session)
-    report(0, simulation.id, f"TRADE", session)
-    constrain_demand(session, simulation)
-    buy_and_sell(session, simulation)
-    report(1,simulation.id,"Trade is complete",session)
-    simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.
-
-    # TODO I don't think it's necessary to revalue, but check this.
-    # This is because trade only involves a change of ownership.
-    # revalue_stocks(session,simulation) 
-
+    try:
+        simulation:Simulation=u.current_simulation(session)
+        report(0, simulation.id, f"TRADE", session)
+        process_trade(session,simulation)
+        simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.
+        report(1,simulation.id,"Finished TRADE",session)
+    except Exception as e:
+        return{"message":f"Error {e} processing trade for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Trade conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/produce",response_model=ServerMessage)
@@ -112,20 +110,14 @@ def produceHandler(
         If there is no current simulation, returns None
         Otherwise, return success message
     """
-
     try:
         simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "PRODUCE", session) # TODO note this is boilerplate
-        produce(session, simulation)
+        report(0, simulation.id, "PRODUCE", session) 
+        process_produce(session,simulation)
         simulation.set_state("CONSUME",session) # set the next state in the circuit, obliging the user to do this next.
-
+        report(1,simulation.id,"Finished PRODUCE",session)
     except Exception as e:
-        return{"message":f"Error {e} processing trade for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-
-    # Don't revalue yet, because consumption (social reproduction) has to
-    # be complete before all the facts are in. 
-    calculate_current_capitals(session,simulation)
-    report(1,simulation.id,"PRODUCE is complete",session)
+        return{"message":f"Error {e} processing produce for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Production conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/consume",response_model=ServerMessage)
@@ -147,18 +139,9 @@ def consumeHandler(
     try:
         simulation:Simulation=u.current_simulation(session)
         report(0, simulation.id, "CONSUME", session) 
-        session.commit()
-        consume(session, simulation)
-        
-        # set the next state in the circuit, obliging the user to do this next.        
-        simulation.set_state("INVEST",session) 
-
-        # Recalculate the price and value of every stock, then calculate capital
-        revalue_commodities(session,simulation)
-        revalue_stocks(session, simulation)
-        calculate_current_capitals(session,simulation)
-        report(1,simulation.id,"CONSUME is complete",session)
-
+        process_consume(session,simulation)
+        simulation.set_state("INVEST",session) # set the next state in the circuit, obliging the user to do this next.        
+        report(1,simulation.id,"Finished CONSUME",session)
     except Exception as e:
         return{"message":f"Error {e} processing social consumption for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Social Consumption conducted for user {u.username}","statusCode":status.HTTP_200_OK}
@@ -170,28 +153,13 @@ def investHandler(
 )->str:
     """Handles calls to the 'Invest' action then resets simulation state
     to restart the next circuit.
-
-        Instructs every industry to assess whether it has a money surplus above
-        what would be needed to produce at the same level as it has been doing.
-
-        If so, attempt to raise the output_scale by the minimum of what this 
-        money will pay for, and the growth rate.
-
-        Note that if the means are not available to make this possible, in the 
-        demand stage of the next circuit, output will be scaled down.
-
-        This is only one of a number of possible algorithms.
-    
-        returns(str):
-            If there is no current simulation, None
-            Otherwise success message
     """
     try:
         simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "INVEST", session) # TODO note this is boilerplate
-        invest(simulation,session)
-        # set the next state in the circuit, obliging the user to do this next.
-        simulation.set_state("DEMAND",session) 
+        report(0, simulation.id, "INVEST", session) 
+        process_invest(simulation,session)
+        simulation.set_state("DEMAND",session) # set the next state in the circuit, obliging the user to do this next.
+        report(1,simulation.id,"Finished INVEST",session)
     except Exception as e:
         return{"message":f"Error {e} processing investment for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Investment conducted for user {u.username}","statusCode":status.HTTP_200_OK}
@@ -228,9 +196,9 @@ def get_json(session: Session = Depends(get_session))->ServerMessage:
     return {"message":f"Database Reloaded","statusCode":status.HTTP_200_OK}
 
 @router.post("/setprices", status_code=200,response_model=ServerMessage)
-def setPrices(
-    # form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    user_data:List[PostedPrice],
+def setPriceHandler(
+    # form_data: Annotated[OAuth2PasswordRequestForm, Depends()], (we didn't use this in the end; delete this comment in due course)
+    user_data:List[PostedPrice], # The user data
     session: Session = Depends(get_session),
     u:User=Security(get_api_key)
 )->str:
@@ -248,43 +216,34 @@ def setPrices(
 
     simulationId=user_data[0].simulationId
     report(0,simulationId,f"USER {u.username} IS RESETTING PRICES IN SIMULATION {simulationId}",session)
-    
+
     # Process all the fields in the form that the user filled in
     # Check that each field is valid (because the client could be flaky)
     # Reset unit prices to be what the user asked for
-    for datum in user_data:
-        commodity:Commodity=session.query(Commodity).where(
-        Commodity.id == datum.commodityId
-        ).first()
-    
-        if commodity is None:
-            raise HTTPException(status_code=404, detail=f'Commodity {datum.commodityId} does not exist')
-
-        if commodity.simulation_id!=datum.simulationId:
-            raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {datum.simulationId}')
-
-        simulation:Simulation=session.query(Simulation).where(
-            Simulation.id==datum.simulationId
-        ).first()
+    # Then process the results using 'process_price_reset()' from the prices module
+    try:
+        for datum in user_data:
+            commodity:Commodity=session.query(Commodity).where(
+            Commodity.id == datum.commodityId
+            ).first()
         
-        session.add(commodity)
-        report(1,simulation.id,f"Setting the price of {commodity.name} to {datum.unitPrice}",session)
-        commodity.unit_price=datum.unitPrice
-    session.commit()
+            if commodity is None:
+                raise HTTPException(status_code=404, detail=f'Commodity {datum.commodityId} does not exist')
 
-    # Reset the prices of all stocks
-    # This call also resets their values though this should have no effect
-    # TODO this could be a source of error
-    revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
+            if commodity.simulation_id!=datum.simulationId:
+                raise HTTPException(status_code=422, detail=f'Commodity {Commodity.id} does not belong to simulation {datum.simulationId}')
 
-    # For each industrial commodity, recalcuate total price and total value from stocks
-    # Then calculate the melt as the ratio of total price and value of all [such] commodities
-    # TODO we should do this for all commodities not just industrial, but at present just testing
-    # Having calculated the melt, reset unit values
-    calculate_melt(session,simulation)
-
-    # Now revalue stocks again
-    revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
-
-    return {'message': f'Processed price change request',"statusCode":status.HTTP_200_OK}
+            simulation:Simulation=session.query(Simulation).where(
+                Simulation.id==datum.simulationId
+            ).first()
+            
+            session.add(commodity)
+            report(1,simulation.id,f"Setting the price of {commodity.name} to {datum.unitPrice}",session)
+            commodity.unit_price=datum.unitPrice
+        session.commit()
+        process_price_reset(session,simulation)
+        report(1,simulation.id,"Finished useer-requested Price Reset",session)
+    except Exception as e:
+        return{"message":f"Error {e} processing price changes for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
+    return {"message":f"Price changes conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 

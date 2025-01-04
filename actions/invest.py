@@ -12,12 +12,15 @@ from models.models import (
     workers,
 )
 from report.report import report
-from actions.supply import calculate_supply
+from actions.supply import process_supply
 from actions.utils import validate
-from .demand import calculate_demand
+from .demand import process_demand
 from sqlalchemy.orm import Session
 
-def invest(simulation: Simulation, session: Session):
+def process_invest(simulation: Simulation, session: Session):
+    """
+    Selects an investment algorithm and applies it.
+    """
     match simulation.investment_algorithm:
         case "Standard":
             standard_invest(simulation, session)
@@ -92,8 +95,8 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     session.add(wc_consumption_stock)
     session.add(lp_sales_stock)
 
-    calculate_supply(session, simulation)
-    calculate_demand(session, simulation)
+    process_supply(session, simulation)
+    process_demand(session, simulation)
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
 
@@ -108,7 +111,7 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Recalculate demand at the new output scale
-    calculate_demand(session, simulation)
+    process_demand(session, simulation)
 
     excess_supply = mp_commodity.total_value - mp_commodity.demand * mp_commodity.unit_value
     report(2,simulation.id,f"*** Raised MP growth rate. MP demand is {mp_commodity.demand*mp_commodity.unit_value}, supply {mp_commodity.supply} and excess capital {excess_supply}",session)
@@ -131,7 +134,7 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     report(2,simulation.id,f"Size of MP is {mp_commodity.size}, value is {mp_commodity.total_value}",session)
 
     # Now we don't have enough workers, so we have to increase the labour supply
-    calculate_demand(session, simulation)
+    process_demand(session, simulation)
     lp_commodity: Commodity = labour_power(simulation, session)
 
     report(2,simulation.id,f"*** Demand for labour power is {lp_commodity.demand}. There are {wc.population} workers. Call up the reserve army!!!",session)
@@ -145,7 +148,7 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     print(2)
     report(3,simulation.id,f"Check: sales stock of labour poweris now {lp_sales_stock.size}",session)
     print(3)
-    calculate_supply(session, simulation)  
+    process_supply(session, simulation)  
     necessity_supply = mc_commodity.supply
     wc_consumption=wc_consumption_stock.demand
     cc_consumption=cc_consumption_stock.demand
@@ -167,15 +170,22 @@ def expanded_reproduction_invest(simulation: Simulation, session: Session):
     return
 
 def standard_invest(simulation: Simulation, session: Session):
-
     """ The standard investment algorithm. 
+    Instructs every industry to assess whether it has a money surplus above
+        what would be needed to produce at the same level as it has been doing.
+
+        If so, attempt to raise the output_scale by the minimum of what this 
+        money will pay for, and the growth rate.
+
+        Note that if the means are not available to make this possible, in the 
+        demand stage of the next circuit, output will be scaled down.
+
+        This is only one of a number of possible algorithms.
     
-    Other algorithms will be developed as the project proceeds. 
-    
-    In time, we aim to rationalise the system of algorithms. 
-    For now this is a kind of test bed for development
-    """
-    
+        returns(str):
+            If there is no current simulation, None
+            Otherwise success message
+    """    
     report(1, simulation.id, "Applying the standard investment algorithm", session)
     industries = session.query(Industry).where(Industry.simulation_id == simulation.id)
     for industry in industries:

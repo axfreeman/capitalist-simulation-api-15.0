@@ -9,6 +9,16 @@ from models.models import Class_stock, Commodity,Industry, Industry_stock,Social
 from report.report import report
 from sqlalchemy.orm import Session
 
+def process_supply(session:Session, simulation:Simulation):
+    """
+    Calculate the supply of all commodities from their sales stocks
+    and save the results in the commodity objects
+    """
+    initialise_supply(session, simulation)
+    report(1,simulation.id, "Calculating supply from industries",session)
+    industry_supply(session, simulation)  # tell industries to register their supply
+    report(1,simulation.id, "Calculating supply from social classes",session)
+    class_supply(session, simulation)  # tell classes to register their supply 
 
 def initialise_supply(session,simulation):
     """Set supply of every commodity to zero to prepare for the calculation."""
@@ -49,15 +59,3 @@ def class_supply(session,simulation):
         commodity.supply+=ns
     session.commit()
 
-def calculate_supply(session:Session, simulation:Simulation):
-    """
-    Calculate the supply of all commodities from their sales stocks
-    and save the results in the commodity objects
-    """
-    initialise_supply(session, simulation)
-    report(1,simulation.id, "Calculating supply from industries",session)
-    industry_supply(session, simulation)  # tell industries to register their supply
-    report(1,simulation.id, "Calculating supply from social classes",session)
-    class_supply(session, simulation)  # tell classes to register their supply 
-    report(1,simulation.id, "Finished calculating supply",session)
-    

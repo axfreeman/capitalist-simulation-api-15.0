@@ -1,9 +1,18 @@
 from sqlalchemy.orm import Session
+from actions.utils import calculate_current_capitals, revalue_commodities,revalue_stocks
 from models.models import Commodity, SocialClass, Simulation, Class_stock
 from report.report import report
 
 """This module contains functions needed to implement the consumption action.
 """
+
+def process_consume(session,simulation):
+    consume(session, simulation)
+    # Recalculate the price and value of every stock, then calculate capital
+    revalue_commodities(session,simulation)
+    revalue_stocks(session, simulation)
+    calculate_current_capitals(session,simulation)
+
 
 def consume(session:Session, simulation:Simulation)->str:
     """Tell all classes to consume and reproduce their product if they have one.

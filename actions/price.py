@@ -6,10 +6,27 @@ are transformed as a result.
 
 """
 
+from actions.utils import revalue_stocks
 from models import models
 from models.models import Class_stock, Commodity,Industry, Industry_stock,SocialClass, Simulation
 from report.report import report
 from sqlalchemy.orm import Session
+
+def process_price_reset(session,simulation):
+    # Reset the prices of all stocks
+    # This call also resets their values though this should have no effect
+    # TODO this could be a source of error
+    revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
+
+    # For each industrial commodity, recalcuate total price and total value from stocks
+    # Then calculate the melt as the ratio of total price and value of all [such] commodities
+    # TODO we should do this for all commodities not just industrial, but at present just testing
+    # Having calculated the melt, reset unit values
+    calculate_melt(session,simulation)
+
+    # Now revalue stocks again
+    revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
+
 
 def calculate_melt(session:Session,simulation:Simulation)->float:
     """

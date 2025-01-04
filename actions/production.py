@@ -1,12 +1,19 @@
+from actions.utils import calculate_current_capitals
 from models.models import Simulation, Industry, Industry_stock
 from report.report import report
 from sqlalchemy.orm import Session
+
+def process_produce(session,simulation):
+    produce(session, simulation)
+    calculate_current_capitals(session,simulation)
+    # Don't revalue yet, because consumption (social reproduction) has to
+    # be complete before all the facts are in. 
+
 
 def produce(session:Session, simulation:Simulation):
     """Tell all industries to produce."""
     report(1, simulation.id, "Tell all industries to produce", session)
     iquery = session.query(Industry).where(Industry.simulation_id == simulation.id)
-
     for ind in iquery:
         industry_produce(ind, session, simulation)
 

@@ -4,6 +4,17 @@ from sqlalchemy.orm import Session
 from models.models import Buyer, Class_stock, Industry_stock, Seller, Commodity, Simulation
 from report.report import report
 
+def process_trade(session,simulation):
+    """
+    Conduct the trade action. First, constrain traded quantities to demand.
+    Then identify buyers and sellers. Then Trade.
+
+    # TODO I don't think it's necessary to revalue, but check this.
+    # This is because trade only involves a change of ownership.
+    """
+    constrain_demand(session, simulation)
+    buy_and_sell(session, simulation)
+
 def constrain_demand(session,simulation):
     """Constrain demand to supply.
     TODO mostly untested

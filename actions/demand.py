@@ -10,7 +10,7 @@ from models.models import Class_stock, Commodity,Industry, Industry_stock,Social
 from report.report import report
 from sqlalchemy.orm import Session
 
-def calculate_demand(session:Session, simulation:Simulation):
+def process_demand(session:Session, simulation:Simulation):
         
     """Set demand for all stocks and commodities in one simulation.
 
