@@ -104,7 +104,6 @@ def revalue_stocks(
   session.commit()
   report(2,simulation.id,"Finished resetting class stocks",session)
 
-# TODO this should be a method of the Industry object
 def capital(
       session:Session, 
       simulation:Simulation,

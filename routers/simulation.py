@@ -32,7 +32,7 @@ def delete_simulation(id:int,session:Session)->bool:
         Relies on cascading dependent objects.
     """
 
-    report(1,1,f"Trying to delete simulation {id}",session)
+    report(1,id,f"Trying to delete simulation {id}",session)
     query = session.query(Simulation).where(Simulation.id==id)
     if (query is None):
         return False
@@ -123,7 +123,7 @@ def delete_user_simulation(
         session: a valid sqlAlchemy session
 
     """
-    report(1,1,f"Deleting Simulations for user {u.username}",session)
+    report(1,u.current_simulation_id,f"Deleting Simulations for user {u.username}",session)
 
     query:Simulation=session.query(Simulation).where(Simulation.id==u.current_simulation_id)
 
@@ -144,7 +144,7 @@ def delete_user_simulation(
         session: a valid sqlAlchemy session
 
     """
-    report(1,1,f"Deleting Simulations for user {u.username}",session)
+    report(1,id,f"Deleting Simulations for user {u.username}",session)
     query:Simulation=session.query(Simulation).where(Simulation.username == u.username)
     for simulation in query:
         delete_simulation(simulation.id)

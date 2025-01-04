@@ -205,7 +205,7 @@ def get_json(session: Session = Depends(get_session))->ServerMessage:
         Should only be available to admin since it reinitialises everything.  
         If 'reload' is false in the call to reload_table, does not re-initialise
     """
-    report(1,1,"RESETTING ENTIRE DATABASE",session)
+    report(1,0,"RESETTING ENTIRE DATABASE",session)
     clear_table(session, Trace, 1) # This should be done first, to ensure the Trace table includes what follows
     clear_table(session, Simulation, 1)
     clear_table(session, SocialClass, 1)
@@ -248,7 +248,10 @@ def setPrices(
 
     simulationId=user_data[0].simulationId
     report(0,simulationId,f"USER {u.username} IS RESETTING PRICES IN SIMULATION {simulationId}",session)
-
+    
+    # Process all the fields in the form that the user filled in
+    # Check that each field is valid (because the client could be flaky)
+    # Reset unit prices to be what the user asked for
     for datum in user_data:
         commodity:Commodity=session.query(Commodity).where(
         Commodity.id == datum.commodityId
@@ -267,10 +270,21 @@ def setPrices(
         session.add(commodity)
         report(1,simulation.id,f"Setting the price of {commodity.name} to {datum.unitPrice}",session)
         commodity.unit_price=datum.unitPrice
-
     session.commit()
+
+    # Reset the prices of all stocks
+    # This call also resets their values though this should have no effect
+    # TODO this could be a source of error
+    revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
+
+    # For each industrial commodity, recalcuate total price and total value from stocks
+    # Then calculate the melt as the ratio of total price and value of all [such] commodities
+    # TODO we should do this for all commodities not just industrial, but at present just testing
+    # Having calculated the melt, reset unit values
     calculate_melt(session,simulation)
-    revalue_stocks(session, simulation)
+
+    # Now revalue stocks again
+    revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
 
     return {'message': f'Processed price change request',"statusCode":status.HTTP_200_OK}
 
