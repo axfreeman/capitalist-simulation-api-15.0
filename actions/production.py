@@ -16,6 +16,7 @@ def produce(session:Session, simulation:Simulation):
     iquery = session.query(Industry).where(Industry.simulation_id == simulation.id)
     for ind in iquery:
         industry_produce(ind, session, simulation)
+    
 
 def industry_produce(
         industry:Industry, 

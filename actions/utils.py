@@ -7,19 +7,9 @@ from sqlalchemy.orm import Session
 def revalue_commodities(
       session:Session, 
       simulation:Simulation):
-  """Calculate the size, value and price of all commodities from their stocks
+  """Calculate the size, value and price of all commodities from their stocks. 
   Recalculate unit values and unit prices on this basis.
-
-  Normally, 'revalue stocks' should be called after this, because a change
-  in the unit value and/or price will affect all stocks of it.
-
-      session(Session):
-          The sqlAlchemy session which will commit the commodity to storage
-
-      simulation(Simulation):
-          The simulation to which this calculation refers
   """
-
   report(1,simulation.id,"Calculate the size, value and price of all commodities",session)
   commodities=session.query(Commodity).where(Commodity.simulation_id==simulation.id)
   for c in commodities:
@@ -51,7 +41,8 @@ def revalue_commodities(
           report(3,simulation.id,f"Adding {sc.value} to the value of {c.name}",session)
           report(3,simulation.id,f"Adding {sc.price} to the price of {c.name}",session)
           # report(2,simulation.id,f"Commodity {c.name} now has size {c.size}, value {c.total_value}, price {c.total_price}",session)
-# Recalculate the unit vvalues and prices of all commodities from their size and totals
+
+# Recalculate the unit values and prices of all commodities from their size and totals
   for c in commodities:
       report(2,simulation.id,f"Resetting unit value and price of commodity {c.name} with size {c.size}, value {c.total_value}, price {c.total_price}",session)
       if c.size>0:
@@ -71,12 +62,6 @@ def revalue_stocks(
   """ Revalue all stocks.
   Set value from unit value and size of their commodity
   Set price from unit price and size of their commodity
-
-      session(Session):
-          the sqlAlchemy session that will store the revalued stocks
-
-      simulation(Simulation):
-          the simulation that is currently being processed    
   """
   report(1,simulation.id,"Reset stock values and prices from the unit values and prices of their commodities",session)
 

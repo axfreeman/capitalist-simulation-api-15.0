@@ -9,6 +9,9 @@ from report.report import report
 def process_consume(session,simulation):
     consume(session, simulation)
     # Recalculate the price and value of every stock, then calculate capital
+    
+    # TODO BRING IN THE NEW METHODS!
+
     revalue_commodities(session,simulation)
     revalue_stocks(session, simulation)
     calculate_current_capitals(session,simulation)

@@ -13,20 +13,15 @@ from report.report import report
 from sqlalchemy.orm import Session
 
 def process_price_reset(session,simulation):
-    # Reset the prices of all stocks
-    # This call also resets their values though this should have no effect
-    # TODO this could be a source of error
+
+    # Reset the prices of all stocks. Also resets their values though this should have no effect
     revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
 
-    # For each industrial commodity, recalcuate total price and total value from stocks
-    # Then calculate the melt as the ratio of total price and value of all [such] commodities
-    # TODO we should do this for all commodities not just industrial, but at present just testing
-    # Having calculated the melt, reset unit values
+    # Calculate total price and total value of all commodities; then calculate the MELT
     calculate_melt(session,simulation)
 
     # Now revalue stocks again
     revalue_stocks(session, simulation) #TODO separate revaluation of prices from revaluation of values
-
 
 def calculate_melt(session:Session,simulation:Simulation)->float:
     """
@@ -34,9 +29,8 @@ def calculate_melt(session:Session,simulation:Simulation)->float:
     Invoked when the user changes prices, or when prices change as a result
     of the simulation itself.
 
-    TODO under development. At present only revalue produced commodities. 
-    TODO actually we should include all commodities but at present, we are
-    TODO testing the simple transformation of produced stock values into normalised market prices
+    TODO under development. At present only revalue produced commodities. We should include all commodities 
+    but at present, we are testing the simple transformation of produced stock values into normalised market prices
     """
     
     # Calculate the total value and total price of all produced commodities

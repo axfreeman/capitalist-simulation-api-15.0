@@ -8,6 +8,7 @@ from fastapi import HTTPException
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
 from sqlalchemy.orm import relationship, Session
 from database.database import Base
+from report.report import report
 
 
 Industry_stock = typing.NewType("Industry_stock", None)
@@ -132,8 +133,133 @@ class Commodity(Base):
 
     simulation_name = relationship("Simulation")
 
-class Industry(Base):
+    def revalue_stocks_from_unit_values(self,session:Session,simulation:Simulation):
+        """
+        Reset the (total) values of all stocks of this commodity. Commit the changes
+        """
+        report(1,simulation.id,f"Resetting the value of all stocks of the commodity {self.name}",session)
+        session.add(self)
+        
+        # Reset the values of all industry stocks
+        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
+        for si in istocks:
+            report(2,simulation.id,f"Reset value (currently {si.value}) with size {si.size} of industrial stock {si.name}",session)
+            session.add(si)
+            si.value=si.size*self.unit_value
+            report(2,simulation.id,f"Its value is now {si.value}",session)
 
+        # Reset the values of all class stocks
+        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
+        for sc in cstocks:
+            report(2,simulation.id,f"Reset value (currently {si.value}) with size {sc.size} of class stock {sc.name}",session)
+            session.add(sc)
+            sc.value=si.size*self.unit_value
+            report(2,simulation.id,f"Its value is now {sc.value}",session)
+        session.commit()
+
+
+    def reprice_stock_from_unit_prices(self,session:Session,simulation:Simulation):
+        """
+        Reset the (total) prices of all stocks of this commodity. Commit the changes.
+        """
+        report(1,simulation.id,f"Resetting the price of all stocks of the commodity {self.name}",session)
+        session.add(self)
+        # Calculate the prices of all industry stocks
+        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
+        for si in istocks:
+            report(2,simulation.id,f"Reset price (currently {si.price}) with size {si.size} of industrial stock {si.name}",session)
+            session.add(si)
+            si.price=si.size*self.unit_price
+            report(2,simulation.id,f"Its price is now {si.value}",session)
+
+        # Calculate the contribution of all class stocks
+        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
+        for sc in cstocks:
+            report(2,simulation.id,f"Reset price (currently {si.value}) with size {sc.size} of class stock {sc.name}",session)
+            session.add(sc)
+            sc.price=si.size*self.unit_price
+            report(2,simulation.id,f"Its price is now {sc.value}",session)
+        session.commit()
+
+    def reset_size_from_stocks(self,session:Session,simulation:Simulation):
+        """
+        Reset the total size of this commodity.
+        Should be called before reset_value_from_stocks() or reset_price_from_stocks()
+        """
+        session.add(self)
+        report(1,simulation.id,f"Recalculating the size of the commodity {self.name} which is currently {self.size}",session)
+        self.size=0
+
+        # Add the sizes of all industry stocks of this commodity
+        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
+        for si in istocks:
+            self.size+=si.size
+            report(2,simulation.id,f"Adding {si.size} to total {self.size}, from industrial stock {si.name}",session)
+
+        # Add the sizes of all class stocks of this commodity
+        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
+        for sc in cstocks:
+            self.size+=si.size
+            report(2,simulation.id,f"Adding {sc.size} to make new total {self.size}, from class stock {sc.name}",session)
+        session.commit()
+
+    def reset_value_from_stocks(self, session:Session,simulation:Simulation):
+        """
+        Reset the total value of this commodity.
+        Should be called after reset_size_from_stocks()
+        """
+        session.add(self)
+        report(1,simulation.id,f"Recalculating the value of the commodity {self.name} which is currently {self.total_value}",session)
+        self.total_value=0
+
+        # Add the values of all industry stocks of this commodity
+        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
+        for si in istocks:
+            self.total_value+=si.value
+            report(2,simulation.id,f"Adding {si.value} to total {self.total_value}, from industrial stock {si.name}",session)
+
+        # Add the sizes of all class stocks of this commodity
+        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
+        for sc in cstocks:
+            self.total_value+=si.value
+            report(2,simulation.id,f"Adding {sc.value} to make new total {self.total_value}, from class stock {sc.name}",session)
+
+        new_unit_value=self.total_value/self.size
+        if self.unit_value!=new_unit_value:
+            report(2,simulation.id,f"Unit Price will be changed from {self.unit_value} to {new_unit_value}",session)
+            self.unit_value=new_unit_value
+
+        session.commit()
+
+    def reset_price_from_stocks(self,session:Session,simulation:Simulation):
+        """
+        Reset the total price of this commodity.
+        Should be called after reset_size_from_stocks()
+        """
+        session.add(self)
+        report(1,simulation.id,f"Recalculating the price of the commodity {self.name} which is currently {self.total_price}",session)
+        self.total_price=0
+
+        # Add the prices of all industry stocks of this commodity
+        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
+        for si in istocks:
+            self.total_price+=si.price
+            report(2,simulation.id,f"Adding {si.price} to total {self.total_price}, from industrial stock {si.name}",session)
+
+        # Add the sizes of all class stocks of this commodity
+        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
+        for sc in cstocks:
+            self.total_price+=si.price
+            report(2,simulation.id,f"Adding {sc.value} to make new total {self.total_price}, from class stock {sc.name}",session)
+
+        new_unit_price=self.total_price/self.size
+        if self.unit_price!=new_unit_price:
+            report(2,simulation.id,f"Unit Price will be changed from {self.unit_price} to {new_unit_price}",session)
+            self.unit_price=new_unit_price
+
+        session.commit()
+
+class Industry(Base):
     """Each Industry is a basic productive unit.
 
     It owns:
