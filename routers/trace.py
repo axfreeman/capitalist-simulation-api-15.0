@@ -3,8 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List
 from authorization.auth import get_api_key
 from database.database import  get_session
-from models.models import Simulation,Trace,User
+from models.models import Simulation,User
 from models.schemas import TraceOut
+from report.report import Trace
 
 router=APIRouter(
     prefix="/trace",

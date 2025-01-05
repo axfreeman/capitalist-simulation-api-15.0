@@ -1,10 +1,10 @@
 """This module contains models, and their methods, for the objects of
-the system, except for the User model which is in authorization.py.
+the system, except for the User model which is in authorization.py and the Trace
+model which is in report.report.py
 """
 
 import typing
 from fastapi import HTTPException
-# from report.report import report
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
 from sqlalchemy.orm import relationship, Session
 from database.database import Base
@@ -629,22 +629,6 @@ class Class_stock(Base):
         self.size += amount
         self.price=self.size*self.commodity(db).unit_value
         self.value=self.size*self.commodity(db).unit_price
-
-class Trace(Base):
-    """
-    Trace reports the progress of the simulation in a format meaningful
-    for the user. It works in combination with logging.report(). A call
-    to report() creates a single trace entry in the database and prints
-    it on the console
-    """
-
-    __tablename__ = "trace"
-    id = Column(Integer, primary_key=True, nullable=False)
-    simulation_id = Column(Integer)
-    time_stamp = Column(Integer)
-    username = Column(String, nullable=True)
-    level = Column(Integer)
-    message = Column(String)
 
 class Buyer(Base):
     """The Buyer class is initialized when a simulation is created,

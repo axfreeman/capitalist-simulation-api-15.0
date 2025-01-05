@@ -1,13 +1,31 @@
-from models.models import Trace
 from colorama import Fore 
 import logging
+from sqlalchemy.orm import Session
+
+from sqlalchemy import Column, Integer, String
+from database.database import Base
 
 FORMAT = "%(levelname)s:%(message)s"
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
-from sqlalchemy.orm import Session
 logger = logging.getLogger("capsim-logger")
 logger.info("Started Logging")
 
+
+class Trace(Base):
+    """
+    Trace reports the progress of the simulation in a format meaningful
+    for the user. It works in combination with logging.report(). A call
+    to report() creates a single trace entry in the database and prints
+    it on the console
+    """
+
+    __tablename__ = "trace"
+    id = Column(Integer, primary_key=True, nullable=False)
+    simulation_id = Column(Integer)
+    time_stamp = Column(Integer)
+    username = Column(String, nullable=True)
+    level = Column(Integer)
+    message = Column(String)
 
 
 # Logs both to the console and

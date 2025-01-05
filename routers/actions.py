@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from database.database import get_session
 from models.schemas import PostedPrice, ServerMessage
 from authorization.auth import get_api_key
-from report.report import report
+from report.report import Trace, report
 from actions.reload import clear_table, load_table
 from actions.demand import process_demand
 from actions.supply import process_supply
@@ -22,7 +22,6 @@ from models.models import (
     SocialClass,
     Industry,
     Commodity,
-    Trace,
     User,
 )
 from actions.utils import revalue_stocks
