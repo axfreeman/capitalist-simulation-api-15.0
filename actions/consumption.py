@@ -8,14 +8,20 @@ from report.report import report
 
 def process_consume(session,simulation):
     consume(session, simulation)
+
     # Recalculate the price and value of every stock, then calculate capital
-    
-    # TODO BRING IN THE NEW METHODS!
-
-    revalue_commodities(session,simulation)
-    revalue_stocks(session, simulation)
+    report(1,simulation.id,f"Production and reproduction complete. Now revalue all commodities",session)
+    commodities=session.query(Commodity).where(Commodity.simulation_id==simulation.id)
+    c:Commodity
+    for c in commodities:
+        session.add(c)
+        report(2,simulation.id,f"Revaluing the commodity {c.name}",session)
+        c.resize(session,simulation)
+        c.revalue(session, simulation)
+        c.revalue_stocks(session,simulation)
+    report(1,simulation.id,f"Revaluation complete. Now recalculate current capital and profits",session)
     calculate_current_capitals(session,simulation)
-
+    session.commit()
 
 def consume(session:Session, simulation:Simulation)->str:
     """Tell all classes to consume and reproduce their product if they have one.
@@ -28,7 +34,7 @@ def consume(session:Session, simulation:Simulation)->str:
     for social_class in squery:
         report(1,simulation.id,f"Social Class {social_class.name} is reproducing",session)
         class_consume(social_class, session, simulation)
-        report(1, simulation.id, f"Social Class {social_class.name} has finished consuming", session)
+        report(1, simulation.id, f"Social Class {social_class.name} has finished reproducing", session)
 
     return "Consumption complete"
 

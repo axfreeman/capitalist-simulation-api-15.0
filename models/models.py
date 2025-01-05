@@ -133,9 +133,10 @@ class Commodity(Base):
 
     simulation_name = relationship("Simulation")
 
-    def revalue_stocks_from_unit_values(self,session:Session,simulation:Simulation):
+    def revalue_stocks(self,session:Session,simulation:Simulation):
         """
-        Reset the (total) values of all stocks of this commodity. Commit the changes
+        Reset the value of every stock of this commodity from the unit value of that commodity. 
+        Commit the changes
         """
         report(1,simulation.id,f"Resetting the value of all stocks of the commodity {self.name}",session)
         session.add(self)
@@ -157,10 +158,10 @@ class Commodity(Base):
             report(2,simulation.id,f"Its value is now {sc.value}",session)
         session.commit()
 
-
-    def reprice_stock_from_unit_prices(self,session:Session,simulation:Simulation):
+    def reprice_stocks(self,session:Session,simulation:Simulation):
         """
-        Reset the (total) prices of all stocks of this commodity. Commit the changes.
+        Reset the price of every stock of this commodity from the unit price of that commodity. 
+        Commit the changes.
         """
         report(1,simulation.id,f"Resetting the price of all stocks of the commodity {self.name}",session)
         session.add(self)
@@ -181,7 +182,7 @@ class Commodity(Base):
             report(2,simulation.id,f"Its price is now {sc.value}",session)
         session.commit()
 
-    def reset_size_from_stocks(self,session:Session,simulation:Simulation):
+    def resize(self,session:Session,simulation:Simulation):
         """
         Reset the total size of this commodity.
         Should be called before reset_value_from_stocks() or reset_price_from_stocks()
@@ -203,56 +204,64 @@ class Commodity(Base):
             report(2,simulation.id,f"Adding {sc.size} to make new total {self.size}, from class stock {sc.name}",session)
         session.commit()
 
-    def reset_value_from_stocks(self, session:Session,simulation:Simulation):
+    def revalue(self, session:Session,simulation:Simulation):
         """
-        Reset the total value of this commodity.
+        Reset the total value and unit value of this commodity.
         Should be called after reset_size_from_stocks()
         """
         session.add(self)
         report(1,simulation.id,f"Recalculating the value of the commodity {self.name} which is currently {self.total_value}",session)
-        self.total_value=0
+        total_value:float=0
 
         # Add the values of all industry stocks of this commodity
         istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
         for si in istocks:
-            self.total_value+=si.value
-            report(2,simulation.id,f"Adding {si.value} to total {self.total_value}, from industrial stock {si.name}",session)
+            total_value+=si.value
+            report(2,simulation.id,f"Adding {si.value} to total value {total_value}, from industrial stock {si.name}",session)
 
         # Add the sizes of all class stocks of this commodity
         cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
         for sc in cstocks:
-            self.total_value+=si.value
-            report(2,simulation.id,f"Adding {sc.value} to make new total {self.total_value}, from class stock {sc.name}",session)
+            total_value+=si.value
+            report(2,simulation.id,f"Adding {sc.value} to total value {total_value}, from class stock {sc.name}",session)
 
-        new_unit_value=self.total_value/self.size
+        if (total_value)!=self.total_value:
+            report(2,simulation.id,f"Total value has changed from {self.total_value} to {total_value}",session)
+            self.total_value=total_value
+
+        new_unit_value=total_value/self.size
         if self.unit_value!=new_unit_value:
-            report(2,simulation.id,f"Unit Price will be changed from {self.unit_value} to {new_unit_value}",session)
+            report(2,simulation.id,f"Unit value has changed from {self.unit_value} to {new_unit_value}",session)
             self.unit_value=new_unit_value
 
         session.commit()
 
-    def reset_price_from_stocks(self,session:Session,simulation:Simulation):
+    def reprice_from_stocks(self,session:Session,simulation:Simulation):
         """
-        Reset the total price of this commodity.
+        Reset the total price and unit price of this commodity.
         Should be called after reset_size_from_stocks()
         """
         session.add(self)
         report(1,simulation.id,f"Recalculating the price of the commodity {self.name} which is currently {self.total_price}",session)
-        self.total_price=0
+        total_price=0
 
         # Add the prices of all industry stocks of this commodity
         istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
         for si in istocks:
-            self.total_price+=si.price
-            report(2,simulation.id,f"Adding {si.price} to total {self.total_price}, from industrial stock {si.name}",session)
+            total_price+=si.price
+            report(2,simulation.id,f"Adding {si.price} to total {total_price}, from industrial stock {si.name}",session)
 
         # Add the sizes of all class stocks of this commodity
         cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
         for sc in cstocks:
             self.total_price+=si.price
-            report(2,simulation.id,f"Adding {sc.value} to make new total {self.total_price}, from class stock {sc.name}",session)
+            report(2,simulation.id,f"Adding {sc.value} to make new total {total_price}, from class stock {sc.name}",session)
 
-        new_unit_price=self.total_price/self.size
+        if (total_price)!=self.total_value:
+            report(2,simulation.id,f"Total value has changed from {self.total_value} to {total_price}",session)
+            self.total_value=total_price
+
+        new_unit_price=total_price/self.size
         if self.unit_price!=new_unit_price:
             report(2,simulation.id,f"Unit Price will be changed from {self.unit_price} to {new_unit_price}",session)
             self.unit_price=new_unit_price

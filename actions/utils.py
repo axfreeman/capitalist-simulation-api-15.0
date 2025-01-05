@@ -148,7 +148,7 @@ def calculate_current_capitals(
     Calculate the current capital of all industries in the simulation and store it.
     Set the profit and the profit rate of each industry.
 
-    Assumes that the price of all stocks has been set correctly.
+    Assumes that the prices of all stocks have  been set correctly.
 
       session(Session):
           the sqlAlchemy session that will store the revalued stocks

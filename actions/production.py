@@ -11,7 +11,18 @@ def process_produce(session,simulation):
 
 
 def produce(session:Session, simulation:Simulation):
-    """Tell all industries to produce."""
+    """Tell all industries to produce. Then reset unit values.
+    Once Production and Consumption are *both* complete, we recalculate
+    unit values and prices and then revalue all Stocks from their sizes.
+    But we do not do that here; it is done in the Consumption action.
+
+    This is a separate calculation and is not done inside production,
+    because it can only calculated after Social Classes have restored
+    their sale_stocks. This applies in particular to Labour - but a 
+    value-creating function can be assigned to any Social Class to study 
+    the consequences of a theory which asserts that it provides a 'factor 
+    of production' whether ficitious or not.
+    """
     report(1, simulation.id, "Tell all industries to produce", session)
     iquery = session.query(Industry).where(Industry.simulation_id == simulation.id)
     for ind in iquery:
@@ -34,17 +45,6 @@ def industry_produce(
 
     Add the used-up size of each socially-produced productive Stock to 
     the value of self.sales_stock.
-
-    Once Production and Consumptioon are both complete, we recalculate
-    unit values and prices and then revalue all Stocks from their sizes.
-    But we do not do that here; it is done in the Consumption action.
-
-    This is a separate calculation and is not done inside production,
-    because it can only calculated after Social Classes have restored
-    their sale_stocks. This applies in particular to Labour - but a 
-    value-creating function can be assigned to any Social Class to study 
-    the consequences of a theory which asserts that it provides a 'factor 
-    of production' whether ficitious or not.
 
         industry(Industry):
             the industry that is producing
