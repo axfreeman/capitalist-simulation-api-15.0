@@ -32,20 +32,32 @@ def process_price_reset(session: Session,simulation:Simulation):
 #   Steps 1-3
     total_price=0
     total_value=0
-    commodities=session.query(Commodity).where(Commodity.simulation_id==simulation.id)
+    # TODO FOR DEMONSTRATION PURPOSES HERE WE ONLY INCLUDE PRODUCED COMMODITIES. FULL VERSION SHOULD LET USER CHOOSE
+    commodities=session.query(Commodity).where(Commodity.simulation_id==simulation.id).where(Commodity.origin=="INDUSTRIAL")
     c:Commodity
     for c in commodities:
         session.add(c)
+        report(2,simulation.id,f"Commodity {c.name} before processing: total price is {c.total_price}",session)
         extra_price=c.unit_price*c.size
         extra_value=c.unit_value*c.size
-        report(2,simulation.id,f"Commodity {c.name} total value is {c.total_value} and total price is {c.total_price}",session)
-        report(2,simulation.id,f"New price of {c.name} is {extra_price} bringing economy-wide total to {total_price}",session)
-        report(2,simulation.id,f"Calculated value of {c.name} is {extra_value} bringing economy-wide total to {total_value}",session)
-        report(2,simulation.id,f"Total price has reached {simulation.total_price} and total value has reached {simulation.total_value}",session)
         c.total_price=extra_price
         total_price+=extra_price
-        total_value+=extra_value # NOTE do not change total value of the commodity because it should be invariant; report it and possibly test it.
-    simulation.melt=total_price/total_value
+        total_value+=extra_value 
+        # NOTE total value of c should be invariant; this calculation is ONLY used to set the simulation.total_value and hence calculate the MELT.
+        # NOTE extra_value should not be used to reset c.total_value. Instead, we test they are equal and report a warning if they are not.
+
+        # report(2,simulation.id,f"Calculated value of {c.name} is {extra_value} bringing economy-wide total to {total_value}",session)
+        # report(2,simulation.id,f"Total price has reached {simulation.total_price}",session)
+
+        report(2,simulation.id,f"Price of {c.name} is {extra_price} bringing economy-wide total to {total_price}",session)
+        report(2,simulation.id,f"Value of {c.name} is {extra_value} bringing calculated economy-wide total to {total_value}",session)
+        if c.total_value!=extra_value:
+            report(2,simulation.id,f"WARNING: value of {c.name} was {c.total_value} and the calculated value is {extra_value}. These should be the same but are not")
+
+    # TODO simulation.total_value should be set separately from this. But since it isn't as yet, we set it here
+    simulation.total_value=total_value
+    simulation.total_price=total_price
+    simulation.melt=simulation.total_price/simulation.total_value
     report(1,simulation.id,f"Finished resetting and adding up prices. E-W price is now {simulation.total_price}, E-W value is {simulation.total_value} and MELT is {simulation.melt}",session)
 
 #   Steps 4-5
