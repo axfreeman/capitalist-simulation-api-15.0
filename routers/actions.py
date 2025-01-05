@@ -84,8 +84,10 @@ def tradeHandler(
     Handles calls to the 'Trade' action. Allocates supply, conducts 
     trade, and resets simulation state to the next in the circuit.
 
-        If there is no current simulation, returns None
-        Otherwise, return success message
+        u: User (supplied by Oath middleware)
+        session: a valid session which stores the results
+        returns: None if there is no current simulation
+        returns: success message if there is a simulation
     """
     try:
         simulation:Simulation=u.current_simulation(session)
@@ -106,8 +108,10 @@ def produceHandler(
     Handles calls to the 'Produce' action then resets simulation state
     to the next in the circuit.
 
-        If there is no current simulation, returns None
-        Otherwise, return success message
+        u: User (supplied by Oath middleware)
+        session: a valid session which stores the results
+        returns: None if there is no current simulation
+        returns: success message if there is a simulation
     """
     try:
         simulation:Simulation=u.current_simulation(session)
@@ -128,13 +132,12 @@ def consumeHandler(
     Handles calls to the 'Consume' action then resets simulation state
     to the next in the circuit.
 
-    Instructs every social class to consume and reproduce anything it sells.
+        u: User (supplied by Oath middleware)
+        session: a valid session which stores the results
+        returns: None if there is no current simulation
+        returns: success message if there is a simulation
 
-    return: 
-        If there is no current simulation, returns None
-        Otherwise, return success message
     """
-
     try:
         simulation:Simulation=u.current_simulation(session)
         report(0, simulation.id, "CONSUME", session) 
@@ -152,6 +155,11 @@ def investHandler(
 )->str:
     """Handles calls to the 'Invest' action then resets simulation state
     to restart the next circuit.
+
+        u: User (supplied by Oath middleware)
+        session: a valid session which stores the results
+        returns: None if there is no current simulation
+        returns: success message if there is a simulation
     """
     try:
         simulation:Simulation=u.current_simulation(session)
