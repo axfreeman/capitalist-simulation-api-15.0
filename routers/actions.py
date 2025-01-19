@@ -249,7 +249,7 @@ def setPriceHandler(
             commodity.unit_price=datum.unitPrice
         session.commit()
         process_price_reset(session,simulation)
-        report(1,simulation.id,"Finished useer-requested Price Reset",session)
+        report(1,simulation.id,"Finished user-requested Price Reset",session)
     except Exception as e:
         return{"message":f"Error {e} processing price changes for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
     return {"message":f"Price changes conducted for user {u.username}","statusCode":status.HTTP_200_OK}

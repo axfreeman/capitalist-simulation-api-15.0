@@ -142,7 +142,7 @@ class Commodity(Base):
         session.add(self)
         
         # Reset the values of all industry stocks
-        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
+        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==self.id)
         for si in istocks:
             report(2,simulation.id,f"Reset value (currently {si.value}) with size {si.size} of industrial stock {si.name}",session)
             session.add(si)
@@ -150,7 +150,7 @@ class Commodity(Base):
             report(2,simulation.id,f"Its value is now {si.value}",session)
 
         # Reset the values of all class stocks
-        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
+        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==self.id)
         for sc in cstocks:
             report(2,simulation.id,f"Reset value (currently {si.value}) with size {sc.size} of class stock {sc.name}",session)
             session.add(sc)
@@ -210,42 +210,33 @@ class Commodity(Base):
         Expects that resize() has been called or that in some way, the total size of the commodity is correct
         """
         report(1,simulation.id,f"Recalculating the value of the commodity {self.name} which is currently {self.total_value}",session)
-        print("reached here")
         total_value:float=0
 
         # Add the values of all industry stocks of this commodity
-        print("reached industry stocks")
-        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==id)
-        print("constructed a query for industry stocks which was", istocks)
+        istocks=session.query(Industry_stock).where(Industry_stock.commodity_id==self.id)
         
         for si in istocks:
-            print("processing an industrial stock")
             total_value+=si.value
             report(2,simulation.id,f"Adding {si.value} to total value {total_value}, from industrial stock {si.name}",session)
 
         # Add the values of all class stocks of this commodity
-        print("reached class stocks")
-        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==id)
+        cstocks=session.query(Class_stock).where(Class_stock.commodity_id==self.id)
         for sc in cstocks:
             total_value+=sc.value
             report(2,simulation.id,f"Adding {sc.value} to total value {total_value}, from class stock {sc.name}",session)
 
         # reset total value if relevant
-        print("reached revaluation")
         if (total_value)!=self.total_value:
             report(2,simulation.id,f"Total value has changed from {self.total_value} to {total_value}",session)
             self.total_value=total_value
 
-        print("reached resize")
         if self.size==0:
             report(2,simulation.id,f"WARNING: SIZE OF {self.name} IS ZERO",session)
         else:
-            print("passed checks")
             new_unit_value=total_value/self.size
             if self.unit_value!=new_unit_value:
                 report(2,simulation.id,f"Unit value has changed from {self.unit_value} to {new_unit_value}",session)
                 self.unit_value=new_unit_value
-            print("complete revalue")    
         session.commit()
 
     def reprice(self,session:Session,simulation:Simulation):

@@ -66,7 +66,8 @@ def process_price_reset(session: Session,simulation:Simulation):
         new_unit_value=c.unit_value/simulation.melt
         report(2,simulation.id,f"Unit value of {c.name} reset from {c.unit_value} to {new_unit_value}",session)
         c.unit_value=new_unit_value
-        c.revalue(session,simulation)
+        c.revalue_stocks(session,simulation)
+    report(1,simulation.id,f"Finished applying MELT",session)
 
 #   TODO tests (steps 6-7)
 
