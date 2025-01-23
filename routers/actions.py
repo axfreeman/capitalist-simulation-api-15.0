@@ -28,6 +28,48 @@ from actions.utils import revalue_stocks
 
 router = APIRouter(prefix="/action", tags=["Actions"])
 
+class actionObject:
+    initialReportString: str
+    closingReportString:str
+    nextState:str
+    actionName:str
+    actionItself:None
+    def __init__(self, irs,crs,ns,an,ai):
+        self.initialReportString=irs
+        self.closingReportString=crs
+        self.nextState=ns
+        self.actionName=an
+        self.actionItself=ai
+ 
+demandObject=actionObject("CALCULATE DEMAND","Finished DEMAND","SUPPLY","demand",process_demand)
+
+# actionList={
+#     "DEMAND":actionObject("CALCULATE DEMAND","Finished DEMAND","SUPPLY","demand",process_demand),
+# }
+
+def processAction(
+    act:actionObject,
+    u:User=Security(get_api_key),
+    session: Session=Depends(get_session))->str:
+    """Handles calls to an action. Carries out the action, then resets 
+    the simulation state to the next in the circuit.
+
+        u: User (supplied by Oath middleware)
+        session: a valid session which stores the results
+        returns: None if there is no current simulation
+        returns: success message if there is a simulation
+    """
+    print(actionObject)
+    try:
+        simulation:Simulation=u.current_simulation(session)
+        report(0, simulation.id, act.initialReportString, session) # TODO note this is boilerplate
+        act.actionItself(session,simulation)
+        simulation.set_state(act.nextState,session) # set the next state in the circuit, obliging the user to do this next.
+        report(1,simulation.id, act.closingReportString,session)
+    except Exception as e:
+        return{"message":f"Error {e} processing {act.actionName} for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
+    return {"message":f"Completed {act.actionName} for user {u.username}","statusCode":status.HTTP_200_OK}
+
 @router.get("/demand",response_model=ServerMessage)
 def demandHandler(
     u:User=Security(get_api_key),
