@@ -1,5 +1,3 @@
-# TODO rationalise to remove boilerplate
-
 from typing import List
 from fastapi import Depends, APIRouter, HTTPException, Security, status
 from sqlalchemy.orm import Session
@@ -41,12 +39,6 @@ class actionObject:
         self.actionName=an
         self.actionItself=ai
  
-demandObject=actionObject("CALCULATE DEMAND","Finished DEMAND","SUPPLY","demand",process_demand)
-
-# actionList={
-#     "DEMAND":actionObject("CALCULATE DEMAND","Finished DEMAND","SUPPLY","demand",process_demand),
-# }
-
 def processAction(act:actionObject,u:User,session: Session)->str:
     """Handles calls to an action. Carries out the action, then resets 
     the simulation state to the next in the circuit.
@@ -56,10 +48,10 @@ def processAction(act:actionObject,u:User,session: Session)->str:
         returns: None if there is no current simulation
         returns: success message if there is a simulation
     """
-    print(actionObject)
+    print("Conducting an action",actionObject)
     try:
         simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, act.initialReportString, session) # TODO note this is boilerplate
+        report(0, simulation.id, act.initialReportString, session)
         act.actionItself(session,simulation)
         simulation.set_state(act.nextState,session) # set the next state in the circuit, obliging the user to do this next.
         report(1,simulation.id, act.closingReportString,session)
@@ -73,6 +65,7 @@ def demandHandler(
     session: Session = Depends(get_session),
 )->str:
     """Handles calls to the 'Demand' action. See 'processAction()' for details """
+    demandObject=actionObject("CALCULATE DEMAND","Finished DEMAND","SUPPLY","demand",process_demand)
     return processAction(demandObject,u,session)
 
 @router.get("/supply",response_model=ServerMessage)
@@ -89,96 +82,36 @@ def tradeHandler(
     u:User=Security(get_api_key),    
     session: Session = Depends(get_session),
 )->str:
-    """
-    Handles calls to the 'Trade' action. Allocates supply, conducts 
-    trade, and resets simulation state to the next in the circuit.
+    """Handles calls to the 'Trade' action. See 'processAction()' for details """
+    return processAction(actionObject("CONDUCT TRADE","Finished TRADE","PRODUCE","trade",process_trade), u, session)
 
-        u: User (supplied by Oath middleware)
-        session: a valid session which stores the results
-        returns: None if there is no current simulation
-        returns: success message if there is a simulation
-    """
-    try:
-        simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, f"TRADE", session)
-        process_trade(session,simulation)
-        simulation.set_state("PRODUCE",session) # set the next state in the circuit, obliging the user to do this next.
-        report(1,simulation.id,"Finished TRADE",session)
-    except Exception as e:
-        return{"message":f"Error {e} processing trade for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-    return {"message":f"Trade conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/produce",response_model=ServerMessage)
 def produceHandler(
     u:User=Security(get_api_key),    
     session: Session = Depends(get_session),
 )->str:
-    """
-    Handles calls to the 'Produce' action then resets simulation state
-    to the next in the circuit.
+    """Handles calls to the 'Produce' action. See 'processAction()' for details """
+    return processAction(actionObject("PRODUCE","Finished PRODUCE","CONSUME","produce",process_produce), u, session)
 
-        u: User (supplied by Oath middleware)
-        session: a valid session which stores the results
-        returns: None if there is no current simulation
-        returns: success message if there is a simulation
-    """
-    try:
-        simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "PRODUCE", session) 
-        process_produce(session,simulation)
-        simulation.set_state("CONSUME",session) # set the next state in the circuit, obliging the user to do this next.
-        report(1,simulation.id,"Finished PRODUCE",session)
-    except Exception as e:
-        return{"message":f"Error {e} processing produce for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-    return {"message":f"Production conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/consume",response_model=ServerMessage)
 def consumeHandler(
     u:User=Security(get_api_key),    
     session: Session = Depends(get_session),
 )->str:
-    """
-    Handles calls to the 'Consume' action then resets simulation state
-    to the next in the circuit.
+    """Handles calls to the 'consume (reproduce)' action. See 'processAction()' for details """
+    return processAction(actionObject("REPRODUCE","Finished REPRODUCE","INVEST","reproduce",process_consume), u, session)
 
-        u: User (supplied by Oath middleware)
-        session: a valid session which stores the results
-        returns: None if there is no current simulation
-        returns: success message if there is a simulation
-
-    """
-    try:
-        simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "CONSUME", session) 
-        process_consume(session,simulation)
-        simulation.set_state("INVEST",session) # set the next state in the circuit, obliging the user to do this next.        
-        report(1,simulation.id,"Finished CONSUME",session)
-    except Exception as e:
-        return{"message":f"Error {e} processing social consumption for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-    return {"message":f"Social Consumption conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/invest",response_model=ServerMessage)
 def investHandler(
     u:User=Security(get_api_key),    
     session: Session = Depends(get_session),
 )->str:
-    """Handles calls to the 'Invest' action then resets simulation state
-    to restart the next circuit.
+    """Handles calls to the 'Supply' action. See 'processAction()' for details """
+    return processAction(actionObject("INVEST","Finished INVEST","DEMAND","invest",process_invest), u, session)
 
-        u: User (supplied by Oath middleware)
-        session: a valid session which stores the results
-        returns: None if there is no current simulation
-        returns: success message if there is a simulation
-    """
-    try:
-        simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "INVEST", session) 
-        process_invest(simulation,session)
-        simulation.set_state("DEMAND",session) # set the next state in the circuit, obliging the user to do this next.
-        report(1,simulation.id,"Finished INVEST",session)
-    except Exception as e:
-        return{"message":f"Error {e} processing investment for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-    return {"message":f"Investment conducted for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/reset",response_model=ServerMessage)
 def get_json(session: Session = Depends(get_session))->ServerMessage:
