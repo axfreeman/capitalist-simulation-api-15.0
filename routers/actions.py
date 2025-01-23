@@ -75,51 +75,14 @@ def demandHandler(
     """Handles calls to the 'Demand' action. See 'processAction()' for details """
     return processAction(demandObject,u,session)
 
-def olddemandHandler(
-    u:User=Security(get_api_key),
-    session: Session = Depends(get_session),
-
-)->str:
-    """Handles calls to the 'Demand' action. Sets demand, then resets 
-    the simulation state to the next in the circuit.
-
-        u: User (supplied by Oath middleware)
-        session: a valid session which stores the results
-        returns: None if there is no current simulation
-        returns: success message if there is a simulation
-    """
-    try:
-        simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "CALCULATE DEMAND", session) # TODO note this is boilerplate
-        process_demand(session,simulation)
-        simulation.set_state("SUPPLY",session) # set the next state in the circuit, obliging the user to do this next.
-        report(1,simulation.id, "Finished DEMAND",session)
-    except Exception as e:
-        return{"message":f"Error {e} processing demand for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-    return {"message":f"Demand initialised for user {u.username}","statusCode":status.HTTP_200_OK}
-
 @router.get("/supply",response_model=ServerMessage)
 def supplyHandler(
     u:User=Security(get_api_key),    
     session: Session = Depends(get_session),
 )->str:
-    """Handles calls to the 'Supply' action. Sets supply, then resets 
-    simulation state to the next in the circuit.
+    """Handles calls to the 'Supply' action. See 'processAction()' for details """
+    return processAction(actionObject("CALCULATE SUPPLY","Finished SUPPLY","TRADE","supply",process_supply), u, session)
 
-        u: User (supplied by Oath middleware)
-        session: a valid session which stores the results
-        returns: None if there is no current simulation
-        returns: success message if there is a simulation
-    """
-    try:
-        simulation:Simulation=u.current_simulation(session)
-        report(0, simulation.id, "CALCULATE SUPPLY", session) 
-        process_supply(session, simulation)        
-        simulation.set_state("TRADE",session) # set the next state in the circuit, obliging the user to do this next.
-        report(1,simulation.id, "Finished SUPPLY",session)
-    except Exception as e:
-        return{"message":f"Error {e} processing supply for user {u.username}: no action taken","statusCode":status.HTTP_200_OK}
-    return {"message":f"Supply initialised for user {u.username}","statusCode":status.HTTP_200_OK}
 
 @router.get("/trade",response_model=ServerMessage)
 def tradeHandler(
