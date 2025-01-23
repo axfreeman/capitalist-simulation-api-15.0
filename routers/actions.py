@@ -47,10 +47,7 @@ demandObject=actionObject("CALCULATE DEMAND","Finished DEMAND","SUPPLY","demand"
 #     "DEMAND":actionObject("CALCULATE DEMAND","Finished DEMAND","SUPPLY","demand",process_demand),
 # }
 
-def processAction(
-    act:actionObject,
-    u:User=Security(get_api_key),
-    session: Session=Depends(get_session))->str:
+def processAction(act:actionObject,u:User,session: Session)->str:
     """Handles calls to an action. Carries out the action, then resets 
     the simulation state to the next in the circuit.
 
@@ -72,6 +69,13 @@ def processAction(
 
 @router.get("/demand",response_model=ServerMessage)
 def demandHandler(
+    u:User=Security(get_api_key),
+    session: Session = Depends(get_session),
+)->str:
+    """Handles calls to the 'Demand' action. See 'processAction()' for details """
+    return processAction(demandObject,u,session)
+
+def olddemandHandler(
     u:User=Security(get_api_key),
     session: Session = Depends(get_session),
 
