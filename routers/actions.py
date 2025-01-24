@@ -11,7 +11,7 @@ from actions.supply import process_supply
 from actions.trade import process_trade
 from actions.production import process_produce
 from actions.invest import process_invest
-from actions.price import process_price_reset
+from actions.price import process_price_reset, process_setprice
 from actions.consumption import process_consume
 from models.models import (
     Class_stock,
@@ -101,8 +101,15 @@ def consumeHandler(
     session: Session = Depends(get_session),
 )->str:
     """Handles calls to the 'consume (reproduce)' action. See 'processAction()' for details """
-    return processAction(actionObject("REPRODUCE","Finished REPRODUCE","INVEST","reproduce",process_consume), u, session)
+    return processAction(actionObject("REPRODUCE","Finished REPRODUCE","SETPRICE","reproduce",process_consume), u, session)
 
+@router.get("/prices",response_model=ServerMessage)
+def consumeHandler(
+    u:User=Security(get_api_key),    
+    session: Session = Depends(get_session),
+)->str:
+    """Handles calls to the 'consume (reproduce)' action. See 'processAction()' for details """
+    return processAction(actionObject("SET PRICES","Finished Setting Prices","INVEST","set price",process_setprice), u, session)
 
 @router.get("/invest",response_model=ServerMessage)
 def investHandler(

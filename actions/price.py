@@ -12,6 +12,18 @@ from models.models import Class_stock, Commodity,Industry, Industry_stock,Social
 from report.report import report
 from sqlalchemy.orm import Session
 
+def process_setprice(session: Session,simulation:Simulation):
+    """decide how to handle price changes
+    Depends on the value of Simulation.SetPriceMode
+
+      if Simulation.SetPriceMode=="Locked" do nothing
+      if Simulation.SetPriceMode=="User" invoke process_price_reset (TODO currently just assumes the user will activate)
+      if Simulation.SetPriceMode=="Auto" set prices by some algorithm, eg equalise profit rates
+    """
+# TODO UNDER DEVELOPMENT
+    print("invoked pricess_price_reset")
+    report(2, simulation.id, f"Finished processing price changes", session)
+
 def process_price_reset(session: Session,simulation:Simulation):
     """
     Apply the effects of a change in money prices. 

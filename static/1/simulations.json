@@ -11,6 +11,7 @@
     "labour_supply_response": "UNDEFINED",
     "price_response_type": "UNDEFINED",
     "melt_response_type": null,
+    "setPriceMode": "Locked",
     "currency_symbol": "$",
     "quantity_symbol": "#",
     "total_value": 0,
