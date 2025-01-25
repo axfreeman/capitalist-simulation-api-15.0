@@ -43,7 +43,7 @@ class Simulation(Base):
     labour_supply_response = Column(String)
     price_response_type = Column(String)
     melt_response_type = Column(String)
-    setPriceMode= Column(String) # "Locked", "User", "Auto": Whether prices are fixed, set by the user, or automatically generated
+    setPriceMode= Column(String) # "Locked", "User", "Equalise","Dsynamic": Whether prices are fixed, set by the user, equlised, or dynamically generated
     total_value= Column(Float)
     total_price= Column (Float)
     melt = Column(Float)

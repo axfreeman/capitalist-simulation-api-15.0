@@ -1,42 +1,30 @@
 [
    {
-    "id": 33,
-    "simulation_id": 7,
+    "id": 30,
+    "simulation_id": 6,
     "name": "Capitalists",
     "output": "Capital Services",
-    "population": 10,
+    "population": 3000,
     "consumption_ratio": 1.0,
+    "revenue": 3000.0,
+    "assets": 0.0
+  },
+  {
+    "id": 31,
+    "simulation_id": 6,
+    "name": "Workers",
+    "output": "Labour Power",
+    "population": 6000,
+    "consumption_ratio": 0.5,
+    "revenue": 0.0,
+    "assets": 0.0
+  },
+  {
+    "id": 32,
+    "simulation_id": 6,
+    "name": "Bankers",
+    "population": 10,
+    "consumption_ratio": 2.0,
     "revenue": 10.0,
     "assets": 0.0
-  },
-  {
-    "id": 34,
-    "simulation_id": 7,
-    "name": "Workers",
-    "output": "Labour Power",
-    "population": 300,
-    "consumption_ratio": 0.5,
-    "revenue": 0.0,
-    "assets": 0.0
-  },
-  {
-    "id": 35,
-    "simulation_id": 8,
-    "name": "Capitalists",
-    "output": "Capital Services",
-    "population": 1500,
-    "consumption_ratio": 1.0,
-    "revenue": 1500.0,
-    "assets": 0.0
-  },
-  {
-    "id": 36,
-    "simulation_id": 8,
-    "name": "Workers",
-    "output": "Labour Power",
-    "population": 3000,
-    "consumption_ratio": 0.5,
-    "revenue": 0.0,
-    "assets": 0.0
-  }
-]
+  }]

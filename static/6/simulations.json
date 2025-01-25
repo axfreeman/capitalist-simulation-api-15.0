@@ -1,7 +1,7 @@
 [
   {
-    "id": 6,
-    "name": "SR with equalisation",
+    "id": 7,
+    "name": "Three-sector Dynamic",
     "time_stamp": 0,
     "username": "admin",
     "state": "TEMPLATE",
@@ -11,7 +11,7 @@
     "labour_supply_response": "UNDEFINED",
     "price_response_type": "UNDEFINED",
     "melt_response_type": null,
-    "setPriceMode": "Locked",
+    "setPriceMode": "Dynamic",
     "currency_symbol": "$",
     "quantity_symbol": "#",
     "total_value": 0,
