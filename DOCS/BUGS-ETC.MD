@@ -9,3 +9,6 @@
 
 ## Errors in json files
 * From simulation 6 on, the Capitalist Class is wrongly supposed to be selling Labour Power
+
+## Graceful degradation
+* Check the integrity of the static files

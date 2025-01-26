@@ -154,7 +154,7 @@ def create_simulation_from_template(
             f"Cloning class stock [{stock.name}] with id {stock.id}, class id {stock.social_class(session).id} , and commodity  {stock.commodity(session).name} [id {stock.commodity(session).id}]",
             session,
         )
-        old_class = stock.social_class(session)
+        old_class = stock.social_class(session) #TODO deal with No result (ie error in the static file) - also throughout
         old_commodity = stock.commodity(session)
         successor_commodity_id = old_commodity.successor_id
         successor_id = old_class.successor_id

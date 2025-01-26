@@ -9,6 +9,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
 from sqlalchemy.orm import relationship, Session
 from database.database import Base
 from report.report import report
+from sqlalchemy.orm.exc import NoResultFound
 
 
 Industry_stock = typing.NewType("Industry_stock", None)
@@ -43,7 +44,7 @@ class Simulation(Base):
     labour_supply_response = Column(String)
     price_response_type = Column(String)
     melt_response_type = Column(String)
-    setPriceMode= Column(String) # "Locked", "User", "Equalise","Dsynamic": Whether prices are fixed, set by the user, equlised, or dynamically generated
+    setPriceMode= Column(String) # "Locked", "User", "Equalise","Dynamic": Whether prices are fixed, set by the user, equlised, or dynamically generated
     total_value= Column(Float)
     total_price= Column (Float)
     melt = Column(Float)
@@ -582,8 +583,19 @@ class Class_stock(Base):
     demand = Column(Float)
 
     def social_class(self, db: Session)->SocialClass:
-        """Returns the Class which owns this Class_stock."""
-        return db.get_one(SocialClass, self.class_id)
+        """Returns:
+               the Class which owns this Class_stock if it exists
+               none if it does not exist
+        TODO create graceful degradation code here and throughout, based on this paradigm (but done right)
+        """
+        try:
+            return db.get_one(SocialClass, self.class_id)
+        except NoResultFound as e:
+            print(f"ERROR: No social class with id {self.class_id} was found")
+            return None
+        except Exception as e:
+            print (f"ERROR: Unknown error searching for class with id {self.id}")
+
 
     def commodity(self, db: Session)->Commodity:
         """Returns the Commodity that this Class_stock consists of."""

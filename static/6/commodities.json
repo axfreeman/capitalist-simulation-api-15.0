@@ -1,7 +1,7 @@
 [
     {
         "id": 26,
-        "simulation_id": 7,
+        "simulation_id": 6,
         "name": "Circulating",
         "origin": "INDUSTRIAL",
         "usage": "PRODUCTIVE",
@@ -22,7 +22,7 @@
     },
     {
         "id": 27,
-        "simulation_id": 7,
+        "simulation_id": 6,
         "name": "Consumption",
         "origin": "INDUSTRIAL",
         "usage": "CONSUMPTION",
@@ -43,7 +43,7 @@
     },
     {
         "id": 28,
-        "simulation_id": 7,
+        "simulation_id": 6,
         "name": "Fixed",
         "origin": "INDUSTRIAL",
         "usage": "PRODUCTIVE",
@@ -64,7 +64,7 @@
     },
     {
         "id": 29,
-        "simulation_id": 7,
+        "simulation_id": 6,
         "name": "Labour Power",
         "origin": "SOCIAL",
         "usage": "PRODUCTIVE",
@@ -85,7 +85,7 @@
     },
     {
         "id": 30,
-        "simulation_id": 7,
+        "simulation_id": 6,
         "name": "Money",
         "origin": "MONEY",
         "usage": "MONEY",
@@ -106,7 +106,7 @@
     },
     {
         "id": 43,
-        "simulation_id": 7,
+        "simulation_id": 6,
         "name": "Capital Services",
         "origin": "SOCIAL",
         "usage": "Useless",
@@ -127,7 +127,7 @@
     },
     {
         "id": 31,
-        "simulation_id": 8,
+        "simulation_id": 6,
         "name": "Consumption",
         "origin": "INDUSTRIAL",
         "usage": "CONSUMPTION",
@@ -148,7 +148,7 @@
     },
     {
         "id": 32,
-        "simulation_id": 8,
+        "simulation_id": 6,
         "name": "Fixed",
         "origin": "INDUSTRIAL",
         "usage": "PRODUCTIVE",
@@ -169,7 +169,7 @@
     },
     {
         "id": 33,
-        "simulation_id": 8,
+        "simulation_id": 6,
         "name": "Labour Power",
         "origin": "SOCIAL",
         "usage": "PRODUCTIVE",
@@ -190,7 +190,7 @@
     },
     {
         "id": 34,
-        "simulation_id": 8,
+        "simulation_id": 6,
         "name": "Money",
         "origin": "MONEY",
         "usage": "MONEY",
@@ -211,7 +211,7 @@
     },
     {
         "id": 35,
-        "simulation_id": 8,
+        "simulation_id": 6,
         "name": "Raw Materials",
         "origin": "INDUSTRIAL",
         "usage": "PRODUCTIVE",
@@ -232,7 +232,7 @@
     },
     {
         "id": 44,
-        "simulation_id": 8,
+        "simulation_id": 6,
         "name": "Capital Services",
         "origin": "SOCIAL",
         "usage": "Useless",

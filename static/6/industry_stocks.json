@@ -2,7 +2,7 @@
   {
     "id": 96,
     "industry_id": 14,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 30,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -16,7 +16,7 @@
   {
     "id": 102,
     "industry_id": 14,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 26,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -25,12 +25,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Consumption.Production.Circulating.(id_102)(sim_7)"
+    "name": "Consumption.Production.Circulating.(id_102)(sim_6)"
   },
   {
     "id": 104,
     "industry_id": 14,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 28,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -39,12 +39,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Consumption.Production.Fixed.(id_104)(sim_7)"
+    "name": "Consumption.Production.Fixed.(id_104)(sim_6)"
   },
   {
     "id": 105,
     "industry_id": 14,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 29,
     "usage_type": "Production",
     "origin": "SOCIAL",    
@@ -53,12 +53,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Consumption.Production.Labour Power.(id_105)(sim_7)"
+    "name": "Consumption.Production.Labour Power.(id_105)(sim_6)"
   },
   {
     "id": 111,
     "industry_id": 14,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 27,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",
@@ -67,12 +67,12 @@
     "demand": 0,
     "value": 150,
     "price": 150,
-    "name": "Consumption.Sales.Consumption.(id_111)(sim_7)"
+    "name": "Consumption.Sales.Consumption.(id_111)(sim_6)"
   },
   {
     "id": 103,
     "industry_id": 15,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 30,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -81,12 +81,12 @@
     "demand": 0,
     "value": 8000,
     "price": 8000,
-    "name": "Circulating.Money.Money.(id_103)(sim_7)"
+    "name": "Circulating.Money.Money.(id_103)(sim_6)"
   },
   {
     "id": 97,
     "industry_id": 15,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 26,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -100,7 +100,7 @@
   {
     "id": 98,
     "industry_id": 15,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 29,
     "usage_type": "Production",
     "origin": "SOCIAL",    
@@ -114,7 +114,7 @@
   {
     "id": 101,
     "industry_id": 15,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 28,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -123,12 +123,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Circulating.Production.Fixed.(id_101)(sim_7)"
+    "name": "Circulating.Production.Fixed.(id_101)(sim_6)"
   },
   {
     "id": 100,
     "industry_id": 15,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 26,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",    
@@ -137,12 +137,12 @@
     "demand": 0,
     "value": 600,
     "price": 600,
-    "name": "Circulating.Sales.Circulating.(id_100)(sim_7)"
+    "name": "Circulating.Sales.Circulating.(id_100)(sim_6)"
   },
   {
     "id": 94,
     "industry_id": 16,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 30,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -156,7 +156,7 @@
   {
     "id": 106,
     "industry_id": 16,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 26,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -165,12 +165,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Fixed.Production.Circulating.(id_106)(sim_7)"
+    "name": "Fixed.Production.Circulating.(id_106)(sim_6)"
   },
   {
     "id": 107,
     "industry_id": 16,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 28,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -179,12 +179,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Fixed.Production.Fixed.(id_107)(sim_7)"
+    "name": "Fixed.Production.Fixed.(id_107)(sim_6)"
   },
   {
     "id": 109,
     "industry_id": 16,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 29,
     "usage_type": "Production",
     "origin": "SOCIAL",    
@@ -193,12 +193,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Fixed.Production.Labour Power.(id_109)(sim_7)"
+    "name": "Fixed.Production.Labour Power.(id_109)(sim_6)"
   },
   {
     "id": 110,
     "industry_id": 16,
-    "simulation_id": 7,
+    "simulation_id": 6,
     "commodity_id": 28,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",    
@@ -207,12 +207,12 @@
     "demand": 0,
     "value": 10000,
     "price": 10000,
-    "name": "Fixed.Sales.Fixed.(id_110)(sim_7)"
+    "name": "Fixed.Sales.Fixed.(id_110)(sim_6)"
   },
   {
     "id": 120,
     "industry_id": 17,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 34,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -221,12 +221,12 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department Ia.Money.Money.(id_120)(sim_8)"
+    "name": "Department Ia.Money.Money.(id_120)(sim_6)"
   },
   {
     "id": 118,
     "industry_id": 17,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 35,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -235,12 +235,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department Ia.Production.Raw Materials.(id_118)(sim_8)"
+    "name": "Department Ia.Production.Raw Materials.(id_118)(sim_6)"
   },
   {
     "id": 119,
     "industry_id": 17,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 33,
     "usage_type": "Production",
     "origin": "SOCIAL",    
@@ -249,12 +249,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department Ia.Production.Labour Power.(id_119)(sim_8)"
+    "name": "Department Ia.Production.Labour Power.(id_119)(sim_6)"
   },
   {
     "id": 121,
     "industry_id": 17,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 32,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -263,12 +263,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department Ia.Production.Fixed.(id_121)(sim_8)"
+    "name": "Department Ia.Production.Fixed.(id_121)(sim_6)"
   },
   {
     "id": 122,
     "industry_id": 17,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 32,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",    
@@ -277,12 +277,12 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department Ia.Sales.Fixed.(id_122)(sim_8)"
+    "name": "Department Ia.Sales.Fixed.(id_122)(sim_6)"
   },
   {
     "id": 128,
     "industry_id": 18,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 34,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -291,12 +291,12 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department II.Money.Money.(id_128)(sim_8)"
+    "name": "Department II.Money.Money.(id_128)(sim_6)"
   },
   {
     "id": 129,
     "industry_id": 18,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 33,
     "usage_type": "Production",
     "origin": "SOCIAL",    
@@ -305,12 +305,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department II.Production.Labour Power.(id_129)(sim_8)"
+    "name": "Department II.Production.Labour Power.(id_129)(sim_6)"
   },
   {
     "id": 131,
     "industry_id": 18,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 32,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -319,12 +319,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department II.Production.Fixed.(id_131)(sim_8)"
+    "name": "Department II.Production.Fixed.(id_131)(sim_6)"
   },
   {
     "id": 132,
     "industry_id": 18,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 35,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -333,12 +333,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department II.Production.Raw Materials.(id_132)(sim_8)"
+    "name": "Department II.Production.Raw Materials.(id_132)(sim_6)"
   },
   {
     "id": 130,
     "industry_id": 18,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 31,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",    
@@ -347,12 +347,12 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department II.Sales.Consumption.(id_130)(sim_8)"
+    "name": "Department II.Sales.Consumption.(id_130)(sim_6)"
   },
   {
     "id": 124,
     "industry_id": 19,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 34,
     "usage_type": "Money",
     "origin": "MONEY",
@@ -361,12 +361,12 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department Ib.Money.Money.(id_124)(sim_8)"
+    "name": "Department Ib.Money.Money.(id_124)(sim_6)"
   },
   {
     "id": 125,
     "industry_id": 19,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 32,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -375,12 +375,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department Ib.Production.Fixed.(id_125)(sim_8)"
+    "name": "Department Ib.Production.Fixed.(id_125)(sim_6)"
   },
   {
     "id": 126,
     "industry_id": 19,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 35,
     "usage_type": "Production",
     "origin": "INDUSTRIAL",    
@@ -389,12 +389,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department Ib.Production.Raw Materials.(id_126)(sim_8)"
+    "name": "Department Ib.Production.Raw Materials.(id_126)(sim_6)"
   },
   {
     "id": 127,
     "industry_id": 19,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 33,
     "usage_type": "Production",
     "origin": "SOCIAL",
@@ -403,12 +403,12 @@
     "demand": 0,
     "value": 0,
     "price": 0,
-    "name": "Department Ib.Production.Labour Power.(id_127)(sim_8)"
+    "name": "Department Ib.Production.Labour Power.(id_127)(sim_6)"
   },
   {
     "id": 123,
     "industry_id": 19,
-    "simulation_id": 8,
+    "simulation_id": 6,
     "commodity_id": 35,
     "usage_type": "Sales",
     "origin": "INDUSTRIAL",    
@@ -417,6 +417,6 @@
     "demand": 0,
     "value": 3000,
     "price": 3000,
-    "name": "Department Ib.Sales.Raw Materials.(id_123)(sim_8)"
+    "name": "Department Ib.Sales.Raw Materials.(id_123)(sim_6)"
   }
 ]
