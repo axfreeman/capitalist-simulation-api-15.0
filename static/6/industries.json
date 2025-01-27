@@ -1,7 +1,7 @@
 [
     {
     "id": 14,
-    "name": "Department II",
+    "name": "Consumption Goods",
     "simulation_id": 6,
     "output": "Consumption",
     "output_scale": 200,
@@ -14,9 +14,9 @@
   },
   {
     "id": 15,
-    "name": "Circulating",
+    "name": "Raw Materials",
     "simulation_id": 6,
-    "output": "Circulating",
+    "output": "Raw Materials",
     "output_scale": 500,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
@@ -27,7 +27,7 @@
   },
   {
     "id": 16,
-    "name": "Fixed",
+    "name": "Fixed Capital",
     "simulation_id": 6,
     "output": "Fixed",
     "output_scale": 500,
