@@ -37,44 +37,5 @@
     "current_capital": 0.0,
     "profit": 0.0,
     "profit_rate": 0.0
-  },
-  {
-    "id": 17,
-    "name": "Department Ia",
-    "simulation_id": 6,
-    "output": "Fixed",
-    "output_scale": 3000,
-    "output_growth_rate": 0,
-    "initial_capital": 0.0,
-    "work_in_progress": 0.0,
-    "current_capital": 0.0,
-    "profit": 0.0,
-    "profit_rate": 0.0
-  },
-  {
-    "id": 18,
-    "name": "Department II",
-    "simulation_id": 6,
-    "output": "Consumption",
-    "output_scale": 3000,
-    "output_growth_rate": 0,
-    "initial_capital": 0.0,
-    "work_in_progress": 0.0,
-    "current_capital": 0.0,
-    "profit": 0.0,
-    "profit_rate": 0.0
-  },
-  {
-    "id": 19,
-    "name": "Department Ib",
-    "simulation_id": 6,
-    "output": "Raw Materials",
-    "output_scale": 3000,
-    "output_growth_rate": 0,
-    "initial_capital": 0.0,
-    "work_in_progress": 0.0,
-    "current_capital": 0.0,
-    "profit": 0.0,
-    "profit_rate": 0.0
   }
-]
+ ]
