@@ -2,8 +2,9 @@
   {
     "id": 7,
     "name": "Department I",
+    "short_name": "DI",
+    "image_name":"",
     "simulation_id": 3,
-    "output": "Means of Production",
     "output_scale": 6000,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
@@ -15,8 +16,9 @@
   {
     "id": 8,
     "name": "Department IIa",
+    "short_name": "DIIa",
+    "image_name":"",
     "simulation_id": 3,
-    "output": "Necessities",
     "output_scale": 2250,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
@@ -28,8 +30,9 @@
   {
     "id": 9,
     "name": "Department IIb",
+    "short_name": "DIIb",
+    "image_name":"",
     "simulation_id": 3,
-    "output": "Luxuries",
     "output_scale": 750,
     "output_growth_rate": 0,
     "initial_capital": 0.0,

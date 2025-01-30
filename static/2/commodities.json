@@ -3,7 +3,7 @@
         "id": 5,
         "simulation_id": 2,
         "name": "Consumption",
-        "short_name": "N",
+        "short_name": "Cn",
         "image_name": "necessities.png",
         "origin": "INDUSTRIAL",
         "usage": "CONSUMPTION",
