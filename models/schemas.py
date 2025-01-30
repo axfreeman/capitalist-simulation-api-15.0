@@ -41,7 +41,6 @@ class SimulationBase(BaseModel):
     id:int
     name: str
     time_stamp: int
-    username: str
     state: str
     periods_per_year: float
     population_growth_rate: float
@@ -57,7 +56,8 @@ class CommodityBase(BaseModel):
     id: int
     simulation_id: int
     name: str
-    username: str
+    short_name: str
+    image_name: str
     origin: str
     usage: str
     size: float
@@ -70,7 +70,6 @@ class CommodityBase(BaseModel):
     supply: float
     allocation_ratio: float
     display_order: int
-    image_name: str
     tooltip: str
     monetarily_effective_demand: float
     investment_proportion: float
@@ -78,9 +77,9 @@ class CommodityBase(BaseModel):
 class IndustryBase(BaseModel):
     id: int
     name: str
+    short_name: str
+    image_name:str
     simulation_id: int
-    username: str
-    output: str
     output_scale: float
     output_growth_rate: float
     initial_capital: float
@@ -100,8 +99,7 @@ class SocialClassBase(BaseModel):
     id: int
     simulation_id: int
     name: str
-    output: str
-    username: str
+    image_name:str
     population: float
     consumption_ratio: float
     revenue: float
@@ -114,7 +112,6 @@ class Industry_stock_base(BaseModel):
     simulation_id:int
     industry_id: int
     commodity_id:int
-    username:str
     name:str
     usage_type: str
     origin: str
@@ -132,7 +129,6 @@ class Class_stock_base(BaseModel):
     class_id: int
     commodity_id:int
     name:str
-    username:str
     usage_type: str
     size: float
     value: float

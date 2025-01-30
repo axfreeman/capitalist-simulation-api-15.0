@@ -2,7 +2,6 @@
 	{
 		"id" : 12,
 		"simulation_id" : 5,
-		"username" : null,
 		"name" : "Department I",
 		"output" : "Means of Production",
 		"output_scale" : 12000.0,
@@ -17,7 +16,6 @@
 	{
 		"id" : 13,
 		"simulation_id" : 5,
-		"username" : null,
 		"name" : "Department II",
 		"output" : "Consumption",
 		"output_scale" : 12000.0,

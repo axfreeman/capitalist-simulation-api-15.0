@@ -113,8 +113,9 @@ class Commodity(Base):
     simulation_id = Column(
         Integer, ForeignKey("simulations.id", ondelete="CASCADE"), nullable=False
     )
-    username = Column(String, nullable=True)
     name = Column(String)
+    short_name=Column(String)
+    image_name = Column(String)
     origin = Column(String)
     usage = Column(String)
     size = Column(Float)
@@ -127,7 +128,6 @@ class Commodity(Base):
     supply = Column(Float)
     allocation_ratio = Column(Float)
     display_order = Column(Integer)
-    image_name = Column(String)
     tooltip = Column(String)
     monetarily_effective_demand = Column(Float)
     investment_proportion = Column(Float)
@@ -293,6 +293,14 @@ class Industry(Base):
     Industry.output_scale, Stock.requirement, and Commodity.turnover_time
     where Commodity is referenced by Stock.commodity_id.
 
+    The sales stock is increased in size by output_scale, but in value
+    by a magnitude equal to the sum of the value of consumed stocks other
+    than labour power, plus the size of the labour power stock consumed.
+
+    (Note: the industry does not directly know which commodity it produces.
+    The output commodity is determined by the sales stock. This makes it
+    possible in future development to add joint production)
+
     During the 'trade' action, Industries buy the Stocks they need, and
     sell their SalesStock. They may or may not manage to get all the
     productive Stocks they need. If they fail, output_scale is reduced.
@@ -309,9 +317,9 @@ class Industry(Base):
     simulation_id = Column(
         Integer, ForeignKey("simulations.id", ondelete="CASCADE"), nullable=False
     )
-    username = Column(String, nullable=True)
     name = Column(String)
-    output = Column(String)
+    short_name = Column (String)
+    image_name = Column (String)
     output_scale = Column(Float)
     output_growth_rate = Column(Float)
     initial_capital = Column(Float)
@@ -411,8 +419,7 @@ class SocialClass(Base):
         Integer, ForeignKey("simulations.id", ondelete="CASCADE"), nullable=False
     )
     name = Column(String)
-    output= Column(String)
-    username = Column(String, nullable=True)
+    image_name=Column(String)
     population = Column(Float)
     consumption_ratio = Column(Float)
     revenue = Column(Float)
@@ -468,7 +475,6 @@ class Industry_stock(Base):
         Integer, ForeignKey("commodities.id", ondelete="CASCADE"), nullable=False
     )
     name = Column(String)  # Owner.Name+Commodity.Name+usage_type
-    username = Column(String, nullable=True)
     usage_type = Column(String)  # 'Consumption', 'Production' or 'Money'
     origin = Column(String) # 'INDUSTRIAL','SOCIAL', 'MONEY' 
     size = Column(Float)
@@ -574,7 +580,6 @@ class Class_stock(Base):
         Integer, ForeignKey("commodities.id", ondelete="CASCADE"), nullable=False
     )
     name = Column(String)  # Owner.Name+Commodity.Name+usage_type
-    username = Column(String, nullable=True)
     usage_type = Column(String)  # 'Consumption', Production' or 'Money'
     size = Column(Float)
     value = Column(Float)

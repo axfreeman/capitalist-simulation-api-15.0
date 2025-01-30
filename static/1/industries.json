@@ -2,8 +2,9 @@
   {
     "id": 1,
     "name": "Department I",
+    "short_name": "DI",
+    "image_name":"",
     "simulation_id": 1,
-    "output": "Means of Production",
     "output_scale": 6000,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
@@ -15,8 +16,9 @@
   {
     "id": 2,
     "name": "Department II",
+    "short_name": "DII",
+    "image_name":"",
     "simulation_id": 1,
-    "output": "Consumption",
     "output_scale": 3000,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
