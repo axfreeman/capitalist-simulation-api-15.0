@@ -2,8 +2,9 @@
     {
     "id": 14,
     "name": "Consumption Goods",
+    "short_name": "DII",
+    "image_name": "",
     "simulation_id": 6,
-    "output": "Consumption",
     "output_scale": 200,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
@@ -15,8 +16,9 @@
   {
     "id": 15,
     "name": "Raw Materials",
+    "short_name": "DIa",
+    "image_name": "",
     "simulation_id": 6,
-    "output": "Raw Materials",
     "output_scale": 500,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
@@ -28,8 +30,9 @@
   {
     "id": 16,
     "name": "Fixed Capital",
+    "short_name": "DIb",
+    "image_name": "",
     "simulation_id": 6,
-    "output": "Fixed",
     "output_scale": 500,
     "output_growth_rate": 0,
     "initial_capital": 0.0,
